@@ -71,8 +71,8 @@ if (isset($_POST['user_login'])) {
   <div class="container" style="margin-top: 25rem;">
         <div class="row">
           <div class="col-lg-10">
-            <h2 data-aos="fade-up" data-aos-delay="100">Welcome to Attendance Management System </h2>
-            <p data-aos="fade-up" data-aos-delay="200">AMS tracks and manages students attendances digitally for efficient monitoring and reporting.</p>
+            <h2 data-aos="fade-up" data-aos-delay="100">Baho House MAid system </h2>
+            <p data-aos="fade-up" data-aos-delay="200">this system xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx xxxxxxxxxxxx</p>
           </div>
           
         </div>

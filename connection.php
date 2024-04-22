@@ -1,6 +1,6 @@
 <?php
 $host = 'localhost';
-$dbname = 'student_attendance';
+$dbname = 'baho_house_maid';
 $username = 'root';
 $password = '';
 try {
