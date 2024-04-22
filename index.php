@@ -9,7 +9,6 @@ if (isset($_POST['user_login'])) {
     $statement = $pdo->prepare("SELECT users.*, role.role_name, users.password AS hashed_password FROM users INNER JOIN role ON users.role_id = role.role_id WHERE username=:username");
     $statement->bindParam(':username', $username);
     $statement->execute();
-    $user = $statement->fetch(PDO::FETCH_ASSOC);
 
     // Check if the user exists and if the entered password matches the hashed password
     if ($user && password_verify($password, $user['hashed_password'])) {
@@ -22,10 +21,10 @@ if (isset($_POST['user_login'])) {
             case 'admin':
                 header("Location: dashboard/admin.php");
                 break;
-            case 'student':
+            case 'job_seeker':
                 header("Location: student_dashboard/index.php");
                 break;
-            case 'lecturer':
+            case 'job_provider':
                 header("Location: lecturer_dashboard/index.php");
                 break;
             default:
