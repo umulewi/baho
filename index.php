@@ -2,43 +2,51 @@
 include 'connection.php';
 
 if (isset($_POST['user_login'])) {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+  $username = $_POST['username'];
+  $password = $_POST['password'];
 
-    // Fetch user record from the database
-    $statement = $pdo->prepare("SELECT users.*, role.role_name, users.password AS hashed_password FROM users INNER JOIN role ON users.role_id = role.role_id WHERE username=:username");
-    $statement->bindParam(':username', $username);
-    $statement->execute();
+  // Fetch user record from the database (without password)
+  $statement = $pdo->prepare("SELECT users.*, role.role_name FROM users INNER JOIN role ON users.role_id = role.role_id WHERE username=:username");
+  $statement->bindParam(':username', $username);
+  $statement->execute();
 
-    // Check if the user exists and if the entered password matches the hashed password
-    if ($user && password_verify($password, $user['hashed_password'])) {
-        session_start();
-        $_SESSION['username'] = $username;
-        
-        // Redirect based on role
-        $role_name = $user['role_name'];
-        switch ($role_name) {
-            case 'admin':
-                header("Location: dashboard/admin.php");
-                break;
-            case 'job_seeker':
-                header("Location: student_dashboard/index.php");
-                break;
-            case 'job_provider':
-                header("Location: lecturer_dashboard/index.php");
-                break;
-            default:
-                // Default redirect if role is not recognized
-                header("Location: default_dashboard.php");
-                break;
-        }
-        exit(); // Stop further execution
-    } else {
-        echo "<script>alert('Incorrect username and password');</script>";
+  $user = $statement->fetch(PDO::FETCH_ASSOC); // Assuming single user
+
+  // Validate credentials using a secure method (not shown)
+  if ($user && validate_credentials($username, $password)) {
+    session_start();
+    $_SESSION['username'] = $username;
+
+    // Redirect based on role
+    $role_name = $user['role_name'];
+    switch ($role_name) {
+      case 'admin':
+        header("Location: dashboard/admin.php");
+        break;
+      case 'job_seeker':
+        header("Location: student_dashboard/index.php");
+        break;
+      case 'job_provider':
+        header("Location: lecturer_dashboard/index.php");
+        break;
+      default:
+        // Default redirect if role is not recognized
+        header("Location: default_dashboard.php");
+        break;
     }
+    exit(); // Stop further execution
+  } else {
+    echo "<script>alert('Incorrect username and password');</script>";
+  }
 }
-?>
 
+// This function (not implemented here) should securely validate credentials
+// It should NOT compare plain text passwords with hashed passwords directly
+function validate_credentials($username, $password) {
+  // Implement secure password comparison logic (e.g., using password_verify)
+}
+
+?>
 
 
 

@@ -1,9 +1,9 @@
 
 <?php  
-session_start();
-if (!isset($_SESSION['username'])) {
- header("location:../index.php");
-}
+// session_start();
+// if (!isset($_SESSION['username'])) {
+//  header("location:../index.php");
+// }
  ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -79,41 +79,29 @@ if (!isset($_SESSION['username'])) {
             <li>
                 <a href="#" class="dropdown-toggle" data-nav="top">
                     <i class='bx bxs-doughnut-chart' ></i>
-                    <span class="text">Student</span>
+                    <span class="text">Job Seekers</span>
                     <i class='bx bx-chevron-down dropdown-icon'></i>
                 </a>
                 <!-- Dropdown Menu -->
                 <ul class="dropdown-menu">
-                    <li><a href="view">View Student</a></li>
-                    <li><a href="#">Register Student</a></li>
+                    <li><a href="view">View Seekers</a></li>
+                    <li><a href="#">Register  Seeker</a></li>
                     
                 </ul>
             </li>
             <li>
                 <a href="#" class="dropdown-toggle" data-nav="top">
                     <i class='bx bxs-message-dots' ></i>
-                    <span class="text">Lecturer</span>
+                    <span class="text">Job Provider</span>
                     <i class='bx bx-chevron-down dropdown-icon'></i>
                 </a>
                 <!-- Dropdown Menu -->
                 <ul class="dropdown-menu">
-                    <li><a href="#">View Lecturer</a></li>
-                    <li><a href="#">Register Lecturer</a></li>
+                    <li><a href="#">View Providers</a></li>
+                    <li><a href="#">Register Providers</a></li>
                 </ul>
             </li>
-            <li>
-                <a href="#" class="dropdown-toggle" data-nav="top">
-                    <i class='bx bxs-group' ></i>
-                    <span class="text">Attendance</span>
-                    <i class='bx bx-chevron-down dropdown-icon'></i>
-                </a>
-                <!-- Dropdown Menu -->
-                <ul class="dropdown-menu">
-                    <li><a href="#">View attendance</a></li>
-                    <li><a href="#">Make attendance</a></li>
-                    <li><a href="#">Statistics</a></li>
-                </ul>
-            </li>
+            
         </ul>
         <ul class="side-menu">
             <li>
@@ -157,30 +145,7 @@ if (!isset($_SESSION['username'])) {
             </a>
         </nav>
         <!-- NAVBAR -->
-        <main>
-			<div class="head-title">
-				<div class="left">
-					<h1>Dashboard</h1>
-					<ul class="breadcrumb">
-						<li>
-							<a href="#">Dashboard</a>
-						</li>
-						<li><i class='bx bx-chevron-right' ></i></li>
-						<li>
-							<a class="active" href="#">Home</a>
-						</li>
-					</ul>
-				</div>
-				
-			</div>	
-
-
-            <!-- display all content in-->
-
-
-
-
-		</main>
+        
     <!-- CONTENT -->
     
 
