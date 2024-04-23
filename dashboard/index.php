@@ -85,7 +85,7 @@
                 <!-- Dropdown Menu -->
                 <ul class="dropdown-menu">
                     <li><a href="view">View Seekers</a></li>
-                    <li><a href="#">Register  Seeker</a></li>
+                    <li><a href="register_job_seeker.php">Register  Seeker</a></li>
                     
                 </ul>
             </li>

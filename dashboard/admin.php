@@ -52,9 +52,9 @@
 
     <!-- SIDEBAR -->
     <section id="sidebar">
-        <a href="admin.php" class="brand">
+        <a href="#" class="brand">
             <i class='bx bxs-smile'></i>
-            <span class="text">AMS</span>
+            <span class="text">AdminHub</span>
         </a>
         <ul class="side-menu top">
             <li class="active">
@@ -71,62 +71,33 @@
                 </a>
                 <!-- Dropdown Menu -->
                 <ul class="dropdown-menu">
-                    <li><a href="view_institution.php">View Institution</a></li>
+                    <li><a href="#">View Institution</a></li>
                     <li><a href="register_institution.php">Register Institution</a></li>
                 </ul>
             </li>
             <li>
                 <a href="#" class="dropdown-toggle" data-nav="top">
                     <i class='bx bxs-doughnut-chart' ></i>
-                    <span class="text">Student</span>
+                    <span class="text">Job Seekers</span>
                     <i class='bx bx-chevron-down dropdown-icon'></i>
                 </a>
                 <!-- Dropdown Menu -->
-                <?php
-                    include'../connection.php';
-                    $stmt=$pdo->query("SELECT role_id from role where role_name='student'");
-                    
-                    $row = $stmt->fetch(PDO::FETCH_ASSOC);
-                    ?>
                 <ul class="dropdown-menu">
-                    <li><a href="ViewStudent.php">View Student</a></li>
-                    
-                    <li><a href="register_student.php?role_id=<?php echo $row['role_id'];?>">Register Student</a></li>
-
-                    
+                    <li><a href="view">View Seekers</a></li>
+                    <li><a href="#">Register  Seeker</a></li>
                     
                 </ul>
             </li>
             <li>
                 <a href="#" class="dropdown-toggle" data-nav="top">
                     <i class='bx bxs-message-dots' ></i>
-                    <span class="text">Lecturer</span>
-                    <i class='bx bx-chevron-down dropdown-icon'></i>
-                </a>
-                <!-- Dropdown Menu -->
-                <?php
-                    include'../connection.php';
-                    $stmt=$pdo->query("SELECT role_id from role where role_name='lecturer'");
-                    
-                    $row = $stmt->fetch(PDO::FETCH_ASSOC);
-                    ?>
-                <ul class="dropdown-menu">
-                    <li><a href="ViewLecturer.php">View Lecturer</a></li>
-                    <li><a href="register_lecturer.php?role_id=<?php echo $row['role_id'];?>">Register Lecturer</a></li>
-                   
-                </ul>
-            </li>
-            <li>
-                <a href="#" class="dropdown-toggle" data-nav="top">
-                    <i class='bx bxs-group' ></i>
-                    <span class="text">Courses</span>
+                    <span class="text">Job Provider</span>
                     <i class='bx bx-chevron-down dropdown-icon'></i>
                 </a>
                 <!-- Dropdown Menu -->
                 <ul class="dropdown-menu">
-                    <li><a href="ViewCourses.php">View Courses</a></li>
-                    <li><a href="register_courses.php">Add Courses</a></li>
-                    
+                    <li><a href="#">View Providers</a></li>
+                    <li><a href="#">Register Providers</a></li>
                 </ul>
             </li>
             
@@ -145,7 +116,7 @@
                 </a>
             </li>
         </ul>
-    </section>
+    </section> 
     <!-- SIDEBAR -->
 
 
