@@ -86,7 +86,7 @@
                 </a>
                 <!-- Dropdown Menu -->
                 <ul class="dropdown-menu">
-                    <li><a href="view">View Seekers</a></li>
+                    <li><a href="view_job_seeker.php">View Seekers</a></li>
                     <li><a href="register_job_seeker.php">Register  Seeker</a></li>
                     
                 </ul>
