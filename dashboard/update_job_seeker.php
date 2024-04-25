@@ -1,4 +1,3 @@
-
 <?php  
 session_start();
 if (!isset($_SESSION['username'])) {
@@ -82,18 +81,49 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
     <form action="" method="post">
         <div>
             <label for="name">JOB SEEKER NAME:</label>
-            <input type="text" name="name" value="<?php echo $row['firstname']; ?>" required>
+            <input type="text" name="firstname" value="<?php echo $row['firstname']; ?>" required>
         </div>
         <div>
             <label for="name">JOB SEEKER NAME:</label>
-            <input type="text" name="name" value="<?php echo $row['lastname']; ?>" required>
+            <input type="text" name="lastname" value="<?php echo $row['lastname']; ?>" required>
         </div>
-        
         <div>
-            <label for="physical_code">Phone:</label>
-            <input type="text" id="phone" name="phone" value="<?php echo $row['phone']; ?>" required>
+            <label for="fathers_name">FATHER'S NAME:</label>
+            <input type="text" id="fathers_name" name="fathers_name" value="<?php echo $row['fathers_name']; ?>" required>
         </div>
-        
+        <div>
+            <label for="mothers_name">MOTHER'S NAME:</label>
+            <input type="text" id="mothers_name" name="mothers_name" value="<?php echo $row['mothers_name']; ?>" required>
+        </div>
+        <div>
+            <label for="province">PROVINCE:</label>
+            <input type="text" id="province" name="province" value="<?php echo $row['province']; ?>" required>
+        </div>
+        <div>
+            <label for="district">DISTRICT:</label>
+            <input type="text" id="district" name="district" value="<?php echo $row['district']; ?>" required>
+        </div>
+        <div>
+            <label for="sector">SECTOR:</label>
+            <input type="text" id="sector" name="sector" value="<?php echo $row['sector']; ?>" required>
+        </div>
+        <div>
+            <label for="village">VILLAGE:</label>
+            <input type="text" id="village" name="village" value="<?php echo $row['village']; ?>" required>
+        </div>
+        <div>
+            <label for="cell">CELL:</label>
+            <input type="text" id="cell" name="cell" value="<?php echo $row['cell']; ?>" required>
+        </div>
+
+        <div>
+            <label for="cell">DATE OF BIRTH:</label>
+            <input type="text" id="dob" name="date_of_birth" value="<?php echo $row['date_of_birth']; ?>" required>
+        </div>
+        <div>
+            <label for="id">ID CARDS:</label>
+            <input type="text" id="ID" name="ID" value="<?php echo $row['ID']; ?>" required>
+        </div>
         <div>
             <input type="submit" name="update" value="Update" style="background-color: teal;">
         </div>
@@ -109,49 +139,61 @@ include '../connection.php';
 
 if (isset($_POST['update'])) {
     $job_seeker_id = $_GET['job_seeker_id'];
-    $name=$_POST['name'];
-    $physical_code = $_POST['physical_code'];
-    $email = $_POST['email'];
-    $phone = $_POST['phone'];
-    $updated_by = $_SESSION['username']; 
+    $firstname=$_POST['firstname'];
+    $lastname=$_POST['lastname'];
+    $fathers_name=$_POST['fathers_name'];
+    $mothers_name=$_POST['mothers_name'];
+    $province=$_POST['province'];
+    $district=$_POST['district'];
+    $sector=$_POST['sector'];
+    $village=$_POST['village'];
+    $cell=$_POST['cell'];
+    $date_of_birth=$_POST['date_of_birth'];
+    $ID=$_POST['ID'];
+
     $updated_on = date('Y-m-d H:i:s'); 
 
     try {
         // Fetch existing values
-        $stmt_existing = $pdo->prepare("SELECT created_by FROM institution WHERE job_seeker_id = :job_seeker_id");
+        $stmt_existing = $pdo->prepare("SELECT * FROM job_seeker WHERE job_seeker_id = :job_seeker_id");
         $stmt_existing->bindParam(':job_seeker_id', $job_seeker_id);
         $stmt_existing->execute();
         $row_existing = $stmt_existing->fetch(PDO::FETCH_ASSOC);
         $created_by = $row_existing['created_by']; // Use existing created_by value
 
         // Prepare the SQL statement
-        $sql = "UPDATE institution 
-                SET physical_code = :physical_code, 
-                    email = :email, 
-                    name=   :name,
-                    phone = :phone, 
-                    created_by = :created_by, 
-                    updated_by = :updated_by, 
-                    updated_on = :updated_on 
+        $sql = "UPDATE job_seeker 
+                SET firstname = :firstname,
+                lastname=:firstname,
+                fathers_name=:fathers_name,
+                mothers_name=:mothers_name,
+                province=:province,
+                district=:district,
+                sector=:sector,
+                cell=:cell,
+                village=:village,
+                date_of_birth=:date_of_birth,
+                ID=:ID
                 WHERE job_seeker_id = :job_seeker_id";
 
         // Prepare statement
         $stmt = $pdo->prepare($sql);
-
         // Bind parameters
-        $stmt->bindParam(':physical_code', $physical_code);
-        $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':phone', $phone);
-        $stmt->bindParam(':name', $name);
-        $stmt->bindParam(':created_by', $created_by);
-        $stmt->bindParam(':updated_by', $updated_by);
-        $stmt->bindParam(':updated_on', $updated_on);
-        $stmt->bindParam(':job_seeker_id', $job_seeker_id);
-
+        $stmt->bindParam(':firstname', $firstname);
+        $stmt->bindParam(':lastname', $lastname);
+        $stmt->bindParam(':fathers_name', $fathers_name);
+        $stmt->bindParam(':mothers_name', $mothers_name);
+        $stmt->bindParam(':province', $province);
+        $stmt->bindParam(':district', $distrcit);
+        $stmt->bindParam(':sector', $sector);
+        $stmt->bindParam(':cell', $cell);
+        $stmt->bindParam(':village', $village);
+        $stmt->bindParam(':date_of_birth', $date_of_birth);
+        $stmt->bindParam(':ID', $ID);
+H
         // Execute the statement
         if ($stmt->execute()) {
-            echo "<script>window.location.href = 'view_institution.php';</script>";
-
+            echo "<script>window.location.href = 'view_job-seeker.php';</script>";
             exit();
         } else {
             echo "<script>alert('Error updating record');</script>";
