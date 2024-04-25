@@ -72,8 +72,8 @@ include '../connection.php';
             <th>VILLAGE</th>
             <th>DOB</th>
             <th>ID</th>
-            
-            
+            <th>ACTION</th>
+
         </tr>
         <?php 
         $i=1;
@@ -86,12 +86,18 @@ include '../connection.php';
             <td><?php echo $row['lastname'];?></td>
             <td><?php echo $row['fathers_name'];?></td>
             <td><?php echo $row['mothers_name'];?></td>
-            <td><?php echo $row['created_by'];?></td>
-            <td><?php echo $row['created_on'];?></td>
-            <td><?php echo $row['updated_by'];?></td>
-            <td><?php echo $row['updated_on'];?></td>
+            <td><?php echo $row['province'];?></td>
+            <td><?php echo $row['district'];?></td>
+            <td><?php echo $row['sector'];?></td>
+            <td><?php echo $row['village'];?></td>
+            <td><?php echo $row['date_of_birth'];?></td>
+            <td><?php echo $row['ID'];?></td>
+            
+            
+            
             <td style="width: -56rem">
-            <a class="btn custom-bg shadow-none" style="background-color:#b0b435" href="institution_update.php?institution_id=<?php echo $row['institution_id'];?>"><b>Update</b></a>
+            <a class="btn custom-bg shadow-none" style="background-color:#b0b435" href="update_job_seeker.php?job_seeker_id=<?php echo $row['job_seeker_id'];?>"><b>Update</b></a>
+           
            
             </td>
         </tr>

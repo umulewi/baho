@@ -66,18 +66,7 @@
                     <span class="text">Dashboard</span>
                 </a>
             </li>
-            <li>
-                <a href="#" class="dropdown-toggle" data-nav="top">
-                    <i class='bx bxs-shopping-bag-alt' ></i>
-                    <span class="text">Institution</span>
-                    <i class='bx bx-chevron-down dropdown-icon'></i>
-                </a>
-                <!-- Dropdown Menu -->
-                <ul class="dropdown-menu">
-                    <li><a href="#">View Institution</a></li>
-                    <li><a href="register_institution.php">Register Institution</a></li>
-                </ul>
-            </li>
+            
             <li>
                 <a href="#" class="dropdown-toggle" data-nav="top">
                     <i class='bx bxs-doughnut-chart' ></i>
@@ -101,6 +90,18 @@
                 <ul class="dropdown-menu">
                     <li><a href="#">View Providers</a></li>
                     <li><a href="#">Register Providers</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#" class="dropdown-toggle" data-nav="top">
+                    <i class='bx bxs-shopping-bag-alt' ></i>
+                    <span class="text"> Agents</span>
+                    <i class='bx bx-chevron-down dropdown-icon'></i>
+                </a>
+                <!-- Dropdown Menu -->
+                <ul class="dropdown-menu">
+                    <li><a href="#">View Agents</a></li>
+                    <li><a href="register_institution.php">Register Agents</a></li>
                 </ul>
             </li>
             
