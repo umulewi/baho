@@ -1,9 +1,18 @@
-<?php  
+<?php
 session_start();
 if (!isset($_SESSION['username'])) {
- header("location:../index.php");
+    header("location:../index.php");
+    exit();
 }
- ?>
+include('../connection.php');
+$username = $_SESSION['username'];
+$stmt = $pdo->prepare("SELECT users_id FROM users WHERE username = ?");
+$stmt->execute([$username]); 
+$user_id = $stmt->fetchColumn(); 
+$stmt->closeCursor(); 
+echo "User ID: " . $user_id;
+$pdo = null;
+?>
 
 
 
@@ -133,74 +142,79 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
 </body>
 </html>
 
-<?php  
 
+<?php
 include '../connection.php';
 
 if (isset($_POST['update'])) {
-    $job_seeker_id = $_GET['job_seeker_id'];
-    $firstname=$_POST['firstname'];
-    $lastname=$_POST['lastname'];
-    $fathers_name=$_POST['fathers_name'];
-    $mothers_name=$_POST['mothers_name'];
-    $province=$_POST['province'];
-    $district=$_POST['district'];
-    $sector=$_POST['sector'];
-    $village=$_POST['village'];
-    $cell=$_POST['cell'];
-    $date_of_birth=$_POST['date_of_birth'];
-    $ID=$_POST['ID'];
+  $job_seeker_id = $_GET['job_seeker_id'];
+  $firstname = $_POST['firstname'];
+  $lastname = $_POST['lastname'];
+  $fathers_name = $_POST['fathers_name'];
+  $mothers_name = $_POST['mothers_name'];
+  $province = $_POST['province'];
+  $district = $_POST['district'];
+  $sector = $_POST['sector'];
+  $village = $_POST['village'];
+  $cell = $_POST['cell'];
+  $date_of_birth = $_POST['date_of_birth'];
+  $ID = $_POST['ID'];
 
-    $updated_on = date('Y-m-d H:i:s'); 
+  $updated_on = date('Y-m-d H:i:s');
 
-    try {
-        // Fetch existing values
-        $stmt_existing = $pdo->prepare("SELECT * FROM job_seeker WHERE job_seeker_id = :job_seeker_id");
-        $stmt_existing->bindParam(':job_seeker_id', $job_seeker_id);
-        $stmt_existing->execute();
-        $row_existing = $stmt_existing->fetch(PDO::FETCH_ASSOC);
-        $created_by = $row_existing['created_by']; // Use existing created_by value
+  try {
+    // Fetch existing values (optional, not used in update)
+    // $stmt_existing = $pdo->prepare("SELECT * FROM job_seeker WHERE job_seeker_id = :job_seeker_id");
+    // $stmt_existing->bindParam(':job_seeker_id', $job_seeker_id);
+    // $stmt_existing->execute();
+    // $row_existing = $stmt_existing->fetch(PDO::FETCH_ASSOC);
+    // $created_by = $row_existing['created_by']; // Use existing created_by value
 
-        // Prepare the SQL statement
-        $sql = "UPDATE job_seeker 
-                SET firstname = :firstname,
-                lastname=:firstname,
-                fathers_name=:fathers_name,
-                mothers_name=:mothers_name,
-                province=:province,
-                district=:district,
-                sector=:sector,
-                cell=:cell,
-                village=:village,
-                date_of_birth=:date_of_birth,
-                ID=:ID
-                WHERE job_seeker_id = :job_seeker_id";
+    // Prepare the SQL statement
+    $sql = "UPDATE job_seeker 
+            SET user_id =:user_id,
+            firstname = :firstname,
+                lastname = :lastname,
+                fathers_name = :fathers_name,
+                mothers_name = :mothers_name,
+                province = :province,
+                district = :district,
+                sector = :sector,
+                cell = :cell,
+                village = :village,
+                date_of_birth = :date_of_birth,
+                ID = :ID
+            WHERE job_seeker_id = :job_seeker_id";
 
-        // Prepare statement
-        $stmt = $pdo->prepare($sql);
-        // Bind parameters
-        $stmt->bindParam(':firstname', $firstname);
-        $stmt->bindParam(':lastname', $lastname);
-        $stmt->bindParam(':fathers_name', $fathers_name);
-        $stmt->bindParam(':mothers_name', $mothers_name);
-        $stmt->bindParam(':province', $province);
-        $stmt->bindParam(':district', $distrcit);
-        $stmt->bindParam(':sector', $sector);
-        $stmt->bindParam(':cell', $cell);
-        $stmt->bindParam(':village', $village);
-        $stmt->bindParam(':date_of_birth', $date_of_birth);
-        $stmt->bindParam(':ID', $ID);
-H
-        // Execute the statement
-        if ($stmt->execute()) {
-            echo "<script>window.location.href = 'view_job-seeker.php';</script>";
-            exit();
-        } else {
-            echo "<script>alert('Error updating record');</script>";
-        }
-    } catch(PDOException $e) {
-        echo "Error: " . $e->getMessage();
+    // Prepare statement
+    $stmt = $pdo->prepare($sql);
+
+    // Bind parameters (ensure the number matches placeholders)
+    $stmt->bindParam(':user_id', $user_id);
+    $stmt->bindParam(':firstname', $firstname);
+    $stmt->bindParam(':lastname', $lastname);
+    $stmt->bindParam(':fathers_name', $fathers_name);
+    $stmt->bindParam(':mothers_name', $mothers_name);
+    $stmt->bindParam(':province', $province);
+    $stmt->bindParam(':district', $district);
+    $stmt->bindParam(':sector', $sector);
+    $stmt->bindParam(':cell', $cell);
+    $stmt->bindParam(':village', $village);
+    $stmt->bindParam(':date_of_birth', $date_of_birth);
+    $stmt->bindParam(':ID', $ID);
+    $stmt->bindParam(':job_seeker_id', $job_seeker_id);
+
+    // Execute the statement
+    if ($stmt->execute()) {
+    //   echo "<script>window.location.href = 'view_job-seeker.php';</script>";
+    echo"well updated";
+      exit();
+    } else {
+      echo "<script>alert('Error updating record');</script>";
     }
+  } catch (PDOException $e) {
+    echo "Error: " . $e->getMessage();
+  }
 }
 ?>
 
