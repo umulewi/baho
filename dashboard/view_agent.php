@@ -58,7 +58,7 @@ include '../connection.php';
 ?>
 
 
-    <center><h5 style="color:teal;margin-top:2rem">List Of All JOB PROVIDERS</h5></center>
+    <center><h5 style="color:teal;margin-top:2rem">ALL AGENTS</h5></center>
     <table class="table">
         <tr>
             <th>ID</th>

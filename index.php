@@ -22,10 +22,13 @@ if (isset($_POST['user_login'])) {
         header("Location: dashboard/admin.php");
         exit();
       case 'job_seeker':
-        header("Location: student_dashboard/index.php");
+        header("Location: job_seeker/index.php");
         exit();
+        case 'agent':
+          header("Location: agent/index.php");
+          exit();
       case 'job_provider':
-        header("Location: lecturer_dashboard/index.php");
+        header("Location: job_provider/index.php");
         exit();
       default:
         // Default redirect if role is not recognized
