@@ -142,9 +142,9 @@ if (isset($_POST["register"])) {
     $cell = $_POST['cell'];
     $village = $_POST['village'];
     $id=$_POST['id'];
-
+    $created_by = $_SESSION['username'];
     try {
-        $sql = "INSERT INTO job_provider (users_id, firstname, lastname,  province, district, sector, cell, village, id, created_by) 
+        $sql = "INSERT INTO agent (users_id, firstname, lastname,  province, district, sector, cell, village, id, created_by) 
                 VALUES (:users_id, :firstname, :lastname, :province, :district, :sector, :cell, :village, :id, :created_by)";
         $stmt = $pdo->prepare($sql);
     
@@ -157,10 +157,10 @@ if (isset($_POST["register"])) {
         $stmt->bindParam(':cell', $cell);
         $stmt->bindParam(':village', $village);
         $stmt->bindParam(':id', $id);
-        $stmt->bindParam(':created_by', $username);
+        $stmt->bindParam(':created_by', $created_by);
 
         if ($stmt->execute()) {
-            echo "<script>alert('New job provider has been added');</script>";
+            echo "<script>alert('New job agent has been added');</script>";
         } else {
             echo "<script>alert('Error: Unable to execute statement');</script>";
         }
