@@ -88,8 +88,8 @@
                 </a>
                 <!-- Dropdown Menu -->
                 <ul class="dropdown-menu">
-                    <li><a href="#">View Providers</a></li>
-                    <li><a href="#">Register Providers</a></li>
+                    <li><a href="view_job_provider.php">View Providers</a></li>
+                    <li><a href="register_job_provider.php">Register Providers</a></li>
                 </ul>
             </li>
             <li>
@@ -100,8 +100,8 @@
                 </a>
                 <!-- Dropdown Menu -->
                 <ul class="dropdown-menu">
-                    <li><a href="#">View Agents</a></li>
-                    <li><a href="register_institution.php">Register Agents</a></li>
+                    <li><a href="view_agent.php">View Agents</a></li>
+                    <li><a href="register_agent.php">Register Agents</a></li>
                 </ul>
             </li>
             

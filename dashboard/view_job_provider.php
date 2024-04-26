@@ -58,18 +58,15 @@ include '../connection.php';
 ?>
 
 
-    <center><h5 style="color:teal;margin-top:2rem">List Of All JOB SEEKERS</h5></center>
+    <center><h5 style="color:teal;margin-top:2rem">List Of All JOB PROVIDERS</h5></center>
     <table class="table">
         <tr>
             <th>ID</th>
             <th>FIRSTNAME</th>
             <th>LASTNAME</th>
-            <th>FATHERS_NAME</th>
-            <th>MOTHERS_NAME</th>
             <th>PROVINCE</th>
             <th>DISTRICT</th>
             <th>SECTOR</th>
-            <th>CELL</th>
             <th>VILLAGE</th>
             <th>DOB</th>
             <th>ID</th>
@@ -78,27 +75,24 @@ include '../connection.php';
         </tr>
         <?php 
         $i=1;
-        $stmt = $pdo->query("SELECT * FROM job_seeker");
+        $stmt = $pdo->query("SELECT * FROM job_provider");
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         ?>
         <tr>
             <td><?php echo $i; ?></td>
             <td><?php echo $row['firstname'];?></td>
             <td><?php echo $row['lastname'];?></td>
-            <td><?php echo $row['fathers_name'];?></td>
-            <td><?php echo $row['mothers_name'];?></td>
             <td><?php echo $row['province'];?></td>
             <td><?php echo $row['district'];?></td>
             <td><?php echo $row['sector'];?></td>
             <td><?php echo $row['cell'];?></td>
             <td><?php echo $row['village'];?></td>
-            <td><?php echo $row['date_of_birth'];?></td>
             <td><?php echo $row['ID'];?></td>
             
             
             
             <td style="width: -56rem">
-            <a class="btn custom-bg shadow-none" style="background-color:#b0b435" href="update_job_seeker.php?job_seeker_id=<?php echo $row['job_seeker_id'];?>"><b>Update</b></a>
+            <a class="btn custom-bg shadow-none" style="background-color:#b0b435" href="update_job_provider.php?job_provider_id=<?php echo $row['job_provider_id'];?>"><b>Update</b></a>
            
            
             </td>
