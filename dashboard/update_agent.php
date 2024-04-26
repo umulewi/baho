@@ -77,10 +77,10 @@ include'dashboard.php';
 <body>
 
 <?php
-$id = $_GET['job_provider_id'];
+$id = $_GET['agent_id'];
 include'../connection.php';
-$stmt = $pdo->prepare("SELECT * FROM job_provider WHERE job_provider_id = :job_provider_id");
-$stmt->bindParam(':job_provider_id', $id);
+$stmt = $pdo->prepare("SELECT * FROM agent WHERE agent_id = :agent_id");
+$stmt->bindParam(':agent_id', $id);
 $stmt->execute();
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
 ?>
@@ -134,7 +134,7 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
 include '../connection.php';
 
 if (isset($_POST['update'])) {
-  $job_provider_id = $_GET['job_provider_id'];
+  $job_provider_id = $_GET['agent_id'];
   $firstname = $_POST['firstname'];
   $lastname = $_POST['lastname'];
   $province = $_POST['province'];
@@ -145,7 +145,7 @@ if (isset($_POST['update'])) {
   $ID = $_POST['ID'];
 
   try {
-    $sql = "UPDATE job_provider 
+    $sql = "UPDATE agent 
             SET users_id =:users_id,
             firstname = :firstname,
                 lastname = :lastname,
@@ -155,7 +155,7 @@ if (isset($_POST['update'])) {
                 cell = :cell,
                 village = :village,
                 ID = :ID
-            WHERE job_provider_id = :job_provider_id";
+            WHERE agent_id = :agent_id";
 
     // Prepare statement
     $stmt = $pdo->prepare($sql);
@@ -170,11 +170,11 @@ if (isset($_POST['update'])) {
     $stmt->bindParam(':cell', $cell);
     $stmt->bindParam(':village', $village);
     $stmt->bindParam(':ID', $ID);
-    $stmt->bindParam(':job_provider_id', $job_provider_id);
+    $stmt->bindParam(':agent_id', $agent_id);
 
     // Execute the statement
     if ($stmt->execute()) {
-    //   echo "<script>window.location.href = 'view_job-provider.php';</script>";
+    
     echo"well updated";
       exit();
     } else {
