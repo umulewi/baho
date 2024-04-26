@@ -1,3 +1,13 @@
+<?php  
+session_start();
+if (!isset($_SESSION['username'])) {
+    header("location: ../index.php");
+    exit();
+}
+include'../connection.php';
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,8 +17,8 @@
     <!-- Boxicons -->
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <!-- My CSS -->
-    <link rel="stylesheet" href="style.css">
-    <title>baho house  Maids</title>
+    <link rel="stylesheet" href="../dashboard/style.css">
+    <title>Attandance Management System</title>
     <style>
         /* Additional CSS for dropdown icon */
         .dropdown-icon {
@@ -38,16 +48,6 @@
         .subsequent-nav.pushed-down {
             margin-top: 50px; /* Adjust this value as needed */
         }
-        #content main .box-info {
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-	grid-gap: 24px;
-	margin-top: 36px;
-}
-
-
-
-
     </style>
 </head>
 <body>
@@ -55,36 +55,70 @@
 
     <!-- SIDEBAR -->
     <section id="sidebar">
-        <a href="#" class="brand">
+        <a href="index.php" class="brand">
             <i class='bx bxs-smile'></i>
-            <span class="text">AdminHub</span>
+            <span class="text">AMS</span>
         </a>
         <ul class="side-menu top">
-            <li class="active">
-                <a href="#">
-                    <i class='bx bxs-dashboard' ></i>
-                    <span class="text">Dashboard</span>
-                </a>
-            </li>
+            
             
             <li>
                 <a href="#" class="dropdown-toggle" data-nav="top">
                     <i class='bx bxs-doughnut-chart' ></i>
-                    <span class="text">Job Seekers</span>
+                    <span class="text">Student</span>
+                    <i class='bx bx-chevron-down dropdown-icon'></i>
+                </a>
+                <!-- Dropdown Menu -->
+                
+                <ul class="dropdown-menu">
+                    <li><a href="ViewStudent.php">View Student</a></li>
+  
+                </ul>
+            </li>
+            <li>
+                <a href="#" class="dropdown-toggle" data-nav="top">
+                    <i class='bx bxs-message-dots' ></i>
+                    <span class="text">Lecturer</span>
+                    <i class='bx bx-chevron-down dropdown-icon'></i>
+                </a>
+                <!-- Dropdown Menu -->
+                
+                <ul class="dropdown-menu">
+                    <li><a href="ViewLecturer.php">View Lecturer</a></li>
+                    
+                   
+                </ul>
+            </li>
+            <li>
+                <a href="#" class="dropdown-toggle" data-nav="top">
+                    <i class='bx bxs-group' ></i>
+                    <span class="text">Courses</span>
                     <i class='bx bx-chevron-down dropdown-icon'></i>
                 </a>
                 <!-- Dropdown Menu -->
                 <ul class="dropdown-menu">
-                    <li><a href="view_job_seeker.php">View Seekers</a></li>
-                    <li><a href="register_job_seeker.php">Register  Seeker</a></li>
+                    <li><a href="ViewCourses.php">View Courses</a></li>
+    
                     
                 </ul>
             </li>
-            
+            <li>
+                <a href="#" class="dropdown-toggle" data-nav="top">
+                    <i class='bx bxs-group' ></i>
+                    <span class="text">Attendance</span>
+                    <i class='bx bx-chevron-down dropdown-icon'></i>
+                </a>
+                <!-- Dropdown Menu -->
+                <ul class="dropdown-menu">
+                <li><a href="MakeAttendance.php">Make Attendance</a></li>
+                    <li><a href="ViewAttendance.php">View attendance</a></li>
+                    
+                </ul>
+            </li>
         </ul>
         <ul class="side-menu">
             <li>
-                <a href="#">
+                <a href="edit.php">
                     <i class='bx bxs-cog' ></i>
                     <span class="text">Settings</span>
                 </a>
@@ -96,7 +130,8 @@
                 </a>
             </li>
         </ul>
-    </section>    <!-- SIDEBAR -->
+    </section>
+    <!-- SIDEBAR -->
 
 
 
@@ -115,7 +150,6 @@
             <input type="checkbox" id="switch-mode" hidden>
             <label for="switch-mode" class="switch-mode"></label>
             
-           
         </nav>
         <!-- NAVBAR -->
         
@@ -124,13 +158,65 @@
             <!-- display all content in-->
 
 
+            <main>
+			
 
-            
+			<ul class="box-info">
+				
+                <li>
+					<i class='bx bxs-calendar-check' ></i>
+					<?php
+                    include'../connection.php';
+                    $sql = "SELECT COUNT(course_id) AS total FROM course";
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->execute();
+                    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                    ?>
+					<span class="text">
+						<h3><?php echo $result['total']?></h3>
+						<p>Courses</p>
+					</span>
+				</li>
+                
+				<li>
+					<i class='bx bxs-group' ></i>
+					<?php
+                    include'../connection.php';
+                    $sql = "SELECT COUNT(student_id) AS total FROM student";
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->execute();
+                    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                    ?>
+					<span class="text">
+						<h3><?php echo $result['total']?></h3>
+						<p>Students</p>
+					</span>
+				</li>
+				<li>
+					<i class='bx bxs-dollar-circle' ></i>
+					<?php
+                    include'../connection.php';
+                    $sql = "SELECT COUNT(lecturer_id) AS total FROM lecturer";
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->execute();
+                    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                    ?>
+					<span class="text">
+						<h3><?php echo $result['total']?></h3>
+						<p>Lecturers</p>
+					</span>
+				</li>
+			</ul>
+
+
+			
+		</main>
+
 		
     <!-- CONTENT -->
     
 
-    <script src="script.js"></script>
+    <script src="../dashboard/script.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
     const dropdownToggles = document.querySelectorAll("#sidebar .dropdown-toggle");

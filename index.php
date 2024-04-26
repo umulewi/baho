@@ -5,9 +5,10 @@ if (isset($_POST['user_login'])) {
   $username = $_POST['username'];
   $password = $_POST['password'];
 
-  // Fetch user record from the database (without password)
-  $statement = $pdo->prepare("SELECT users.*, role.role_name FROM users INNER JOIN role ON users.role_id = role.role_id WHERE username=:username");
+  // Fetch user record from the database (with password check)
+  $statement = $pdo->prepare("SELECT users.*, role.role_name FROM users INNER JOIN role ON users.role_id = role.role_id WHERE username=:username AND password=:password");
   $statement->bindParam(':username', $username);
+  $statement->bindParam(':password', $password); // Note: It's not recommended to store passwords in plain text. Hash them before storing and comparing.
   $statement->execute();
 
   $user = $statement->fetch(PDO::FETCH_ASSOC); 
@@ -19,17 +20,17 @@ if (isset($_POST['user_login'])) {
     $role_name = $user['role_name'];
     switch ($role_name) {
       case 'admin':
-        header("Location: dashboard/admin.php");
+        header("Location: dashboard/index.php");
         exit();
       case 'job_seeker':
-        header("Location: job_seeker/index.php");
+        header("Location: student_dashboard/index.php");
+        exit();
+      case 'job_provider':
+        header("Location: lecturer_dashboard/index.php");
         exit();
         case 'agent':
           header("Location: agent/index.php");
           exit();
-      case 'job_provider':
-        header("Location: job_provider/index.php");
-        exit();
       default:
         // Default redirect if role is not recognized
         header("Location: default_dashboard.php");
