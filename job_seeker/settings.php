@@ -1,13 +1,13 @@
 <?php
 session_start();
-if (!isset($_SESSION['username'])) {
+if (!isset($_SESSION['email'])) {
     header("location:../index.php");
     exit();
 }
 include('../connection.php');
-$username = $_SESSION['username'];
-$stmt = $pdo->prepare("SELECT users_id FROM users WHERE username = ?");
-$stmt->execute([$username]); 
+$email = $_SESSION['email'];
+$stmt = $pdo->prepare("SELECT users_id FROM users WHERE email = ?");
+$stmt->execute([$email]); 
 $user_id = $stmt->fetchColumn(); 
 $stmt->closeCursor(); 
 echo "User ID: " . $user_id;
@@ -27,7 +27,7 @@ include'dashboard.php';
     <title>Update Student</title>
     <style>
         /* Form container */
-        .form-container {
+        .form-container { 
             max-width: 500px;
             margin: 0 auto;
             padding: 20px;

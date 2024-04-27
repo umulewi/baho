@@ -1,9 +1,18 @@
-<?php  
+<?php
 session_start();
-if (!isset($_SESSION['username'])) {
- header("location:../index.php");
+if (!isset($_SESSION['email'])) {
+    header("location:../index.php");
+    exit();
 }
- ?>
+include('../connection.php');
+$email = $_SESSION['email'];
+$stmt = $pdo->prepare("SELECT users_id FROM users WHERE email = ?");
+$stmt->execute([$email]); 
+$user_id = $stmt->fetchColumn(); 
+$stmt->closeCursor(); 
+$pdo = null;
+
+?>
 
 <?php
 include'dashboard.php';
@@ -74,11 +83,12 @@ include '../connection.php';
             <th>DOB</th>
             <th>ID</th>
             <th>ACTION</th>
-
         </tr>
         <?php 
+        echo $email ;
         $i=1;
-        $stmt = $pdo->prepare("SELECT * FROM job_seeker JOIN users ON job_seeker.users_id = users.users_id WHERE users.username = :username");
+        $stmt = $pdo->prepare("SELECT * FROM job_seeker JOIN users ON job_seeker.users_id = users.users_id WHERE users.users_id = ?");
+        $stmt->execute([$user_id]);
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         ?>
         <tr>
@@ -94,7 +104,6 @@ include '../connection.php';
             <td><?php echo $row['village'];?></td>
             <td><?php echo $row['date_of_birth'];?></td>
             <td><?php echo $row['ID'];?></td>
-            
             
             
             <td style="width: -56rem">
