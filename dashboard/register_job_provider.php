@@ -1,17 +1,17 @@
 <?php
 session_start();
-if (!isset($_SESSION['username'])) {
+if (!isset($_SESSION['email'])) {
     header("location:../index.php");
     exit();
 }
 include('../connection.php');
 
-// Retrieve the username from the session
-$username = $_SESSION['username'];
+// Retrieve the email from the session
+$email = $_SESSION['email'];
 
-// Retrieve the users_id from the database based on the username
-$stmt = $pdo->prepare("SELECT users_id FROM users WHERE username = ?");
-$stmt->execute([$username]); 
+// Retrieve the users_id from the database based on the email
+$stmt = $pdo->prepare("SELECT users_id FROM users WHERE email = ?");
+$stmt->execute([$email]); 
 $user_id = $stmt->fetchColumn(); 
 $stmt->closeCursor(); 
 
@@ -142,7 +142,7 @@ if (isset($_POST["register"])) {
     $cell = $_POST['cell'];
     $village = $_POST['village'];
     $id=$_POST['id'];
-    $created_by = $_SESSION['username'];
+    $created_by = $_SESSION['email'];
 
     try {
         $sql = "INSERT INTO job_provider (users_id, firstname, lastname,  province, district, sector, cell, village, id, created_by) 
