@@ -72,11 +72,21 @@ if (!isset($_SESSION['email'])) {
                     <i class='bx bx-chevron-down dropdown-icon'></i>
                 </a>
                 <!-- Dropdown Menu -->
-                <ul class="dropdown-menu">
-                    <li><a href="view_job_seeker.php">View Seekers</a></li>
-                    <li><a href="register_job_seeker.php">Register  Seeker</a></li>
+                <?php
+                    include'../connection.php';
+                    $stmt=$pdo->query("SELECT role_id from role where role_name='job_seeker'");
                     
+                    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                    ?>
+
+                    <ul class="dropdown-menu">
+                    <li><a href="view_job_seeker.php">View Seekers</a></li>
+                    <li><a href="register_job_seeker.php?role_id=<?php echo $row['role_id'];?>">Register Seeker</a></li>
+
+                   
                 </ul>
+
+                
             </li>
             <li>
                 <a href="#" class="dropdown-toggle" data-nav="top">

@@ -77,12 +77,14 @@ include'dashboard.php';
 <body>
 
 <?php
-$id = $_GET['job_seeker_id'];
+
 include'../connection.php';
-$stmt = $pdo->prepare("SELECT * FROM job_seeker join users  WHERE email = :job_seeker_id");
-$stmt->bindParam(':job_seeker_id', $id);
-$stmt->execute();
-$row = $stmt->fetch(PDO::FETCH_ASSOC);
+$stmt = $pdo->prepare("SELECT * FROM job_seeker JOIN users ON job_seeker.users_id = users.users_id WHERE users.email = :email");
+    $stmt->bindParam(':email', $email);
+    $stmt->execute();
+
+    // Fetch the result
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
 ?>
 
 <h2 style="text-align:center"></h2><br>

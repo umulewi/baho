@@ -73,10 +73,16 @@
                     <span class="text">Job Seekers</span>
                     <i class='bx bx-chevron-down dropdown-icon'></i>
                 </a>
+                <?php
+                    include'../connection.php';
+                    $stmt=$pdo->query("SELECT role_id from role where role_name='job_seeker'");
+                    
+                    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                    ?>
                 <!-- Dropdown Menu -->
                 <ul class="dropdown-menu">
                     <li><a href="view_job_seeker.php">View Seekers</a></li>
-                    <li><a href="register_job_seeker.php">Register  Seeker</a></li>
+                   <li><a href="register_job_seeker.php?role_id=<?php echo $row['role_id'];?>">Register Seeker</a></li>
                     
                 </ul>
             </li>

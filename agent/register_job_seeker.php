@@ -82,6 +82,7 @@ include'dashboard.php';
 <div class="form-container">
     
         <form action="" method="post">
+            
             <div>
                 <label for="name">FIRSTNAME:</label>
                 <input type="text"  name="firstname" required>
@@ -127,6 +128,20 @@ include'dashboard.php';
                 <label for="phone">DATE OF BIRTH</label>
                 <input type="date"  name="date_of_birth" required>
             </div>
+            <div>
+            <label for="physical_code">Email:</label>
+            <input type="text" id="email" name="email" required>
+        </div>
+        
+        <div>
+            <label for="phone">Phone Number:</label>
+            <input type="text" id="phone" name="phone" required>
+        </div>
+        
+        <div>
+            <label for="email">Password:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
             <div>
                 <label for="phone">ID</label>
                 <input type="text"  name="id" required>
