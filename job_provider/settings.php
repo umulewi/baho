@@ -77,10 +77,10 @@ include'dashboard.php';
 <body>
 
 <?php
-$id = $_GET['job_seeker_id'];
+$id = $_GET['job_provider_id'];
 include'../connection.php';
-$stmt = $pdo->prepare("SELECT * FROM job_seeker join users  WHERE email = :job_seeker_id");
-$stmt->bindParam(':job_seeker_id', $id);
+$stmt = $pdo->prepare("SELECT * FROM job_provider WHERE job_provider_id = :job_provider_id");
+$stmt->bindParam(':job_provider_id', $id);
 $stmt->execute();
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
 ?>
@@ -147,7 +147,7 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
 include '../connection.php';
 
 if (isset($_POST['update'])) {
-  $job_seeker_id = $_GET['job_seeker_id'];
+  $job_provider_id = $_GET['job_provider_id'];
   $firstname = $_POST['firstname'];
   $lastname = $_POST['lastname'];
   $fathers_name = $_POST['fathers_name'];
@@ -177,7 +177,7 @@ if (isset($_POST['update'])) {
                 village = :village,
                 date_of_birth = :date_of_birth,
                 ID = :ID
-            WHERE job_seeker_id = :job_seeker_id";
+            WHERE job_provider_id = :job_provider_id";
 
     // Prepare statement
     $stmt = $pdo->prepare($sql);
@@ -195,7 +195,7 @@ if (isset($_POST['update'])) {
     $stmt->bindParam(':village', $village);
     $stmt->bindParam(':date_of_birth', $date_of_birth);
     $stmt->bindParam(':ID', $ID);
-    $stmt->bindParam(':job_seeker_id', $job_seeker_id);
+    $stmt->bindParam(':job_provider_id', $job_provider_id);
 
     // Execute the statement
     if ($stmt->execute()) {

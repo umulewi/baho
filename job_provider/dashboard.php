@@ -1,10 +1,3 @@
-
-<?php  
-session_start();
-if (!isset($_SESSION['email'])) {
- header("location:../index.php");
-}
- ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,8 +8,7 @@ if (!isset($_SESSION['email'])) {
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <!-- My CSS -->
     <link rel="stylesheet" href="style.css">
-
-    <title>AdminHub</title>
+    <title>baho house  Maids</title>
     <style>
         /* Additional CSS for dropdown icon */
         .dropdown-icon {
@@ -46,6 +38,16 @@ if (!isset($_SESSION['email'])) {
         .subsequent-nav.pushed-down {
             margin-top: 50px; /* Adjust this value as needed */
         }
+        #content main .box-info {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+	grid-gap: 24px;
+	margin-top: 36px;
+}
+
+
+
+
     </style>
 </head>
 <body>
@@ -53,55 +55,19 @@ if (!isset($_SESSION['email'])) {
 
     <!-- SIDEBAR -->
     <section id="sidebar">
-        <a href="#" class="brand">
+        <a href="index.php" class="brand">
             <i class='bx bxs-smile'></i>
             <span class="text">AdminHub</span>
         </a>
         <ul class="side-menu top">
             <li class="active">
-                <a href="#">
+                <a href="index.php">
                     <i class='bx bxs-dashboard' ></i>
                     <span class="text">Dashboard</span>
                 </a>
             </li>
             
-            <li>
-                <a href="#" class="dropdown-toggle" data-nav="top">
-                    <i class='bx bxs-doughnut-chart' ></i>
-                    <span class="text">Job Seekers</span>
-                    <i class='bx bx-chevron-down dropdown-icon'></i>
-                </a>
-                <!-- Dropdown Menu -->
-                <ul class="dropdown-menu">
-                    <li><a href="view_job_seeker.php">View Seekers</a></li>
-                    <li><a href="register_job_seeker.php">Register  Seeker</a></li>
-                    
-                </ul>
-            </li>
-            <li>
-                <a href="#" class="dropdown-toggle" data-nav="top">
-                    <i class='bx bxs-message-dots' ></i>
-                    <span class="text">Job Provider</span>
-                    <i class='bx bx-chevron-down dropdown-icon'></i>
-                </a>
-                <!-- Dropdown Menu -->
-                <ul class="dropdown-menu">
-                    <li><a href="view_job_provider.php">View Providers</a></li>
-                    <li><a href="register_job_provider.php">Register Providers</a></li>
-                </ul>
-            </li>
-            <li>
-                <a href="#" class="dropdown-toggle" data-nav="top">
-                    <i class='bx bxs-shopping-bag-alt' ></i>
-                    <span class="text"> Agents</span>
-                    <i class='bx bx-chevron-down dropdown-icon'></i>
-                </a>
-                <!-- Dropdown Menu -->
-                <ul class="dropdown-menu">
-                    <li><a href="view_agent.php">View Agents</a></li>
-                    <li><a href="register_agent.php">Register Agents</a></li>
-                </ul>
-            </li>
+            
             
         </ul>
         <ul class="side-menu">
@@ -118,17 +84,15 @@ if (!isset($_SESSION['email'])) {
                 </a>
             </li>
         </ul>
-    </section>
-    <!-- SIDEBAR -->
+    </section>   
 
 
 
-    <!-- CONTENT -->
     <section id="content">
         <!-- NAVBAR -->
         <nav class="subsequent-nav">
             <i class='bx bx-menu' ></i>
-            <a href="#" class="nav-link">Categories</a>
+            
             <form action="#">
                 <div class="form-input">
                     <input type="search" placeholder="Search...">
@@ -137,16 +101,19 @@ if (!isset($_SESSION['email'])) {
             </form>
             <input type="checkbox" id="switch-mode" hidden>
             <label for="switch-mode" class="switch-mode"></label>
-            <a href="#" class="notification">
-                <i class='bx bxs-bell' ></i>
-                <span class="num">8</span>
-            </a>
-            <a href="#" class="profile">
-                <img src="img/people.png">
-            </a>
+            
+           
         </nav>
         <!-- NAVBAR -->
         
+
+
+            <!-- display all content in-->
+
+
+
+            
+		
     <!-- CONTENT -->
     
 

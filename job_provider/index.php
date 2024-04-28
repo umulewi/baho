@@ -1,10 +1,13 @@
-
 <?php  
 session_start();
 if (!isset($_SESSION['email'])) {
- header("location:../index.php");
+    header("location: ../index.php");
+    exit();
 }
- ?>
+include'../connection.php';
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,9 +17,8 @@ if (!isset($_SESSION['email'])) {
     <!-- Boxicons -->
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <!-- My CSS -->
-    <link rel="stylesheet" href="style.css">
-
-    <title>AdminHub</title>
+    <link rel="stylesheet" href="../dashboard/style.css">
+    <title>Attandance Management System</title>
     <style>
         /* Additional CSS for dropdown icon */
         .dropdown-icon {
@@ -49,64 +51,25 @@ if (!isset($_SESSION['email'])) {
     </style>
 </head>
 <body>
-
-
-    <!-- SIDEBAR -->
-    <section id="sidebar">
-        <a href="#" class="brand">
+<section id="sidebar">
+        <a href="index.php" class="brand">
             <i class='bx bxs-smile'></i>
             <span class="text">AdminHub</span>
         </a>
         <ul class="side-menu top">
             <li class="active">
-                <a href="#">
+                <a href="index.php">
                     <i class='bx bxs-dashboard' ></i>
                     <span class="text">Dashboard</span>
                 </a>
             </li>
             
-            <li>
-                <a href="#" class="dropdown-toggle" data-nav="top">
-                    <i class='bx bxs-doughnut-chart' ></i>
-                    <span class="text">Job Seekers</span>
-                    <i class='bx bx-chevron-down dropdown-icon'></i>
-                </a>
-                <!-- Dropdown Menu -->
-                <ul class="dropdown-menu">
-                    <li><a href="view_job_seeker.php">View Seekers</a></li>
-                    <li><a href="register_job_seeker.php">Register  Seeker</a></li>
-                    
-                </ul>
-            </li>
-            <li>
-                <a href="#" class="dropdown-toggle" data-nav="top">
-                    <i class='bx bxs-message-dots' ></i>
-                    <span class="text">Job Provider</span>
-                    <i class='bx bx-chevron-down dropdown-icon'></i>
-                </a>
-                <!-- Dropdown Menu -->
-                <ul class="dropdown-menu">
-                    <li><a href="view_job_provider.php">View Providers</a></li>
-                    <li><a href="register_job_provider.php">Register Providers</a></li>
-                </ul>
-            </li>
-            <li>
-                <a href="#" class="dropdown-toggle" data-nav="top">
-                    <i class='bx bxs-shopping-bag-alt' ></i>
-                    <span class="text"> Agents</span>
-                    <i class='bx bx-chevron-down dropdown-icon'></i>
-                </a>
-                <!-- Dropdown Menu -->
-                <ul class="dropdown-menu">
-                    <li><a href="view_agent.php">View Agents</a></li>
-                    <li><a href="register_agent.php">Register Agents</a></li>
-                </ul>
-            </li>
+            
             
         </ul>
         <ul class="side-menu">
             <li>
-                <a href="#">
+                <a href="settings.php">
                     <i class='bx bxs-cog' ></i>
                     <span class="text">Settings</span>
                 </a>
@@ -118,7 +81,7 @@ if (!isset($_SESSION['email'])) {
                 </a>
             </li>
         </ul>
-    </section>
+    </section> 
     <!-- SIDEBAR -->
 
 
@@ -128,7 +91,7 @@ if (!isset($_SESSION['email'])) {
         <!-- NAVBAR -->
         <nav class="subsequent-nav">
             <i class='bx bx-menu' ></i>
-            <a href="#" class="nav-link">Categories</a>
+            
             <form action="#">
                 <div class="form-input">
                     <input type="search" placeholder="Search...">
@@ -137,20 +100,47 @@ if (!isset($_SESSION['email'])) {
             </form>
             <input type="checkbox" id="switch-mode" hidden>
             <label for="switch-mode" class="switch-mode"></label>
-            <a href="#" class="notification">
-                <i class='bx bxs-bell' ></i>
-                <span class="num">8</span>
-            </a>
-            <a href="#" class="profile">
-                <img src="img/people.png">
-            </a>
+            
         </nav>
         <!-- NAVBAR -->
         
+
+
+            <!-- display all content in-->
+
+
+            <main>
+			
+
+			<ul class="box-info">
+				
+                <li>
+					<i class='bx bxs-calendar-check' ></i>
+					<?php
+                    include'../connection.php';
+                    $sql = "SELECT COUNT(job_seeker_id) AS total FROM job_seeker";
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->execute();
+                    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                    ?>
+					<span class="text">
+						<h3><?php echo $result['total']?></h3>
+						<p>JOB SEEKER</p>
+					</span>
+				</li>
+                
+				
+			</ul>
+
+
+			
+		</main>
+
+		
     <!-- CONTENT -->
     
 
-    <script src="script.js"></script>
+    <script src="../dashboard/script.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
     const dropdownToggles = document.querySelectorAll("#sidebar .dropdown-toggle");
