@@ -92,10 +92,17 @@
                     <span class="text">Job Provider</span>
                     <i class='bx bx-chevron-down dropdown-icon'></i>
                 </a>
+                <?php
+                    include'../connection.php';
+                    $stmt=$pdo->query("SELECT role_id from role where role_name='job_provider'");
+                    
+                    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                    ?>
                 <!-- Dropdown Menu -->
                 <ul class="dropdown-menu">
                     <li><a href="view_job_provider.php">View Providers</a></li>
-                    <li><a href="register_job_provider.php">Register Providers</a></li>
+                    
+                    <li><a href="register_job_provider.php?role_id=<?php echo $row['role_id'];?>">Register provider</a></li>
                 </ul>
             </li>
             <li>
@@ -104,10 +111,19 @@
                     <span class="text"> Agents</span>
                     <i class='bx bx-chevron-down dropdown-icon'></i>
                 </a>
+                <?php
+                    include'../connection.php';
+                    $stmt=$pdo->query("SELECT role_id from agent where role_name='agent'");
+                    
+                    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                    ?>
+
                 <!-- Dropdown Menu -->
                 <ul class="dropdown-menu">
                     <li><a href="view_agent.php">View Agents</a></li>
-                    <li><a href="register_agent.php">Register Agents</a></li>
+             
+                    <li><a href="register_agent.php?role_id=<?php echo $row['role_id'];?>">Register Agent</a></li>
+
                 </ul>
             </li>
             
