@@ -1,13 +1,13 @@
 <?php
 session_start();
-if (!isset($_SESSION['username'])) {
+if (!isset($_SESSION['email'])) {
     header("location:../index.php");
     exit();
 }
 include('../connection.php');
-$username = $_SESSION['username'];
-$stmt = $pdo->prepare("SELECT users_id FROM users WHERE username = ?");
-$stmt->execute([$username]); 
+$email = $_SESSION['email'];
+$stmt = $pdo->prepare("SELECT users_id FROM users WHERE email = ?");
+$stmt->execute([$email]); 
 $user_id = $stmt->fetchColumn(); 
 $stmt->closeCursor(); 
 $pdo = null;
@@ -172,7 +172,7 @@ if (isset($_POST["register"])) {
     $village = $_POST['village'];
     $date_of_birth = $_POST['date_of_birth'];
     $id=$_POST['id'];
-    $created_by = $_SESSION['username'];
+    $created_by = $_SESSION['email'];
     try {
         // Prepare the SQL statement with placeholders
         $sql = "INSERT INTO job_seeker (users_id,firstname, lastname, fathers_name, mothers_name, province, district, sector, cell, village, date_of_birth, id, created_by) VALUES (:users_id,:firstname, :lastname, :fathers_name, :mothers_name, :province, :district, :sector, :cell, :village, :date_of_birth, :id, :created_by)";

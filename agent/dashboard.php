@@ -60,7 +60,6 @@
                     <span class="text">Dashboard</span>
                 </a>
             </li>
-            
             <li>
                 <a href="#" class="dropdown-toggle" data-nav="top">
                     <i class='bx bxs-doughnut-chart' ></i>

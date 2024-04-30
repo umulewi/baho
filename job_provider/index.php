@@ -63,6 +63,12 @@ include'../connection.php';
                     <span class="text">Dashboard</span>
                 </a>
             </li>
+            <li class="active">
+                <a href="account_settings.php">
+                    <i class='bx bxs-dashboard' ></i>
+                    <span class="text">Account Settings</span>
+                </a>
+            </li>
             
             
             
@@ -74,6 +80,7 @@ include'../connection.php';
                     <span class="text">Settings</span>
                 </a>
             </li>
+            
             <li>
                 <a href="logout.php" class="logout">
                     <i class='bx bxs-log-out-circle' ></i>
@@ -112,25 +119,7 @@ include'../connection.php';
             <main>
 			
 
-			<ul class="box-info">
-				
-                <li>
-					<i class='bx bxs-calendar-check' ></i>
-					<?php
-                    include'../connection.php';
-                    $sql = "SELECT COUNT(job_seeker_id) AS total FROM job_seeker";
-                    $stmt = $pdo->prepare($sql);
-                    $stmt->execute();
-                    $result = $stmt->fetch(PDO::FETCH_ASSOC);
-                    ?>
-					<span class="text">
-						<h3><?php echo $result['total']?></h3>
-						<p>JOB SEEKER</p>
-					</span>
-				</li>
-                
-				
-			</ul>
+			
 
 
 			
