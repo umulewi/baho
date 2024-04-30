@@ -113,8 +113,8 @@
                 </a>
                 <?php
                     include'../connection.php';
-                    $stmt=$pdo->query("SELECT role_id from agent where role_name='agent'");
-                    
+                    $stmt=$pdo->query("SELECT role_id from role where role_name='agent'");
+                
                     $row = $stmt->fetch(PDO::FETCH_ASSOC);
                     ?>
 

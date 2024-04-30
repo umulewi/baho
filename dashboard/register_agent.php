@@ -11,9 +11,9 @@ $email = $_SESSION['email'];
 
 // Retrieve the users_id from the database based on the email
 $stmt = $pdo->prepare("SELECT users_id FROM users WHERE email = ?");
-$stmt->execute([$email]); 
-$user_id = $stmt->fetchColumn(); 
-$stmt->closeCursor(); 
+$stmt_agent->execute([$email]); 
+$user_id = $stmt_agent->fetchColumn(); 
+$stmt_agent->closeCursor(); 
 
 $pdo = null;
 ?>
@@ -116,9 +116,25 @@ include 'dashboard.php';
                 <input type="text"  name="village" required>
             </div>
             <div>
+            <label for="physical_code">Email:</label>
+            <input type="text" id="email" name="email" required>
+        </div>
+        
+        <div>
+            <label for="phone">Phone Number:</label>
+            <input type="text" id="phone" name="telephone" required>
+        </div>
+
+        <div>
+            <label for="email">Password:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+
+            <div>
                 <label for="phone">ID</label>
                 <input type="text"  name="id" required>
             </div>
+
             
             <div>
                 <input type="submit" name="register" value="Register" stayle="background-color:red">
@@ -143,23 +159,33 @@ if (isset($_POST["register"])) {
     $village = $_POST['village'];
     $id=$_POST['id'];
     $created_by = $_SESSION['email'];
-    try {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $telephone = $_POST['telephone'];
+    $role_id = $_GET['role_id'];
+    $stmt_user = $pdo->prepare("INSERT INTO users (telephone, email, password, role_id) VALUES (:telephone, :email, :password, :role_id)");
+    $stmt_user->bindParam(':telephone', $telephone);
+    $stmt_user->bindParam(':email', $email);
+    $stmt_user->bindParam(':password', $password);
+    $stmt_user->bindParam(':role_id', $role_id);
+    $stmt_user->execute();
+    $users_id = $pdo->lastInsertId();
+
         $sql = "INSERT INTO agent (users_id, firstname, lastname,  province, district, sector, cell, village, id, created_by) 
                 VALUES (:users_id, :firstname, :lastname, :province, :district, :sector, :cell, :village, :id, :created_by)";
         $stmt = $pdo->prepare($sql);
-    
-        $stmt->bindParam(':users_id', $user_id); 
-        $stmt->bindParam(':firstname', $firstname);
-        $stmt->bindParam(':lastname', $lastname);
-        $stmt->bindParam(':province', $province);
-        $stmt->bindParam(':district', $district);
-        $stmt->bindParam(':sector', $sector);
-        $stmt->bindParam(':cell', $cell);
-        $stmt->bindParam(':village', $village);
-        $stmt->bindParam(':id', $id);
-        $stmt->bindParam(':created_by', $created_by);
+        $stmt_agent->bindParam(':users_id', $user_id); 
+        $stmt_agent->bindParam(':firstname', $firstname);
+        $stmt_agent->bindParam(':lastname', $lastname);
+        $stmt_agent->bindParam(':province', $province);
+        $stmt_agent->bindParam(':district', $district);
+        $stmt_agent->bindParam(':sector', $sector);
+        $stmt_agent->bindParam(':cell', $cell);
+        $stmt_agent->bindParam(':village', $village);
+        $stmt_agent->bindParam(':id', $id);
+        $stmt_agent->bindParam(':created_by', $created_by);
 
-        if ($stmt->execute()) {
+        if ($stmt_agent->execute()) {
             echo "<script>alert('New job agent has been added');</script>";
         } else {
             echo "<script>alert('Error: Unable to execute statement');</script>";
