@@ -13,14 +13,10 @@ include'../connection.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- Boxicons -->
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
-    <!-- My CSS -->
     <link rel="stylesheet" href="../dashboard/style.css">
     <title>Attandance Management System</title>
     <style>
-        /* Additional CSS for dropdown icon */
         .dropdown-icon {
             margin-left: auto;
             transform: rotate(0deg);
@@ -39,14 +35,11 @@ include'../connection.php';
             display: block;
         }
 
-        /* Hide the dropdown icon when the menu is open */
         .dropdown-menu.active + .dropdown-icon {
             display: none;
         }
-
-        /* Add margin to the subsequent nav elements */
         .subsequent-nav.pushed-down {
-            margin-top: 50px; /* Adjust this value as needed */
+            margin-top: 50px; 
         }
     </style>
 </head>
@@ -63,17 +56,21 @@ include'../connection.php';
                     <span class="text">Dashboard</span>
                 </a>
             </li>
-            
-            
-            
+            <li class="active">
+                <a href="account_settings.php">
+                    <i class='bx bxs-dashboard' ></i>
+                    <span class="text">Account settings</span>
+                </a>
+            </li>
         </ul>
         <ul class="side-menu">
             <li>
-                <a href="settings.php">
+                <a href="#">
                     <i class='bx bxs-cog' ></i>
                     <span class="text">Settings</span>
                 </a>
             </li>
+            
             <li>
                 <a href="logout.php" class="logout">
                     <i class='bx bxs-log-out-circle' ></i>
@@ -81,11 +78,7 @@ include'../connection.php';
                 </a>
             </li>
         </ul>
-    </section> 
-    <!-- SIDEBAR -->
-
-
-
+    </section>  
     <!-- CONTENT -->
     <section id="content">
         <!-- NAVBAR -->
@@ -112,25 +105,7 @@ include'../connection.php';
             <main>
 			
 
-			<ul class="box-info">
-				
-                <li>
-					<i class='bx bxs-calendar-check' ></i>
-					<?php
-                    include'../connection.php';
-                    $sql = "SELECT COUNT(job_seeker_id) AS total FROM job_seeker";
-                    $stmt = $pdo->prepare($sql);
-                    $stmt->execute();
-                    $result = $stmt->fetch(PDO::FETCH_ASSOC);
-                    ?>
-					<span class="text">
-						<h3><?php echo $result['total']?></h3>
-						<p>JOB SEEKER</p>
-					</span>
-				</li>
-                
-				
-			</ul>
+			
 
 
 			

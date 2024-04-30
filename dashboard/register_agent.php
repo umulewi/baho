@@ -8,12 +8,10 @@ include('../connection.php');
 
 // Retrieve the email from the session
 $email = $_SESSION['email'];
-
-// Retrieve the users_id from the database based on the email
 $stmt = $pdo->prepare("SELECT users_id FROM users WHERE email = ?");
-$stmt_agent->execute([$email]); 
-$user_id = $stmt_agent->fetchColumn(); 
-$stmt_agent->closeCursor(); 
+$stmt->execute([$email]); 
+$user_id = $stmt->fetchColumn(); 
+$stmt->closeCursor(); 
 
 $pdo = null;
 ?>
@@ -60,10 +58,16 @@ include 'dashboard.php';
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
-            box-sizing: border-box; /* Ensure padding and border are included in width */
+            box-sizing: border-box; 
+        }
+        .form-container input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box; 
         }
 
-        /* Submit button */
         .form-container input[type="submit"] {
             width: 20%;
             padding: 10px;
@@ -171,10 +175,10 @@ if (isset($_POST["register"])) {
     $stmt_user->execute();
     $users_id = $pdo->lastInsertId();
 
-        $sql = "INSERT INTO agent (users_id, firstname, lastname,  province, district, sector, cell, village, id, created_by) 
-                VALUES (:users_id, :firstname, :lastname, :province, :district, :sector, :cell, :village, :id, :created_by)";
-        $stmt = $pdo->prepare($sql);
+        $stmt_agent=$pdo->prepare("INSERT INTO agent (users_id,role_id, firstname, lastname,  province, district, sector, cell, village, id, created_by) 
+                VALUES (:users_id,:role_id, :firstname, :lastname, :province, :district, :sector, :cell, :village, :id, :created_by)");
         $stmt_agent->bindParam(':users_id', $user_id); 
+        $stmt_agent->bindParam(':role_id', $role_id); 
         $stmt_agent->bindParam(':firstname', $firstname);
         $stmt_agent->bindParam(':lastname', $lastname);
         $stmt_agent->bindParam(':province', $province);
@@ -185,13 +189,13 @@ if (isset($_POST["register"])) {
         $stmt_agent->bindParam(':id', $id);
         $stmt_agent->bindParam(':created_by', $created_by);
 
-        if ($stmt_agent->execute()) {
-            echo "<script>alert('New job agent has been added');</script>";
-        } else {
-            echo "<script>alert('Error: Unable to execute statement');</script>";
+        try {
+            if ($stmt_agent->execute()) {
+                echo "<script>alert('New Agent has been added');</script>";
+            } else {
+                echo "<script>alert('Error: Unable to execute statement');</script>";
+            }
+        } catch(PDOException $e) {
+            echo "Error: " . $e->getMessage();
         }
-    } catch(PDOException $e) {
-        echo "Error: " . $e->getMessage();
     }
-}
-?>
