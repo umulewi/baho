@@ -80,7 +80,7 @@ include'dashboard.php';
 
 include'../connection.php';
 $stmt = $pdo->prepare("SELECT * FROM job_seeker JOIN users ON job_seeker.users_id = users.users_id WHERE users.email = :email");
-    $stmt->bindParam(':email', $email);
+    $stmt->bindParam(':email', $email); 
     $stmt->execute();
 
     // Fetch the result
@@ -90,6 +90,8 @@ $stmt = $pdo->prepare("SELECT * FROM job_seeker JOIN users ON job_seeker.users_i
 <h2 style="text-align:center"></h2><br>
 <div class="form-container">
     <form action="" method="post">
+    <input type="hidden" name="job_seeker_id" value="<?php echo $row['job_seeker_id']; ?>">
+
         <div>
             <label for="name">JOB SEEKER NAME:</label>
             <input type="text" name="firstname" value="<?php echo $row['firstname']; ?>" required>
@@ -98,6 +100,7 @@ $stmt = $pdo->prepare("SELECT * FROM job_seeker JOIN users ON job_seeker.users_i
             <label for="name">JOB SEEKER NAME:</label>
             <input type="text" name="lastname" value="<?php echo $row['lastname']; ?>" required>
         </div>
+
         <div>
             <label for="fathers_name">FATHER'S NAME:</label>
             <input type="text" id="fathers_name" name="fathers_name" value="<?php echo $row['fathers_name']; ?>" required>

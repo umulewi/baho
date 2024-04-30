@@ -68,7 +68,7 @@
             </li>
             <li class="active">
                 <a href="account_settings.php">
-                    <i class='bx bxs-dashboard' ></i>
+                    <i class='bx bxs-dashboard' ></i>   
                     <span class="text">Account settings</span>
                 </a>
             </li>
@@ -78,12 +78,11 @@
         </ul>
         <ul class="side-menu">
             <li>
-                <a href="#">
+                <a href="settings.php">
                     <i class='bx bxs-cog' ></i>
                     <span class="text">Settings</span>
                 </a>
             </li>
-            
             <li>
                 <a href="logout.php" class="logout">
                     <i class='bx bxs-log-out-circle' ></i>

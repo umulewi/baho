@@ -65,7 +65,7 @@ include'../connection.php';
         </ul>
         <ul class="side-menu">
             <li>
-                <a href="#">
+                <a href="settings.php">
                     <i class='bx bxs-cog' ></i>
                     <span class="text">Settings</span>
                 </a>
