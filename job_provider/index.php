@@ -48,6 +48,54 @@ include'../connection.php';
         .subsequent-nav.pushed-down {
             margin-top: 50px; /* Adjust this value as needed */
         }
+
+        <style>
+        /* Form container */
+        .form-container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        /* Form fields */
+        .form-container div {
+            margin-bottom: 15px;
+        }
+        .form-container label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .form-container input[type="text"],
+        .form-container input[type="password"],
+        form select,
+        .form-container input[type="email"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box; 
+        }
+
+
+        .form-container input[type="submit"] {
+            width: 20%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: teal;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .form-container input[type="submit"]:hover {
+            background-color: teal;
+        }
+    </style>
     </style>
 </head>
 <body>
@@ -64,22 +112,24 @@ include'../connection.php';
                 </a>
             </li>
             <li class="active">
-                <a href="account_settings.php">
-                    <i class='bx bxs-dashboard' ></i>
-                    <span class="text">Account Settings</span>
+                <a href="my_profile.php">
+                    <i class='bx bxs-dashboard' ></i>   
+                    <span class="text">My Profile</span>
                 </a>
             </li>
+            <li class="active">
+                <a href="all_employees.php">
+                    <i class='bx bxs-dashboard' ></i>   
+                    <span class="text">All Employees</span>
+                </a>
+            </li>
+            
             
             
             
         </ul>
         <ul class="side-menu">
-            <li>
-                <a href="settings.php">
-                    <i class='bx bxs-cog' ></i>
-                    <span class="text">Settings</span>
-                </a>
-            </li>
+        
             
             <li>
                 <a href="logout.php" class="logout">
@@ -119,7 +169,9 @@ include'../connection.php';
             <main>
 			
 
-			
+			<div class="form-container" style="margin-left:12px;">
+               knsjajsj
+            </div>
 
 
 			

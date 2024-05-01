@@ -114,19 +114,20 @@
                 <?php
                     include'../connection.php';
                     $stmt=$pdo->query("SELECT role_id from role where role_name='agent'");
-                
                     $row = $stmt->fetch(PDO::FETCH_ASSOC);
                     ?>
-
-                <!-- Dropdown Menu -->
                 <ul class="dropdown-menu">
                     <li><a href="view_agent.php">View Agents</a></li>
-             
                     <li><a href="register_agent.php?role_id=<?php echo $row['role_id'];?>">Register Agent</a></li>
 
                 </ul>
             </li>
-            
+            <li class="">
+                <a href="#">
+                    <i class='bx bxs-dashboard' ></i>
+                    <span class="text">View Request</span>
+                </a>
+            </li>
         </ul>
         <ul class="side-menu">
             <li>
@@ -142,7 +143,7 @@
                 </a>
             </li>
         </ul>
-    </section>    <!-- SIDEBAR -->
+    </section>  
 
 
 

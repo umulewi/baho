@@ -71,22 +71,18 @@ if (!isset($_SESSION['email'])) {
                     <span class="text">Job Seekers</span>
                     <i class='bx bx-chevron-down dropdown-icon'></i>
                 </a>
-                <!-- Dropdown Menu -->
                 <?php
                     include'../connection.php';
                     $stmt=$pdo->query("SELECT role_id from role where role_name='job_seeker'");
                     
                     $row = $stmt->fetch(PDO::FETCH_ASSOC);
                     ?>
-
-                    <ul class="dropdown-menu">
+                <!-- Dropdown Menu -->
+                <ul class="dropdown-menu">
                     <li><a href="view_job_seeker.php">View Seekers</a></li>
-                    <li><a href="register_job_seeker.php?role_id=<?php echo $row['role_id'];?>">Register Seeker</a></li>
-
-                   
+                   <li><a href="register_job_seeker.php?role_id=<?php echo $row['role_id'];?>">Register Seeker</a></li>
+                    
                 </ul>
-
-                
             </li>
             <li>
                 <a href="#" class="dropdown-toggle" data-nav="top">
@@ -94,10 +90,17 @@ if (!isset($_SESSION['email'])) {
                     <span class="text">Job Provider</span>
                     <i class='bx bx-chevron-down dropdown-icon'></i>
                 </a>
+                <?php
+                    include'../connection.php';
+                    $stmt=$pdo->query("SELECT role_id from role where role_name='job_provider'");
+                    
+                    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                    ?>
                 <!-- Dropdown Menu -->
                 <ul class="dropdown-menu">
                     <li><a href="view_job_provider.php">View Providers</a></li>
-                    <li><a href="register_job_provider.php">Register Providers</a></li>
+                    
+                    <li><a href="register_job_provider.php?role_id=<?php echo $row['role_id'];?>">Register provider</a></li>
                 </ul>
             </li>
             <li>
@@ -106,12 +109,41 @@ if (!isset($_SESSION['email'])) {
                     <span class="text"> Agents</span>
                     <i class='bx bx-chevron-down dropdown-icon'></i>
                 </a>
+                <?php
+                    include'../connection.php';
+                    $stmt=$pdo->query("SELECT role_id from role where role_name='agent'");
+                
+                    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                    ?>
                 <!-- Dropdown Menu -->
                 <ul class="dropdown-menu">
                     <li><a href="view_agent.php">View Agents</a></li>
-                    <li><a href="register_agent.php">Register Agents</a></li>
+             
+                    <li><a href="register_agent.php?role_id=<?php echo $row['role_id'];?>">Register Agent</a></li>
+
                 </ul>
             </li>
+            <li>
+                <a href="#" class="dropdown-toggle" data-nav="top">
+                    <i class='bx bxs-shopping-bag-alt' ></i>
+                    <span class="text"> Agents</span>
+                    <i class='bx bx-chevron-down dropdown-icon'></i>
+                </a>
+                <?php
+                    include'../connection.php';
+                    $stmt=$pdo->query("SELECT role_id from role where role_name='agent'");
+                
+                    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                    ?>
+                <!-- Dropdown Menu -->
+                <ul class="dropdown-menu">
+                    <li><a href="view_agent.php">View Agents</a></li>
+             
+                    <li><a href="register_agent.php?role_id=<?php echo $row['role_id'];?>">Register Agent</a></li>
+
+                </ul>
+            </li>
+
             
         </ul>
         <ul class="side-menu">
@@ -128,7 +160,7 @@ if (!isset($_SESSION['email'])) {
                 </a>
             </li>
         </ul>
-    </section>
+    </section> 
     <!-- SIDEBAR -->
 
 

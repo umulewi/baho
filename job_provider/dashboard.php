@@ -39,10 +39,10 @@
             margin-top: 50px; /* Adjust this value as needed */
         }
         #content main .box-info {
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-	grid-gap: 24px;
-	margin-top: 36px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)  ::  );
+    grid-gap: 24px;
+    margin-top: 36px;
 }
 
 
@@ -67,19 +67,25 @@
                 </a>
             </li>
             <li class="active">
-                <a href="account_settings.php">
-                    <i class='bx bxs-dashboard' ></i>
-                    <span class="text">Account Settings</span>
+                <a href="my_profile.php">
+                    <i class='bx bxs-dashboard' ></i>   
+                    <span class="text">My Profile</span>
+                </a>
+            </li>
+            <li class="active">
+                <a href="all_employees.php">
+                    <i class='bx bxs-dashboard' ></i>   
+                    <span class="text">All</span>
+                </a>
+            </li>
+            <li class="active">
+                <a href="your_benefits.php">
+                    <i class='bx bxs-dashboard' ></i>   
+                    <span class="text">Our benefits</span>
                 </a>
             </li>
         </ul>
         <ul class="side-menu">
-            <li>
-                <a href="settings.php">
-                    <i class='bx bxs-cog' ></i>
-                    <span class="text">Settings</span>
-                </a>
-            </li>
             <li>
                 <a href="logout.php" class="logout">
                     <i class='bx bxs-log-out-circle' ></i>

@@ -56,10 +56,23 @@ include'../connection.php';
                     <span class="text">Dashboard</span>
                 </a>
             </li>
+           
             <li class="active">
-                <a href="account_settings.php">
-                    <i class='bx bxs-dashboard' ></i>
-                    <span class="text">Account settings</span>
+                <a href="my_profile.php">
+                    <i class='bx bxs-dashboard' ></i>   
+                    <span class="text">My Profile</span>
+                </a>
+            </li>
+            <li class="active">
+                <a href="my_application.php">
+                    <i class='bx bxs-dashboard' ></i>   
+                    <span class="text">My Application</span>
+                </a>
+            </li>
+            <li class="active">
+                <a href="#">
+                    <i class='bx bxs-dashboard' ></i>   
+                    <span class="text">All Jobs</span>
                 </a>
             </li>
         </ul>

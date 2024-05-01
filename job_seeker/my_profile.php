@@ -47,6 +47,7 @@ include'dashboard.php';
         }
         .form-container input[type="text"],
         .form-container input[type="password"],
+        .form-container input[type="date"],
         form select,
         .form-container input[type="email"] {
             width: 100%;
@@ -75,16 +76,14 @@ include'dashboard.php';
     
 </head>
 <body>
+
 <?php
-include '../connection.php';
 
-$stmt = $pdo->prepare("SELECT * FROM job_provider JOIN users ON job_provider.users_id = users.users_id WHERE users.email = :email");
-$stmt->bindParam(':email', $email);
-$stmt->execute();
-$row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-// // Echo job_provider_id
-// echo $row['job_provider_id'];
+include'../connection.php';
+$stmt = $pdo->prepare("SELECT * FROM job_seeker JOIN users ON job_seeker.users_id = users.users_id WHERE users.email = :email");
+    $stmt->bindParam(':email', $email); 
+    $stmt->execute();
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
 ?>
 <?php
 $stmt_user = $pdo->prepare("SELECT * FROM users  WHERE email = :email");
@@ -92,11 +91,10 @@ $stmt_user = $pdo->prepare("SELECT * FROM users  WHERE email = :email");
     $stmt_user->execute();
     $rows = $stmt_user->fetch(PDO::FETCH_ASSOC);
 ?>
-
 <h2 style="text-align:center"></h2><br>
 <div class="form-container">
     <form action="" method="post">
-    <input type="hidden" name="job_provider_id" value="<?php echo $row['job_provider_id']; ?>">
+    <input type="hidden" name="job_seeker_id" value="<?php echo $row['job_seeker_id']; ?>">
         <div>
             <label for="name">FIRST NAME:</label>
             <input type="text" name="firstname" value="<?php echo $row['firstname']; ?>" required>
@@ -104,6 +102,15 @@ $stmt_user = $pdo->prepare("SELECT * FROM users  WHERE email = :email");
         <div>
             <label for="name">LAST NAME:</label>
             <input type="text" name="lastname" value="<?php echo $row['lastname']; ?>" required>
+        </div>
+
+        <div>
+            <label for="fathers_name">FATHER'S NAME:</label>
+            <input type="text" id="fathers_name" name="fathers_name" value="<?php echo $row['fathers_name']; ?>" required>
+        </div>
+        <div>
+            <label for="mothers_name">MOTHER'S NAME:</label>
+            <input type="text" id="mothers_name" name="mothers_name" value="<?php echo $row['mothers_name']; ?>" required>
         </div>
         <div>
             <label for="province">PROVINCE:</label>
@@ -126,7 +133,11 @@ $stmt_user = $pdo->prepare("SELECT * FROM users  WHERE email = :email");
             <input type="text" id="cell" name="cell" value="<?php echo $row['cell']; ?>" required>
         </div>
         <div>
-            <label for="id">IDENTIFICATION CARD</label>
+            <label for="cell">DATE OF BIRTH:</label>
+            <input type="date" id="dob" name="date_of_birth" value="<?php echo $row['date_of_birth']; ?>" required>
+        </div>
+        <div>
+            <label for="id">ID CARDS:</label>
             <input type="text" id="ID" name="ID" value="<?php echo $row['ID']; ?>" required>
         </div>
         <div>
@@ -151,60 +162,71 @@ $stmt_user = $pdo->prepare("SELECT * FROM users  WHERE email = :email");
 include '../connection.php';
 
 if (isset($_POST['update'])) {
-  $job_provider_id = $_POST['job_provider_id'];
+  $job_seeker_id = $_POST['job_seeker_id'];
   $firstname = $_POST['firstname'];
   $lastname = $_POST['lastname'];
+  $fathers_name = $_POST['fathers_name'];
+  $mothers_name = $_POST['mothers_name'];
   $province = $_POST['province'];
   $district = $_POST['district'];
   $sector = $_POST['sector'];
   $village = $_POST['village'];
   $cell = $_POST['cell'];
+  $date_of_birth = $_POST['date_of_birth'];
   $ID = $_POST['ID'];
   $telephone = $_POST['telephone'];
   $password = $_POST['password'];
   $updated_on = date('Y-m-d H:i:s');
 
   try {
-    
-    $sql = "UPDATE job_provider 
-            SET users_id =:users_id,
-            firstname = :firstname,
+    $sql = "UPDATE job_seeker 
+            SET users_id = :users_id,
+                firstname = :firstname,
                 lastname = :lastname,
+                fathers_name = :fathers_name,
+                mothers_name = :mothers_name,
                 province = :province,
                 district = :district,
                 sector = :sector,
                 cell = :cell,
                 village = :village,
+                date_of_birth = :date_of_birth,
                 ID = :ID
-            WHERE job_provider_id = :job_provider_id";
-$sql2 = "UPDATE users 
-SET 
-telephone = :telephone,
-password = :password  
-WHERE users_id = :users_id";
+            WHERE job_seeker_id = :job_seeker_id";
 
-// Prepare statements
-$stmt = $pdo->prepare($sql);
-$stmt_user = $pdo->prepare($sql2);
+    $sql2 = "UPDATE users 
+            SET 
+            telephone = :telephone,
+            password = :password  
+            WHERE users_id = :users_id";
 
-    // Bind parameters (ensure the number matches placeholders)
+    // Prepare statements
+    $stmt = $pdo->prepare($sql);
+    $stmt_user = $pdo->prepare($sql2);
+
+    // Bind parameters for job_seeker table
     $stmt->bindParam(':users_id', $user_id);
     $stmt->bindParam(':firstname', $firstname);
     $stmt->bindParam(':lastname', $lastname);
+    $stmt->bindParam(':fathers_name', $fathers_name);
+    $stmt->bindParam(':mothers_name', $mothers_name);
     $stmt->bindParam(':province', $province);
     $stmt->bindParam(':district', $district);
     $stmt->bindParam(':sector', $sector);
     $stmt->bindParam(':cell', $cell);
     $stmt->bindParam(':village', $village);
+    $stmt->bindParam(':date_of_birth', $date_of_birth);
     $stmt->bindParam(':ID', $ID);
-    $stmt->bindParam(':job_provider_id', $job_provider_id);
+    $stmt->bindParam(':job_seeker_id', $job_seeker_id);
+
+    // Bind parameters for users table
     $stmt_user->bindParam(':telephone', $telephone);
     $stmt_user->bindParam(':password', $password);
     $stmt_user->bindParam(':users_id', $user_id);
-    // Execute the statement
+
+    // Execute the statements
     if ($stmt->execute() && $stmt_user->execute()) {
-    //   echo "<script>window.location.href = 'view_job-seeker.php';</script>";
-    echo"well updated";
+      echo "Well updated";
       exit();
     } else {
       echo "<script>alert('Error updating record');</script>";
@@ -214,4 +236,5 @@ $stmt_user = $pdo->prepare($sql2);
   }
 }
 ?>
+
 
