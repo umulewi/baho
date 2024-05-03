@@ -150,8 +150,7 @@ include 'dashboard.php';
             <input type="range" id="min_salary" name="min_salary" min="0" max="100000" step="1000" value="<?php echo isset($_GET['min_salary']) ? $_GET['min_salary'] : 0 ?>">
             <output for="min_salary" id="min_salary_output">0</output>
 
-            <input type="range" id="max_salary" name="max_salary" min="0" max="100000" step="1000" value="<?php echo isset($_GET['max_salary']) ? $_GET['max_salary'] :0?>">
-            <output for="max_salary" id="max_salary_output"></output>
+            
         </div>
 
         <input type="submit" value="Filter">
@@ -174,7 +173,12 @@ include 'dashboard.php';
         <img src="sample.png" alt="Avatar" style="width:100%">
         <div class="container">
             <h4><b><?php echo $row['firstname'];?> <?php echo $row['lastname'];?></b></h4>
-            <p><?php echo $row['bio'] ?></p>
+            <p><?php echo $row['bio'] ?></p><br>
+            <a href="here.php?user_id=<?php echo $row['users_id'];?>" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: #fff; text-decoration: none; border-radius: 5px;">hire me</a>
+
+
+            
+
         </div>
     </div>
     <?php
