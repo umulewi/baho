@@ -17,15 +17,15 @@ if (isset($_GET['code'])) {
     'picture' => $google_account_info['picture'],
     'verifiedEmail' => $google_account_info['verifiedEmail'],
     'token' => $google_account_info['id'],
+    'role_id'=>"1",
   ];
-
-  // Check if gender is available in the response
   if (isset($google_account_info['gender'])) {
     $userinfo['gender'] = $google_account_info['gender'];
   } else {
-    // Handle the case where gender is not available
     $userinfo['gender'] = 'Unknown';
   }
+
+  
 
   // checking if user already exists in the database
   $sql = "SELECT * FROM users WHERE email ='{$userinfo['email']}'";
@@ -36,13 +36,16 @@ if (isset($_GET['code'])) {
     $token = $userinfo['token'];
   } else {
     // user does not exist
-    $sql = "INSERT INTO users (email, first_name, last_name, gender, full_name, picture, verifiedEmail, token) VALUES ('{$userinfo['email']}', '{$userinfo['first_name']}', '{$userinfo['last_name']}', '{$userinfo['gender']}', '{$userinfo['full_name']}', '{$userinfo['picture']}', '{$userinfo['verifiedEmail']}', '{$userinfo['token']}')";
+    $sql = "INSERT INTO users (email, first_name, last_name, gender, full_name, picture, verifiedEmail, token, country, phone_number) 
+    VALUES ('{$userinfo['email']}', '{$userinfo['first_name']}', '{$userinfo['last_name']}', '{$userinfo['gender']}', '{$userinfo['full_name']}', '{$userinfo['picture']}', '{$userinfo['verifiedEmail']}', '{$userinfo['token']}', '{$userinfo['country']}', '{$userinfo['phone_number']}')";
+
+
     $result = mysqli_query($conn, $sql);
     if ($result) {
-      $token = $userinfo['token'];
+        $token = $userinfo['token'];
     } else {
-      echo "User is not created";
-      die();
+        echo "Error: " . $sql . "<br>" . mysqli_error($conn); // Print the SQL query and the error message
+        die();
     }
   }
 
