@@ -13,39 +13,30 @@ if (isset($_GET['code'])) {
     'email' => $google_account_info['email'],
     'first_name' => $google_account_info['givenName'],
     'last_name' => $google_account_info['familyName'],
+    'gender' => $google_account_info['gender'],
     'full_name' => $google_account_info['name'],
     'picture' => $google_account_info['picture'],
     'verifiedEmail' => $google_account_info['verifiedEmail'],
     'token' => $google_account_info['id'],
-    'role_id'=>"1",
   ];
-  if (isset($google_account_info['gender'])) {
-    $userinfo['gender'] = $google_account_info['gender'];
-  } else {
-    $userinfo['gender'] = 'Unknown';
-  }
 
-  
-
-  // checking if user already exists in the database
+  // checking if user is already exists in database
   $sql = "SELECT * FROM users WHERE email ='{$userinfo['email']}'";
   $result = mysqli_query($conn, $sql);
   if (mysqli_num_rows($result) > 0) {
-    // user exists
+    // user is exists
     $userinfo = mysqli_fetch_assoc($result);
     $token = $userinfo['token'];
   } else {
-    // user does not exist
-    $sql = "INSERT INTO users (email, first_name, last_name, gender, full_name, picture, verifiedEmail, token, country, phone_number) 
-    VALUES ('{$userinfo['email']}', '{$userinfo['first_name']}', '{$userinfo['last_name']}', '{$userinfo['gender']}', '{$userinfo['full_name']}', '{$userinfo['picture']}', '{$userinfo['verifiedEmail']}', '{$userinfo['token']}', '{$userinfo['country']}', '{$userinfo['phone_number']}')";
-
-
+    // user is not exists
+    $country = "Rwanda";
+    $sql = "INSERT INTO users (email, first_name, last_name, gender, full_name, picture, verifiedEmail, token, country) VALUES ('{$userinfo['email']}', '{$userinfo['first_name']}', '{$userinfo['last_name']}', '{$userinfo['gender']}', '{$userinfo['full_name']}', '{$userinfo['picture']}', '{$userinfo['verifiedEmail']}', '{$userinfo['token']}','$country')";
     $result = mysqli_query($conn, $sql);
     if ($result) {
-        $token = $userinfo['token'];
+      $token = $userinfo['token'];
     } else {
-        echo "Error: " . $sql . "<br>" . mysqli_error($conn); // Print the SQL query and the error message
-        die();
+      echo "User is not created";
+      die();
     }
   }
 
@@ -57,11 +48,11 @@ if (isset($_GET['code'])) {
     die();
   }
 
-  // checking if user already exists in the database
+  // checking if user is already exists in database
   $sql = "SELECT * FROM users WHERE token ='{$_SESSION['user_token']}'";
   $result = mysqli_query($conn, $sql);
   if (mysqli_num_rows($result) > 0) {
-    // user exists
+    // user is exists
     $userinfo = mysqli_fetch_assoc($result);
   }
 }
@@ -81,7 +72,7 @@ if (isset($_GET['code'])) {
 <body>
   <img src="<?= $userinfo['picture'] ?>" alt="" width="90px" height="90px">
   <ul>
-    <li>Full Name: <?= $userinfo['full_name'] ?></li>
+    <li>Full Name: <?= $userinfo['full_name'] ?></li>s
     <li>Email Address: <?= $userinfo['email'] ?></li>
     <li>Gender: <?= $userinfo['gender'] ?></li>
     <li><a href="logout.php">Logout</a></li>
