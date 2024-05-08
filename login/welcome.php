@@ -15,6 +15,7 @@ if (isset($_GET['code'])) {
     'last_name' => $google_account_info['familyName'],
     'gender' => $google_account_info['gender'],
     'full_name' => $google_account_info['name'],
+    'password' =>$google_account_info['password'],
     'picture' => $google_account_info['picture'],
     'verifiedEmail' => $google_account_info['verifiedEmail'],
     'token' => $google_account_info['id'],
@@ -30,16 +31,16 @@ if (isset($_GET['code'])) {
   } else {
     // user is not exists
     $country = "Rwanda";
-    $sql = "INSERT INTO users (email, first_name, last_name, gender, full_name, picture, verifiedEmail, token, country) VALUES ('{$userinfo['email']}', '{$userinfo['first_name']}', '{$userinfo['last_name']}', '{$userinfo['gender']}', '{$userinfo['full_name']}', '{$userinfo['picture']}', '{$userinfo['verifiedEmail']}', '{$userinfo['token']}','$country')";
+    $role_id="1";
+    $sql = "INSERT INTO users (email, first_name, last_name, gender,password, full_name, picture, verifiedEmail, token, country,role_id) VALUES ('{$userinfo['email']}', '{$userinfo['first_name']}', '{$userinfo['last_name']}', '{$userinfo['gender']}', '{$userinfo['password']}','{$userinfo['full_name']}', '{$userinfo['picture']}', '{$userinfo['verifiedEmail']}', '{$userinfo['token']}','$country',$role_id)";
     $result = mysqli_query($conn, $sql);
     if ($result) {
       $token = $userinfo['token'];
     } else {
       echo "User is not created";
       die();
-    }
+    }``
   }
-
   // save user data into session
   $_SESSION['user_token'] = $token;
 } else {
@@ -75,6 +76,7 @@ if (isset($_GET['code'])) {
     <li>Full Name: <?= $userinfo['full_name'] ?></li>s
     <li>Email Address: <?= $userinfo['email'] ?></li>
     <li>Gender: <?= $userinfo['gender'] ?></li>
+    <li>password: <?= $userinfo['password'] ?></li>
     <li><a href="logout.php">Logout</a></li>
   </ul>
 </body>

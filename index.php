@@ -58,7 +58,9 @@ if (isset($_POST['user_login'])) {
             </div>
             <input type="submit" name="user_login" value="Login" style="background-color:teal" class="btn">
 
+            <h2>continue as:</h2>
             
+
             
   
   
