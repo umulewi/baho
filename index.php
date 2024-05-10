@@ -57,6 +57,7 @@ if (isset($_POST['user_login'])) {
               <input type="password" name="password" class="form-control shadow-none" required>
             </div>
             <input type="submit" name="user_login" value="Login" style="background-color:teal" class="btn">
+            <a href="register.php">register</a>
 
             <h2>continue as:</h2>
             
