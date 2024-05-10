@@ -59,7 +59,11 @@ if (isset($_POST['user_login'])) {
             <input type="submit" name="user_login" value="Login" style="background-color:teal" class="btn">
             <a href="register.php">register</a>
 
-            <h2>continue as:</h2>
+            <h2>continue with google:</h2>
+            <a href="login/index.php">here?</a>
+
+
+            
             
 
             
