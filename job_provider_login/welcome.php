@@ -28,10 +28,18 @@ if (isset($_GET['code'])) {
     $userinfo = mysqli_fetch_assoc($result);
     $token = $userinfo['token'];
   } else {
-    // user is not exists
-    $country = "Rwanda";
-    $role_id="3";
-    $sql = "INSERT INTO users (email, first_name, last_name, gender, full_name, picture, verifiedEmail, token, country,role_id) VALUES ('{$userinfo['email']}', '{$userinfo['first_name']}', '{$userinfo['last_name']}', '{$userinfo['gender']}', '{$userinfo['full_name']}', '{$userinfo['picture']}', '{$userinfo['verifiedEmail']}', '{$userinfo['token']}','$country',$role_id)";
+    $sql_role = "SELECT role_id FROM role WHERE role_name = 'job_provider'";
+    $result_role = mysqli_query($conn, $sql_role);
+    if (mysqli_num_rows($result_role) > 0) {
+      $role_info = mysqli_fetch_assoc($result_role);
+      $role_id = $role_info['role_id'];
+    } else {
+
+      echo "Job seeker role does not exist";
+      die();
+    }
+
+    $sql = "INSERT INTO users (email, first_name, last_name, gender, full_name, picture, verifiedEmail, token,role_id) VALUES ('{$userinfo['email']}', '{$userinfo['first_name']}', '{$userinfo['last_name']}', '{$userinfo['gender']}', '{$userinfo['full_name']}', '{$userinfo['picture']}', '{$userinfo['verifiedEmail']}', '{$userinfo['token']}',$role_id)";
     $result = mysqli_query($conn, $sql);
     if ($result) {
       $token = $userinfo['token'];

@@ -1,99 +1,16 @@
-<?php
-require_once 'config.php';
-if (isset($_GET['code'])) {
-  $token = $client->fetchAccessTokenWithAuthCode($_GET['code']);
-  $client->setAccessToken($token['access_token']);
-
-  $google_oauth = new Google_Service_Oauth2($client);
-  $google_account_info = $google_oauth->userinfo->get();
-  $userinfo = [
-    'email' => $google_account_info['email'],
-    'first_name' => $google_account_info['givenName'],
-    'last_name' => $google_account_info['familyName'],
-    'gender' => $google_account_info['gender'],
-    'full_name' => $google_account_info['name'],
-    'picture' => $google_account_info['picture'],
-    'verifiedEmail' => $google_account_info['verifiedEmail'],
-    'token' => $google_account_info['id'],
-  ];
-  $sql = "SELECT * FROM users WHERE email ='{$userinfo['email']}'";
-  $result = mysqli_query($conn, $sql);
-  if (mysqli_num_rows($result) > 0) {
-    $userinfo = mysqli_fetch_assoc($result);
-    $token = $userinfo['token'];
-  } else {
-    $sql_role = "SELECT role_id FROM role WHERE role_name = 'job_seeker'";
-    $result_role = mysqli_query($conn, $sql_role);
-    if (mysqli_num_rows($result_role) > 0) {
-      $role_info = mysqli_fetch_assoc($result_role);
-      $role_id = $role_info['role_id'];
-    } else {
-
-      echo "Job seeker role does not exist";
-      die();
-    }
-    $sql = "INSERT INTO users (email, first_name, last_name, gender, full_name, picture, verifiedEmail, token, role_id) VALUES ('{$userinfo['email']}', '{$userinfo['first_name']}', '{$userinfo['last_name']}', '{$userinfo['gender']}', '{$userinfo['full_name']}', '{$userinfo['picture']}', '{$userinfo['verifiedEmail']}', '{$userinfo['token']}', '{$role_id}')";
-    $result = mysqli_query($conn, $sql);
-   
-
-
-    if ($result) {
-      $token = $userinfo['token'];
-    } else {
-      echo "User is not created";
-      die();
-    }
-  }
-
-  $_SESSION['user_token'] = $token;
-} else {
-  if (!isset($_SESSION['user_token'])) {
-    header("Location: index.php");
-    die();
-  }
-
-  // checking if user is already exists in database
-  $sql = "SELECT * FROM users WHERE token ='{$_SESSION['user_token']}'";
-  $result = mysqli_query($conn, $sql);
-  if (mysqli_num_rows($result) > 0) {
-    // user exists
-    $userinfo = mysqli_fetch_assoc($result);
-  }
-}
-
-?>
-
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Welcome</title>
-</head>
-
-<!-- <body>
-  <img src="<?= $userinfo['picture'] ?>" alt="" width="90px" height="90px">
-  <ul>
-    <li>Full Name: <?= $userinfo['full_name'] ?></li>s
-    <li>Email Address: <?= $userinfo['email'] ?></li>
-    <li>Gender: <?= $userinfo['gender'] ?></li>
-    <li><a href="logout.php">Logout</a></li>
-  </ul>
-</body> -->
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Boxicons -->
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="../dashboard/style.css">
-    <title>Attandance Management System</title>
+    <!-- My CSS -->
+    <link rel="stylesheet" href="style.css">
+    <title>baho house  Maids</title>
     <style>
+        /* Additional CSS for dropdown icon */
         .dropdown-icon {
             margin-left: auto;
             transform: rotate(0deg);
@@ -112,16 +29,32 @@ if (isset($_GET['code'])) {
             display: block;
         }
 
+        /* Hide the dropdown icon when the menu is open */
         .dropdown-menu.active + .dropdown-icon {
             display: none;
         }
+
+        /* Add margin to the subsequent nav elements */
         .subsequent-nav.pushed-down {
-            margin-top: 50px; 
+            margin-top: 50px; /* Adjust this value as needed */
         }
+        #content main .box-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)  ::  );
+    grid-gap: 24px;
+    margin-top: 36px;
+}
+
+
+
+
     </style>
 </head>
 <body>
-<section id="sidebar">
+
+
+    <!-- SIDEBAR -->
+    <section id="sidebar">
         <a href="index.php" class="brand">
             <i class='bx bxs-smile'></i>
             <span class="text">AdminHub</span>
@@ -133,7 +66,6 @@ if (isset($_GET['code'])) {
                     <span class="text">Dashboard</span>
                 </a>
             </li>
-           
             <li class="active">
                 <a href="my_profile.php">
                     <i class='bx bxs-dashboard' ></i>   
@@ -141,26 +73,19 @@ if (isset($_GET['code'])) {
                 </a>
             </li>
             <li class="active">
-                <a href="my_application.php">
+                <a href="all_employees.php">
                     <i class='bx bxs-dashboard' ></i>   
-                    <span class="text">My Application</span>
+                    <span class="text">All</span>
                 </a>
             </li>
             <li class="active">
-                <a href="#">
+                <a href="your_benefits.php">
                     <i class='bx bxs-dashboard' ></i>   
-                    <span class="text">All Jobs</span>
+                    <span class="text">Our benefits</span>
                 </a>
             </li>
         </ul>
         <ul class="side-menu">
-            <li>
-                <a href="settings.php">
-                    <i class='bx bxs-cog' ></i>
-                    <span class="text">Settings</span>
-                </a>
-            </li>
-            
             <li>
                 <a href="logout.php" class="logout">
                     <i class='bx bxs-log-out-circle' ></i>
@@ -168,8 +93,10 @@ if (isset($_GET['code'])) {
                 </a>
             </li>
         </ul>
-    </section>  
-    <!-- CONTENT -->
+    </section>   
+
+
+
     <section id="content">
         <!-- NAVBAR -->
         <nav class="subsequent-nav">
@@ -184,6 +111,7 @@ if (isset($_GET['code'])) {
             <input type="checkbox" id="switch-mode" hidden>
             <label for="switch-mode" class="switch-mode"></label>
             
+           
         </nav>
         <!-- NAVBAR -->
         
@@ -192,20 +120,13 @@ if (isset($_GET['code'])) {
             <!-- display all content in-->
 
 
-            <main>
-			
 
-			
-
-
-			
-		</main>
-
+            
 		
     <!-- CONTENT -->
     
 
-    <script src="../dashboard/script.js"></script>
+    <script src="script.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
     const dropdownToggles = document.querySelectorAll("#sidebar .dropdown-toggle");
@@ -286,9 +207,4 @@ function showContent(content) {
 
     </script>
 </body>
-</html>
-
-
-
-
 </html>

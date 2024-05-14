@@ -23,10 +23,11 @@ if (isset($_POST['user_login'])) {
         header("Location: dashboard/index.php");
         exit();
       case 'job_seeker':
-        header("Location: job_seeker/index.php");
+        header("Location: job_seeker_login/my_profile.php");
+       
         exit();
       case 'job_provider':
-        header("Location: job_provider/index.php");
+        header("Location: job_provider_login/my_profile.php");
         exit();
       case 'agent':
         header("Location: agent/index.php");
@@ -60,10 +61,7 @@ if (isset($_POST['user_login'])) {
             <a href="register.php">register</a>
 
             <h2>continue with google:</h2>
-
-
             <?php
-
             include'connection.php';
 function getRoleId($pdo, $roleName) {
     $stmt = $pdo->prepare("SELECT role_id FROM role WHERE role_name = :role_name");
