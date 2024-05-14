@@ -87,7 +87,7 @@ function getRoleId2($pdo, $roleName) {
     return $row['role_id'];
 }
 $roleId2 = getRoleId2($pdo, 'job_provider');
-$link = "<a href='job_provider.php?role_id=$roleId2'>AS JOB SEEKER</a>";
+$link = "<a href='job_provider_login.php?role_id=$roleId2'>AS JOB SEEKER</a>";
 
 echo $link;
 ?>

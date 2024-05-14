@@ -54,6 +54,15 @@ ini_set('display_errors', 1);
 
 ?>
 
+<?php
+require_once 'job_seeker_login/config.php';
 
+if (isset($_SESSION['user_token'])) {
+  header("Location: job_seeker_login/welcome.php");
+} else {
+  echo "<a href='" . $client->createAuthUrl() . "'>Google Login</a>";
+}
+
+?>
 </body>
 </html>
