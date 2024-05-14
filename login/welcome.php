@@ -31,7 +31,14 @@ if (isset($_GET['code'])) {
   } else {
     // user does not exist, insert into database
     $country = "Rwanda";
-    $role_id = "1"; // Assuming default role is 1
+    
+    // Fetch role_id based on role name
+    $role_name = "job_seeker"; // Change this to the appropriate role name
+    $role_query = "SELECT role_id FROM role WHERE role_name = '$role_name'";
+    $role_result = mysqli_query($conn, $role_query);
+    $role_row = mysqli_fetch_assoc($role_result);
+    $role_id = $role_row['role_id'];
+    
     $sql = "INSERT INTO users (email, first_name, last_name, gender, full_name, picture, verifiedEmail, token, country, role_id) VALUES ('{$userinfo['email']}', '{$userinfo['first_name']}', '{$userinfo['last_name']}', '{$userinfo['gender']}', '{$userinfo['full_name']}', '{$userinfo['picture']}', '{$userinfo['verifiedEmail']}', '{$userinfo['token']}','$country',$role_id)";
     $result = mysqli_query($conn, $sql);
     if ($result) {
@@ -42,25 +49,31 @@ if (isset($_GET['code'])) {
     }
   }
 
-  // save user data into session
-  $_SESSION['user_token'] = $token;
+ // Retrieve role_id when fetching user info from the database
+$sql = "SELECT * FROM users WHERE token ='{$_SESSION['user_token']}'";
+$result = mysqli_query($conn, $sql);
 
-  // Fetching role_name from role based on role_id
-  $sql = "SELECT role_name FROM role WHERE role_id = {$userinfo['role_id']}";
+if (mysqli_num_rows($result) > 0) {
+  // user exists
+  $userinfo = mysqli_fetch_assoc($result);
+
+  // Fetch role_id along with user info
+  $role_id = $userinfo['role_id'];
+
+  // Fetch role_name based on role_id
+  $sql = "SELECT role_name FROM role WHERE role_id = $role_id";
   $result = mysqli_query($conn, $sql);
 
   if (mysqli_num_rows($result) > 0) {
     $role_info = mysqli_fetch_assoc($result);
     $role_name = $role_info['role_name'];
-
-    // Redirect based on role_name
     if ($role_name == "admin") {
       header("Location:admin.php");
       exit();
     } elseif ($role_name == "job_provider") {
       header("Location: provider.php");
       exit();
-    } elseif ($role_name == "job_seeker") {
+    } elseif ($role_name == "../job_seeker/index.php") {
       header("Location: seekeer.php");
       exit();
     } else {
@@ -74,20 +87,10 @@ if (isset($_GET['code'])) {
     exit();
   }
 } else {
-  if (!isset($_SESSION['user_token'])) {
-    header("Location: index.php");
-    die();
-  }
-
-  // checking if user is already exists in database
-  $sql = "SELECT * FROM users WHERE token ='{$_SESSION['user_token']}'";
-  $result = mysqli_query($conn, $sql);
-
-  if (mysqli_num_rows($result) > 0) {
-    // user exists
-    $userinfo = mysqli_fetch_assoc($result);
-  }
-}
+  // Handle if user not found in the database
+  echo "User not found";
+  exit();
+}}
 ?>
 
 <!DOCTYPE html>

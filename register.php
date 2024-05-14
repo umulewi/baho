@@ -34,13 +34,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Assign gender based on selected radio button
     $gender = isset($_POST['gender']) ? $_POST['gender'] : null;
-
-    // Insert data into the users table
     $email = $_POST['email'];
     $first_name = $_POST['first_name'];
     $last_name = $_POST['last_name'];
     $password = $_POST['password'];
-    $full_name = $first_name . ' ' . $last_name; // Combining first and last names for full name
+    $full_name = $first_name . ' ' . $last_name; 
 
     $sql = "INSERT INTO users (role_id, email, first_name, last_name, full_name, gender, password) 
             VALUES (:role_id, :email, :first_name, :last_name, :full_name, :gender, :password)";
@@ -52,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'email' => $email,
             'first_name' => $first_name,
             'last_name' => $last_name,
-            'full_name' => $full_name, // Bind the full_name parameter
+            'full_name' => $full_name, 
             'gender' => $gender,
             'password' => $password,
         ]);

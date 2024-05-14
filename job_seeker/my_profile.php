@@ -79,6 +79,7 @@ include'dashboard.php';
 
 <?php
 
+error_reporting(0);
 include'../connection.php';
 $stmt = $pdo->prepare("SELECT * FROM job_seeker JOIN users ON job_seeker.users_id = users.users_id WHERE users.email = :email");
     $stmt->bindParam(':email', $email); 
@@ -97,11 +98,11 @@ $stmt_user = $pdo->prepare("SELECT * FROM users  WHERE email = :email");
     <input type="hidden" name="job_seeker_id" value="<?php echo $row['job_seeker_id']; ?>">
         <div>
             <label for="name">FIRST NAME:</label>
-            <input type="text" name="firstname" value="<?php echo $row['firstname']; ?>" required>
+            <input type="text" name="firstname" value="<?php echo $rows['first_name']; ?>" required>
         </div>
         <div>
             <label for="name">LAST NAME:</label>
-            <input type="text" name="lastname" value="<?php echo $row['lastname']; ?>" required>
+            <input type="text" name="lastname" value="<?php echo $rows['last_name']; ?>" required>
         </div>
 
         <div>
@@ -174,7 +175,7 @@ if (isset($_POST['update'])) {
   $cell = $_POST['cell'];
   $date_of_birth = $_POST['date_of_birth'];
   $ID = $_POST['ID'];
-  $telephone = $_POST['telephone'];
+ 
   $password = $_POST['password'];
   $updated_on = date('Y-m-d H:i:s');
 
@@ -196,15 +197,13 @@ if (isset($_POST['update'])) {
 
     $sql2 = "UPDATE users 
             SET 
-            telephone = :telephone,
             password = :password  
             WHERE users_id = :users_id";
 
-    // Prepare statements
+ 
     $stmt = $pdo->prepare($sql);
     $stmt_user = $pdo->prepare($sql2);
 
-    // Bind parameters for job_seeker table
     $stmt->bindParam(':users_id', $user_id);
     $stmt->bindParam(':firstname', $firstname);
     $stmt->bindParam(':lastname', $lastname);
@@ -219,12 +218,9 @@ if (isset($_POST['update'])) {
     $stmt->bindParam(':ID', $ID);
     $stmt->bindParam(':job_seeker_id', $job_seeker_id);
 
-    // Bind parameters for users table
-    $stmt_user->bindParam(':telephone', $telephone);
     $stmt_user->bindParam(':password', $password);
     $stmt_user->bindParam(':users_id', $user_id);
 
-    // Execute the statements
     if ($stmt->execute() && $stmt_user->execute()) {
       echo "Well updated";
       exit();

@@ -60,7 +60,42 @@ if (isset($_POST['user_login'])) {
             <a href="register.php">register</a>
 
             <h2>continue with google:</h2>
-            <a href="login/index.php">here?</a>
+
+
+            <?php
+
+            include'connection.php';
+function getRoleId($pdo, $roleName) {
+    $stmt = $pdo->prepare("SELECT role_id FROM role WHERE role_name = :role_name");
+    $stmt->execute(array(':role_name' => $roleName));
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $row['role_id'];
+}
+$roleId = getRoleId($pdo, 'job_seeker');
+$link = "<a href='job_seeker_login.php?role_id=$roleId'>AS JOB SEEKER</a>";
+
+echo $link;
+?>
+<br><br>
+
+
+<?php
+function getRoleId2($pdo, $roleName) {
+    $stmt = $pdo->prepare("SELECT role_id FROM role WHERE role_name = :role_name");
+    $stmt->execute(array(':role_name' => $roleName));
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $row['role_id'];
+}
+$roleId2 = getRoleId2($pdo, 'job_provider');
+$link = "<a href='job_provider.php?role_id=$roleId2'>AS JOB SEEKER</a>";
+
+echo $link;
+?>
+<br>
+          
+
+
+
 
 
             
