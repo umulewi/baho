@@ -164,7 +164,7 @@ include 'dashboard.php';
     $max_salary = isset($_GET['max_salary']) ? $_GET['max_salary'] : 100000;
 
     // Prepare SQL query based on whether a filter is applied or not
-    $stmt = $pdo->prepare("SELECT * FROM job_seeker WHERE salary BETWEEN ? AND ?");
+    $stmt = $pdo->prepare("SELECT * FROM job_seeker inner join users WHERE salary BETWEEN ? AND ?");
     $stmt->execute([$min_salary, $max_salary]);
 
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -172,7 +172,8 @@ include 'dashboard.php';
     <div class="card">
         <img src="sample.png" alt="Avatar" style="width:100%">
         <div class="container">
-            <h4><b><?php echo $row['firstname'];?> <?php echo $row['lastname'];?></b></h4>
+            <h4><b><?php echo $row['full_name'];?> 
+           </b></h4><br>
             <p><?php echo $row['bio'] ?></p><br>
             <a href="here.php?user_id=<?php echo $row['users_id'];?>" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: #fff; text-decoration: none; border-radius: 5px;">hire me</a>
 

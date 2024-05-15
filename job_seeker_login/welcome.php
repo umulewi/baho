@@ -1,67 +1,78 @@
 <?php
 require_once 'config.php';
+
 if (isset($_GET['code'])) {
-  $token = $client->fetchAccessTokenWithAuthCode($_GET['code']);
-  $client->setAccessToken($token['access_token']);
+    $token = $client->fetchAccessTokenWithAuthCode($_GET['code']);
+    $client->setAccessToken($token['access_token']);
 
-  $google_oauth = new Google_Service_Oauth2($client);
-  $google_account_info = $google_oauth->userinfo->get();
-  $userinfo = [
-    'email' => $google_account_info['email'],
-    'first_name' => $google_account_info['givenName'],
-    'last_name' => $google_account_info['familyName'],
-    'gender' => $google_account_info['gender'],
-    'full_name' => $google_account_info['name'],
-    'picture' => $google_account_info['picture'],
-    'verifiedEmail' => $google_account_info['verifiedEmail'],
-    'token' => $google_account_info['id'],
-  ];
-  $sql = "SELECT * FROM users WHERE email ='{$userinfo['email']}'";
-  $result = mysqli_query($conn, $sql);
-  if (mysqli_num_rows($result) > 0) {
-    $userinfo = mysqli_fetch_assoc($result);
-    $token = $userinfo['token'];
-  } else {
-    $sql_role = "SELECT role_id FROM role WHERE role_name = 'job_seeker'";
-    $result_role = mysqli_query($conn, $sql_role);
-    if (mysqli_num_rows($result_role) > 0) {
-      $role_info = mysqli_fetch_assoc($result_role);
-      $role_id = $role_info['role_id'];
-    } else {
-
-      echo "Job seeker role does not exist";
-      die();
-    }
-    $sql = "INSERT INTO users (email, first_name, last_name, gender, full_name, picture, verifiedEmail, token, role_id) VALUES ('{$userinfo['email']}', '{$userinfo['first_name']}', '{$userinfo['last_name']}', '{$userinfo['gender']}', '{$userinfo['full_name']}', '{$userinfo['picture']}', '{$userinfo['verifiedEmail']}', '{$userinfo['token']}', '{$role_id}')";
+    $google_oauth = new Google_Service_Oauth2($client);
+    $google_account_info = $google_oauth->userinfo->get();
+    $userinfo = [
+        'email' => $google_account_info['email'],
+        'first_name' => $google_account_info['givenName'],
+        'last_name' => $google_account_info['familyName'],
+        'gender' => $google_account_info['gender'],
+        'full_name' => $google_account_info['name'],
+        'picture' => $google_account_info['picture'],
+        'verifiedEmail' => $google_account_info['verifiedEmail'],
+        'token' => $google_account_info['id'],
+    ];
+    $sql = "SELECT * FROM users WHERE email ='{$userinfo['email']}'";
     $result = mysqli_query($conn, $sql);
-   
-
-
-    if ($result) {
-      $token = $userinfo['token'];
+    if (mysqli_num_rows($result) > 0) {
+        $userinfo = mysqli_fetch_assoc($result);
+        $token = $userinfo['token'];
     } else {
-      echo "User is not created";
-      die();
+        $sql_role = "SELECT role_id FROM role WHERE role_name = 'job_seeker'";
+        $result_role = mysqli_query($conn, $sql_role);
+        if (mysqli_num_rows($result_role) > 0) {
+            $role_info = mysqli_fetch_assoc($result_role);
+            $role_id = $role_info['role_id'];
+        } else {
+            echo "Job seeker role does not exist";
+            die();
+        }
+        $sql = "INSERT INTO users (email, first_name, last_name, gender, full_name, picture, verifiedEmail, token, role_id) 
+        VALUES ('{$userinfo['email']}', '{$userinfo['first_name']}', '{$userinfo['last_name']}', '{$userinfo['gender']}', '{$userinfo['full_name']}', '{$userinfo['picture']}', '{$userinfo['verifiedEmail']}', '{$userinfo['token']}', '{$role_id}')";
+        $result = mysqli_query($conn, $sql);
+
+        if ($result) {
+            $lastInsertedID = mysqli_insert_id($conn); // Get the last inserted ID
+            // Now insert the role_id and lastInsertedID into the job_provide table
+            $sql_job_provide = "INSERT INTO job_seeker (users_id, role_id) VALUES ('{$lastInsertedID}', '{$role_id}')";
+            $result_job_provide = mysqli_query($conn, $sql_job_provide);
+            if (!$result_job_provide) {
+                echo "Error inserting into job_provide table: " . mysqli_error($conn);
+                die();
+            }
+            $token = $userinfo['token'];
+        } else {
+            echo "User is not created";
+            die();
+        }
     }
-  }
 
-  $_SESSION['user_token'] = $token;
+    $_SESSION['user_token'] = $token;
+    $_SESSION['user_email'] = $userinfo['email']; // Setting email in session
 } else {
-  if (!isset($_SESSION['user_token'])) {
-    header("Location: index.php");
-    die();
-  }
+    if (!isset($_SESSION['user_token'])) {
+        header("Location: index.php");
+        die();
+    }
 
-  // checking if user is already exists in database
-  $sql = "SELECT * FROM users WHERE token ='{$_SESSION['user_token']}'";
-  $result = mysqli_query($conn, $sql);
-  if (mysqli_num_rows($result) > 0) {
-    // user exists
-    $userinfo = mysqli_fetch_assoc($result);
-  }
+    // checking if user is already exists in database
+    $sql = "SELECT * FROM users WHERE token ='{$_SESSION['user_token']}'";
+    $result = mysqli_query($conn, $sql);
+    if (mysqli_num_rows($result) > 0) {
+        // user exists
+        $userinfo = mysqli_fetch_assoc($result);
+        $_SESSION['user_email'] = $userinfo['email']; // Setting email in session
+    }
 }
 
 ?>
+
+
 
 
 <!DOCTYPE html>

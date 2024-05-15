@@ -1,12 +1,8 @@
 <?php
 require_once 'config.php';
-
-// authenticate code from Google OAuth Flow
 if (isset($_GET['code'])) {
   $token = $client->fetchAccessTokenWithAuthCode($_GET['code']);
   $client->setAccessToken($token['access_token']);
-
-  // get profile info
   $google_oauth = new Google_Service_Oauth2($client);
   $google_account_info = $google_oauth->userinfo->get();
   $userinfo = [
@@ -20,7 +16,6 @@ if (isset($_GET['code'])) {
     'token' => $google_account_info['id'],
   ];
 
-  // checking if user is already exists in database
   $sql = "SELECT * FROM users WHERE email ='{$userinfo['email']}'";
   $result = mysqli_query($conn, $sql);
   if (mysqli_num_rows($result) > 0) {
@@ -34,11 +29,9 @@ if (isset($_GET['code'])) {
       $role_info = mysqli_fetch_assoc($result_role);
       $role_id = $role_info['role_id'];
     } else {
-
       echo "Job seeker role does not exist";
       die();
     }
-
     $sql = "INSERT INTO users (email, first_name, last_name, gender, full_name, picture, verifiedEmail, token,role_id) VALUES ('{$userinfo['email']}', '{$userinfo['first_name']}', '{$userinfo['last_name']}', '{$userinfo['gender']}', '{$userinfo['full_name']}', '{$userinfo['picture']}', '{$userinfo['verifiedEmail']}', '{$userinfo['token']}',$role_id)";
     $result = mysqli_query($conn, $sql);
     if ($result) {
@@ -48,7 +41,6 @@ if (isset($_GET['code'])) {
       die();
     }
   }
-
   // save user data into session
   $_SESSION['user_token'] = $token;
 } else {

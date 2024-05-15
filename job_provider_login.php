@@ -10,8 +10,6 @@
     <input type="email" name="email" placeholder="EMAIL" required><br>
     <input type="text" name="first_name" placeholder="FIRST NAME" required><br>
     <input type="text" name="last_name" placeholder="LAST NAME" required><br>
-
-  
     Female:<input type="radio" name="gender" value="female" required>Male:<input type="radio" name="gender" value="male" required><br>
     <input type="password" name="password" placeholder="PASSWORD" required><br><br><br>
     <input type="submit" value="Submit">
@@ -50,7 +48,7 @@ ini_set('display_errors', 1);
 }
 ?>
 <?php
-require_once 'job_seeker_login/config.php';
+require_once 'job_provider_login/config.php';
 if (isset($_SESSION['user_token'])) {
   header("Location: job_provider_login/welcome.php");
 } else {

@@ -7,7 +7,7 @@ session_start();
 // init configuration
 $clientID = '67536973859-u2fsecvceffqtbaik2tnlkj2he7g5scl.apps.googleusercontent.com';
 $clientSecret = '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';
-$redirectUri = 'http://localhost/job_provider_login/welcome.php';
+$redirectUri = 'http://localhost/baho/job_provider_login/welcome.php';
 
 // create Client Request to access Google API
 $client = new Google_Client();
