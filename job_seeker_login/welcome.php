@@ -85,15 +85,7 @@ if (isset($_GET['code'])) {
   <title>Welcome</title>
 </head>
 
-<!-- <body>
-  <img src="<?= $userinfo['picture'] ?>" alt="" width="90px" height="90px">
-  <ul>
-    <li>Full Name: <?= $userinfo['full_name'] ?></li>s
-    <li>Email Address: <?= $userinfo['email'] ?></li>
-    <li>Gender: <?= $userinfo['gender'] ?></li>
-    <li><a href="logout.php">Logout</a></li>
-  </ul>
-</body> -->
+
 
 
 <!DOCTYPE html>
@@ -197,8 +189,6 @@ if (isset($_GET['code'])) {
             
         </nav>
         <!-- NAVBAR -->
-        
-
 
             <!-- display all content in-->
 

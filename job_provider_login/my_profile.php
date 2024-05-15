@@ -5,9 +5,12 @@ if (!isset($_SESSION['user_email'])) {
     exit();
 }
 $user_email = $_SESSION['user_email']; 
+echo  $user_email;
+
 ?>
+
 <?php
-include 'dashboard.php'; 
+include'dashboard.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,6 +28,7 @@ include 'dashboard.php';
             border-radius: 5px;
             background-color: #f9f9f9;
         }
+
         /* Form fields */
         .form-container div {
             margin-bottom: 15px;
@@ -55,15 +59,17 @@ include 'dashboard.php';
             font-size: 16px;
             cursor: pointer;
         }
+
         .form-container input[type="submit"]:hover {
             background-color: teal;
         }
     </style>
+    
 </head>
 <body>
 <?php
 include '../connection.php';  
-$stmt = $pdo->prepare("SELECT * FROM job_seeker JOIN users ON job_seeker.users_id = users.users_id WHERE users.email = :user_email");
+$stmt = $pdo->prepare("SELECT * FROM job_provider JOIN users ON job_provider.users_id = users.users_id WHERE users.email = :user_email");
 $stmt->bindParam(':user_email', $user_email);
 $stmt->execute();
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -71,7 +77,7 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
 <h2 style="text-align:center"></h2><br>
 <div class="form-container">
     <form action="" method="post">
-    <input type="hidden" name="job_seeker_id" value="<?php echo $row['job_seeker_id']; ?>">
+    <input type="hidden" name="job_provider_id" value="<?php echo $row['job_provider_id']; ?>">
         <div>
             <label for="name">FIRST NAME:</label>
             <input type="text" name="first_name" value="<?php echo $row['first_name']; ?>" required>
@@ -81,22 +87,10 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
             <input type="text" name="last_name" value="<?php echo $row['last_name']; ?>" required>
         </div>
         <div>
-            <label for="name">FATHER'S NAME:</label>
-            <input type="text" name="fathers_name" value="<?php echo $row['fathers_name']; ?>" required>
-        </div>
-        <div>
-            <label for="name">MOTHER'S NAME:</label>
-            <input type="text" name="mothers_name" value="<?php echo $row['mothers_name']; ?>" required>
-        </div>
-        <div>
             <label for="name">DATE OF BIRTH:</label>
             <input type="date" name="date_of_birth" value="<?php echo $row['date_of_birth']; ?>" required>
         </div>
         
-        <div>
-            <label for="province">GENDER:</label>
-            <input type="text" id="gender" name="gender" value="<?php echo $row['gender']; ?>" required>
-        </div>
         <div>
             <label for="province">PROVINCE:</label>
             <input type="text" id="province" name="province" value="<?php echo $row['province']; ?>" required>
@@ -112,6 +106,13 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
         <div>
             <label for="village">VILLAGE:</label>
             <input type="text" id="village" name="village" value="<?php echo $row['village']; ?>" required>
+   
+        </div>
+        <div>
+        <select name="gender">
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
         </div>
         <div>
             <label for="cell">CELL:</label>
@@ -138,16 +139,13 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
 </body>
 </html>
 
-
 <?php
 include '../connection.php';
 
 if (isset($_POST['update'])) {
-  $job_seeker_id = $_POST['job_seeker_id'];
+  $job_provider_id = $_POST['job_provider_id'];
   $first_name = $_POST['first_name'];
   $last_name = $_POST['last_name'];
-  $mothers_name = $_POST['mothers_name'];
-  $fathers_name = $_POST['fathers_name'];
   $province = $_POST['province'];
   $district = $_POST['district'];
   $sector = $_POST['sector'];
@@ -161,7 +159,7 @@ if (isset($_POST['update'])) {
   $updated_on = date('Y-m-d H:i:s');
   $full_name = $first_name . ' ' . $last_name;
   try {
-    $sql = "UPDATE job_seeker 
+    $sql = "UPDATE job_provider 
             SET users_id =:users_id,
                 province = :province,
                 district = :district,
@@ -170,10 +168,8 @@ if (isset($_POST['update'])) {
                 village = :village,
                 telephone=:telephone,
                 ID = :ID,
-                date_of_birth=:date_of_birth,
-                mothers_name=:mothers_name,
-                fathers_name=:fathers_name
-            WHERE job_seeker_id = :job_seeker_id";
+                date_of_birth=:date_of_birth
+            WHERE job_provider_id = :job_provider_id";
 $sql2 = "UPDATE users SET 
 first_name = :first_name,
 gender=:gender,
@@ -193,10 +189,8 @@ $stmt->bindParam(':cell', $cell);
 $stmt->bindParam(':village', $village);
 $stmt->bindParam(':ID', $ID);
 $stmt->bindParam(':date_of_birth', $date_of_birth);
-$stmt->bindParam(':mothers_name', $mothers_name);
-$stmt->bindParam(':fathers_name', $fathers_name);
 
-$stmt->bindParam(':job_seeker_id', $job_seeker_id);
+$stmt->bindParam(':job_provider_id', $job_provider_id);
 $stmt->bindParam(':telephone', $telephone);
 $stmt_user->bindParam(':full_name', $full_name);
 $stmt_user->bindParam(':first_name', $first_name);

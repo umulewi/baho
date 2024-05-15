@@ -3,14 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- Boxicons -->
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
-    <!-- My CSS -->
-    <link rel="stylesheet" href="style.css">
-    <title>baho house  Maids</title>
+    <link rel="stylesheet" href="../dashboard/style.css">
+    <title>Attandance Management System</title>
     <style>
-        /* Additional CSS for dropdown icon */
         .dropdown-icon {
             margin-left: auto;
             transform: rotate(0deg);
@@ -29,32 +25,16 @@
             display: block;
         }
 
-        /* Hide the dropdown icon when the menu is open */
         .dropdown-menu.active + .dropdown-icon {
             display: none;
         }
-
-        /* Add margin to the subsequent nav elements */
         .subsequent-nav.pushed-down {
-            margin-top: 50px; /* Adjust this value as needed */
+            margin-top: 50px; 
         }
-        #content main .box-info {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)  ::  );
-    grid-gap: 24px;
-    margin-top: 36px;
-}
-
-
-
-
     </style>
 </head>
 <body>
-
-
-    <!-- SIDEBAR -->
-    <section id="sidebar">
+<section id="sidebar">
         <a href="index.php" class="brand">
             <i class='bx bxs-smile'></i>
             <span class="text">AdminHub</span>
@@ -66,26 +46,43 @@
                     <span class="text">Dashboard</span>
                 </a>
             </li>
+           
+            
             <li class="active">
-                <a href="my_profile.php">
+                <a href="#" class="dropdown-toggle" data-nav="top">
+                    <i class='bx bxs-shopping-bag-alt' ></i>
+                    <span class="text">MY Profile</span>
+                    <i class='bx bx-chevron-down dropdown-icon'></i>
+                </a>
+                <!-- Dropdown Menu -->
+                <ul class="dropdown-menu">
+                    <li><a href="view_profile.php">View Profile</a></li>
+                    <li><a href="my_profile.php">Edit Profile</a></li>
+                </ul>
+            </li>
+
+            <li class="active">
+                <a href="my_application.php">
                     <i class='bx bxs-dashboard' ></i>   
-                    <span class="text">My Profile</span>
+                    <span class="text">My Application</span>
                 </a>
             </li>
+            
             <li class="active">
-                <a href="all_employees.php">
+                <a href="#">
                     <i class='bx bxs-dashboard' ></i>   
-                    <span class="text">All</span>
-                </a>
-            </li>
-            <li class="active">
-                <a href="your_benefits.php">
-                    <i class='bx bxs-dashboard' ></i>   
-                    <span class="text">Our benefits</span>
+                    <span class="text">All Jobs</span>
                 </a>
             </li>
         </ul>
         <ul class="side-menu">
+            <li>
+                <a href="settings.php">
+                    <i class='bx bxs-cog' ></i>
+                    <span class="text">Settings</span>
+                </a>
+            </li>
+            
             <li>
                 <a href="logout.php" class="logout">
                     <i class='bx bxs-log-out-circle' ></i>
@@ -93,10 +90,8 @@
                 </a>
             </li>
         </ul>
-    </section>   
-
-
-
+    </section>  
+    <!-- CONTENT -->
     <section id="content">
         <!-- NAVBAR -->
         <nav class="subsequent-nav">
@@ -111,17 +106,21 @@
             <input type="checkbox" id="switch-mode" hidden>
             <label for="switch-mode" class="switch-mode"></label>
             
-           
         </nav>
         <!-- NAVBAR -->
-        
-
 
             <!-- display all content in-->
 
 
+            <main>
+			
 
-            
+			
+
+
+			
+		</main>
+
 		
     <!-- CONTENT -->
     

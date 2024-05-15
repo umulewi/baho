@@ -15,7 +15,7 @@ if (isset($_POST['user_login'])) {
 
   if ($user) {
     session_start();
-    $_SESSION['email'] = $email; // Changed from username to email
+    $_SESSION['user_email'] = $email; 
 
     $role_name = $user['role_name'];
     switch ($role_name) {
@@ -58,7 +58,7 @@ if (isset($_POST['user_login'])) {
               <input type="password" name="password" class="form-control shadow-none" required>
             </div>
             <input type="submit" name="user_login" value="Login" style="background-color:teal" class="btn">
-            <a href="register.php">register</a>
+            
 
             <h2>continue with google:</h2>
             <?php
@@ -75,8 +75,6 @@ $link = "<a href='job_seeker_login.php?role_id=$roleId'>AS JOB SEEKER</a>";
 echo $link;
 ?>
 <br><br>
-
-
 <?php
 function getRoleId2($pdo, $roleName) {
     $stmt = $pdo->prepare("SELECT role_id FROM role WHERE role_name = :role_name");

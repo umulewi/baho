@@ -1,6 +1,6 @@
-<?php 	
-include'../connection.php';
+<?php
 session_start();
+unset($_SESSION['user_token']);
 session_destroy();
-echo"<script>window.location.replace('index.php')</script>";
- ?>
+header("Location: ../index.php");
+?>

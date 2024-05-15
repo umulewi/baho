@@ -18,7 +18,6 @@
 </form>
 
 
-
 <?php
 include 'connection.php';
 
@@ -36,7 +35,6 @@ ini_set('display_errors', 1);
     $stmt->bindParam(':gender', $_POST['gender']);
     $stmt->bindParam(':password', $_POST['password']);
     $stmt->bindParam(':role_id', $role_id);
-   
     $stmt->execute();
     $users_id = $pdo->lastInsertId();
     
