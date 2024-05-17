@@ -35,6 +35,14 @@ if (isset($_GET['code'])) {
     $sql = "INSERT INTO users (email, first_name, last_name, gender, full_name, picture, verifiedEmail, token,role_id) VALUES ('{$userinfo['email']}', '{$userinfo['first_name']}', '{$userinfo['last_name']}', '{$userinfo['gender']}', '{$userinfo['full_name']}', '{$userinfo['picture']}', '{$userinfo['verifiedEmail']}', '{$userinfo['token']}',$role_id)";
     $result = mysqli_query($conn, $sql);
     if ($result) {
+        $lastInsertedID = mysqli_insert_id($conn);
+        $sql_job_provide = "INSERT INTO job_provider (users_id, role_id) VALUES ('{$lastInsertedID}', '{$role_id}')";
+        $result_job_provide = mysqli_query($conn, $sql_job_provide);
+        if (!$result_job_provide) {
+                echo "Error inserting into job_provide table: " . mysqli_error($conn);
+                die();
+            }
+            
       $token = $userinfo['token'];
     } else {
       echo "User is not created";
@@ -43,6 +51,7 @@ if (isset($_GET['code'])) {
   }
   // save user data into session
   $_SESSION['user_token'] = $token;
+  $_SESSION['user_email'] = $userinfo['email']; 
 } else {
   if (!isset($_SESSION['user_token'])) {
     header("Location: index.php");
@@ -55,9 +64,9 @@ if (isset($_GET['code'])) {
   if (mysqli_num_rows($result) > 0) {
     // user is exists
     $userinfo = mysqli_fetch_assoc($result);
+    $_SESSION['user_email'] = $userinfo['email'];
   }
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -158,31 +167,37 @@ if (isset($_GET['code'])) {
         </a>
         <ul class="side-menu top">
             <li class="active">
-                <a href="index.php">
+                <a href="welcome.php">
                     <i class='bx bxs-dashboard' ></i>
                     <span class="text">Dashboard</span>
                 </a>
             </li>
             <li class="active">
-                <a href="my_profile.php">
-                    <i class='bx bxs-dashboard' ></i>   
-                    <span class="text">My Profile</span>
+                <a href="#" class="dropdown-toggle" data-nav="top">
+                    <i class='bx bxs-shopping-bag-alt' ></i>
+                    <span class="text">MY Profile</span>
+                    <i class='bx bx-chevron-down dropdown-icon'></i>
                 </a>
+                <!-- Dropdown Menu -->
+                <ul class="dropdown-menu">
+                    <li><a href="view_profile.php">View Profile</a></li>
+                    <li><a href="my_profile.php">Edit Profile</a></li>
+                </ul>
             </li>
             <li class="active">
                 <a href="all_employees.php">
                     <i class='bx bxs-dashboard' ></i>   
-                    <span class="text">All Employees</span>
+                    <span class="text">All Job Seeker</span>
                 </a>
             </li>
-            
-            
-            
-            
+            <li class="active">
+                <a href="your_benefits.php">
+                    <i class='bx bxs-dashboard' ></i>   
+                    <span class="text">Our benefits</span>
+                </a>
+            </li>
         </ul>
         <ul class="side-menu">
-        
-            
             <li>
                 <a href="logout.php" class="logout">
                     <i class='bx bxs-log-out-circle' ></i>
@@ -190,7 +205,7 @@ if (isset($_GET['code'])) {
                 </a>
             </li>
         </ul>
-    </section> 
+    </section>  
     <!-- SIDEBAR -->
 
 
@@ -212,27 +227,14 @@ if (isset($_GET['code'])) {
             
         </nav>
         <!-- NAVBAR -->
-        
-
-
             <!-- display all content in-->
-
-
             <main>
-			
-
 			<div class="form-container" style="margin-left:12px;">
-               knsjajsj
+             
             </div>
-
-
-			
-		</main>
-
-		
+		</main>	
     <!-- CONTENT -->
     
-
     <script src="../dashboard/script.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {

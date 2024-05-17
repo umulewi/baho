@@ -108,7 +108,10 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
             <input type="text" id="village" name="village" value="<?php echo $row['village']; ?>" required>
    
         </div>
+        
         <div>
+        
+            <label for="village">GENDER:</label>
         <select name="gender">
                     <option value="male">Male</option>
                     <option value="female">Female</option>

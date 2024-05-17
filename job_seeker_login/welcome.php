@@ -53,7 +53,7 @@ if (isset($_GET['code'])) {
     }
 
     $_SESSION['user_token'] = $token;
-    $_SESSION['user_email'] = $userinfo['email']; // Setting email in session
+    $_SESSION['user_email'] = $userinfo['email']; 
 } else {
     if (!isset($_SESSION['user_token'])) {
         header("Location: index.php");

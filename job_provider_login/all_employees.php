@@ -175,6 +175,7 @@ include 'dashboard.php';
             <h4><b><?php echo $row['full_name'];?> 
            </b></h4><br>
             <p><?php echo $row['bio'] ?></p><br>
+            <button>here me</button>
 
         </div>
     </div>

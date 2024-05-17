@@ -67,10 +67,16 @@
                 </a>
             </li>
             <li class="active">
-                <a href="my_profile.php">
-                    <i class='bx bxs-dashboard' ></i>   
-                    <span class="text">My Profile</span>
+                <a href="#" class="dropdown-toggle" data-nav="top">
+                    <i class='bx bxs-shopping-bag-alt' ></i>
+                    <span class="text">MY Profile</span>
+                    <i class='bx bx-chevron-down dropdown-icon'></i>
                 </a>
+                <!-- Dropdown Menu -->
+                <ul class="dropdown-menu">
+                    <li><a href="view_profile.php">View Profile</a></li>
+                    <li><a href="my_profile.php">Edit Profile</a></li>
+                </ul>
             </li>
             <li class="active">
                 <a href="all_employees.php">
