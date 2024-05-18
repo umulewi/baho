@@ -55,13 +55,13 @@
 
     <!-- SIDEBAR -->
     <section id="sidebar">
-        <a href="index.php" class="brand">
+        <a href="welcom.php" class="brand">
             <i class='bx bxs-smile'></i>
             <span class="text">AdminHub</span>
         </a>
         <ul class="side-menu top">
             <li class="active">
-                <a href="index.php">
+                <a href="welcome.php">
                     <i class='bx bxs-dashboard' ></i>
                     <span class="text">Dashboard</span>
                 </a>

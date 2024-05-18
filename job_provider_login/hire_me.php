@@ -5,9 +5,11 @@ if (!isset($_SESSION['user_email'])) {
     exit();
 }
 $user_email = $_SESSION['user_email']; 
-echo  $user_email;
-
+echo $user_email;
 ?>
+
+
+
 <?php
 include'dashboard.php';
 ?>
@@ -153,10 +155,7 @@ $salaryWithCurrency = $row['salary'] . ' RWF';
                 <input type="text" id="salary" name="salary" value="<?php echo ($salaryWithCurrency); ?>" required readonly>
             </div>
         </div>
-        <a href='hire_me.php?job_seeker_id=<?php echo ($row['job_seeker_id']); ?>' 
-           style="display: inline-block; padding: 10px 20px; margin: 10px 0; font-size: 16px; cursor: pointer; text-align: center; text-decoration: none; outline: none; color: #fff; background-color: teal; border: none; border-radius: 5px;">
-           HIRE ME
-        </a>
+        <button style="display: inline-block; padding: 10px 20px; margin: 10px 0; font-size: 16px; cursor: pointer; text-align: center; text-decoration: none; outline: none; color: #fff; background-color: teal; border: none; border-radius: 5px;">hire me</button>
     </form>
 </div>
 
@@ -166,38 +165,46 @@ $salaryWithCurrency = $row['salary'] . ' RWF';
 
 
 <?php
-$stmt = $pdo->prepare("SELECT job_provider_id from job_provider inner join users where users.email=:user_email");
+include '../connection.php';
+$stmt = $pdo->prepare("SELECT job_provider_id FROM job_provider INNER JOIN users ON users.users_id = job_provider.users_id WHERE users.email = :user_email");
 $stmt->bindParam(':user_email', $user_email); 
 $stmt->execute();
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
-?>
+if ($row) {
+    $job_provider_id = $row['job_provider_id'];
+} else {
+    echo "No job provider found for this email.";
+    exit;
+}
 
-<?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Fetch role_id based on selected role_name
-    $job_seeker_id = $_POST['job_seeker_id'];
-    $job_seeker_id = $role['role_id'];
-
-
-
-   
-
-    $sql = "INSERT INTO hired_seekers (hired_id, job_seeker_id, job_provider) 
-            VALUES (:hired_id, :job_seeker_id, :job_provider)";
-    $stmt = $pdo->prepare($sql);
-
-    try {
-        $stmt->execute([
-            'hired_id' => $hired_id,
-            'job_seeker_id' => $job_seeker_id,
-            'job_provider_id' => $job_provider_id,
-        ]);
-        echo "thank you for hiring our seeker, we shall communicate you soon.<br>";
-    } catch (PDOException $e) {
-        echo "Error: " . $e->getMessage() . "<br>";
+    $job_seeker_id = filter_var($_GET['job_seeker_id'], FILTER_SANITIZE_NUMBER_INT);
+    $stmt = $pdo->prepare("SELECT * FROM hired_seekers WHERE job_seeker_id = :job_seeker_id AND job_provider_id = :job_provider_id");
+    $stmt->execute([
+        ':job_seeker_id' => $job_seeker_id,
+        ':job_provider_id' => $job_provider_id
+    ]);
+    $existing_entry = $stmt->fetch(PDO::FETCH_ASSOC);
+    if ($existing_entry) {
+        echo "This job seeker has already been hired by you.";
+    } else {
+        $sql = "INSERT INTO hired_seekers (job_seeker_id, job_provider_id) 
+                VALUES (:job_seeker_id, :job_provider_id)";
+        $stmt = $pdo->prepare($sql);
+        try {
+            $stmt->execute([
+                ':job_seeker_id' => $job_seeker_id,
+                ':job_provider_id' => $job_provider_id,
+            ]);
+            echo "Thank you for hiring our seeker, we shall communicate with you soon.<br>";
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage() . "<br>";
+        }
     }
 }
 ?>
+
+
 
 
 
