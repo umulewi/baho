@@ -175,7 +175,11 @@ include 'dashboard.php';
             <h4><b><?php echo $row['full_name'];?> 
            </b></h4><br>
             <p><?php echo $row['bio'] ?></p><br>
-            <button>here me</button>
+            <a href='hire_me.php?job_seeker_id=<?php echo $row['job_seeker_id']; ?>' 
+               style="display: inline-block; padding: 10px 20px; margin: 10px 0; font-size: 16px; cursor: pointer; text-align: center; text-decoration: none; outline: none; color: #fff; background-color: #4CAF50; border: none; border-radius: 5px; box-shadow: 0 9px #999;">
+               HIRE ME
+            </a>
+            
 
         </div>
     </div>
