@@ -7,7 +7,7 @@ if (!isset($_SESSION['user_email'])) {
 include('../connection.php');
 
 // Retrieve the email from the session
-$email = $_SESSION['email'];
+$email = $_SESSION['user_email'];
 
 // Retrieve the users_id from the database based on the email
 $stmt = $pdo->prepare("SELECT users_id FROM users WHERE email = ?");

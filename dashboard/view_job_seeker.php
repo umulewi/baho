@@ -1,6 +1,6 @@
 <?php  
 session_start();
-if (!isset($_SESSION['email'])) {
+if (!isset($_SESSION['user_email'])) {
  header("location:../index.php");
 }
  ?>
@@ -78,13 +78,13 @@ include '../connection.php';
         </tr>
         <?php 
         $i=1;
-        $stmt = $pdo->query("SELECT * FROM job_seeker");
+        $stmt = $pdo->query("SELECT * FROM job_seeker inner join users on users.users_id=job_seeker.users_id");
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         ?>
         <tr>
             <td><?php echo $i; ?></td>
-            <td><?php echo $row['firstname'];?></td>
-            <td><?php echo $row['lastname'];?></td>
+            <td><?php echo $row['first_name'];?></td>
+            <td><?php echo $row['last_name'];?></td>
             <td><?php echo $row['fathers_name'];?></td>
             <td><?php echo $row['mothers_name'];?></td>
             <td><?php echo $row['province'];?></td>
