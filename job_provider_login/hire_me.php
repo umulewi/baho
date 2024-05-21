@@ -5,7 +5,7 @@ if (!isset($_SESSION['user_email'])) {
     exit();
 }
 $user_email = $_SESSION['user_email']; 
-echo $user_email;
+
 ?>
 
 
@@ -40,6 +40,7 @@ include'dashboard.php';
             margin-bottom: 5px;
         }
         .form-container input[type="text"],
+        textarea,
         .form-container input[type="password"],
         .form-container input[type="date"],
         form select,
@@ -155,6 +156,11 @@ $salaryWithCurrency = $row['salary'] . ' RWF';
                 <input type="text" id="salary" name="salary" value="<?php echo ($salaryWithCurrency); ?>" required readonly>
             </div>
         </div>
+        <div>
+    <label for="bio">BIO:</label>
+    <textarea id="bio" name="bio" required readonly><?php echo ($row['bio']); ?></textarea>
+</div>
+
         <button style="display: inline-block; padding: 10px 20px; margin: 10px 0; font-size: 16px; cursor: pointer; text-align: center; text-decoration: none; outline: none; color: #fff; background-color: teal; border: none; border-radius: 5px;">hire me</button>
     </form>
 </div>
@@ -176,7 +182,6 @@ if ($row) {
     echo "No job provider found for this email.";
     exit;
 }
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $job_seeker_id = filter_var($_GET['job_seeker_id'], FILTER_SANITIZE_NUMBER_INT);
     $stmt = $pdo->prepare("SELECT * FROM hired_seekers WHERE job_seeker_id = :job_seeker_id AND job_provider_id = :job_provider_id");

@@ -46,8 +46,6 @@
 }
 
 
-
-
     </style>
 </head>
 <body>
@@ -55,7 +53,7 @@
 
     <!-- SIDEBAR -->
     <section id="sidebar">
-        <a href="welcom.php" class="brand">
+        <a href="welcome.php" class="brand">
             <i class='bx bxs-smile'></i>
             <span class="text">AdminHub</span>
         </a>
@@ -69,7 +67,7 @@
             <li class="active">
                 <a href="#" class="dropdown-toggle" data-nav="top">
                     <i class='bx bxs-shopping-bag-alt' ></i>
-                    <span class="text">MY Profile</span>
+                    <span class="text">My Profile</span>
                     <i class='bx bx-chevron-down dropdown-icon'></i>
                 </a>
                 <!-- Dropdown Menu -->
