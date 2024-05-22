@@ -36,22 +36,26 @@ include'dashboard.php';
         }
         .form-container input[type="text"],
         .form-container input[type="date"],
+        .form-container input[type="number"],
+        select,
+        .form-container input[type="password"],
+
         .form-container input[type="email"] {
             width: 100%;
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
-            box-sizing: border-box; /* Ensure padding and border are included in width */
+            box-sizing: border-box; 
         }
         .form-container input[type="tel"] {
             width: 100%;
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
-            box-sizing: border-box; /* Ensure padding and border are included in width */
+            box-sizing: border-box; 
         }
 
-        /* Submit button */
+        
         .form-container input[type="submit"] {
             width: 20%;
             padding: 10px;
@@ -93,6 +97,10 @@ include'dashboard.php';
                 <input type="text"  name="mothers_name" required>
             </div>
             <div>
+            <label for="physical_code">SALARY:</label>
+            <input type="number" id="salary" name="salary" required>
+        </div>
+            <div>
                 <label for="phone">PROVINCE:</label>
                 <input type="text"  name="province" required>
             </div>
@@ -112,19 +120,26 @@ include'dashboard.php';
                 <label for="phone">VILLAGE:</label>
                 <input type="text"  name="village" required>
             </div>
+            <div>
+                <label for="gender">GENDER:</label>
+                <select name="gender">
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+            </div>
 
             <div>
-            <label for="physical_code">Email:</label>
+            <label for="physical_code">EMAIL:</label>
             <input type="text" id="email" name="email" required>
         </div>
         
         <div>
-            <label for="phone">Phone Number:</label>
+            <label for="phone">PHONE NUMBER:</label>
             <input type="text" id="phone" name="telephone" required>
         </div>
 
         <div>
-            <label for="email">Password:</label>
+            <label for="email">PASSWORD:</label>
             <input type="password" id="password" name="password" required>
         </div>
             
@@ -136,7 +151,6 @@ include'dashboard.php';
                 <label for="phone">ID</label>
                 <input type="text"  name="id" required>
             </div>
-            
             <div>
                 <input type="submit" name="register" value="Register" stayle="background-color:red">
             </div>
@@ -154,6 +168,7 @@ if (isset($_POST["register"])) {
     $lastname = $_POST["lastname"];
     $fathers_name = $_POST['fathers_name'];
     $mothers_name = $_POST['mothers_name'];
+    $full_name = $firstname . ' ' . $lastname; 
     $province = $_POST['province'];
     $district = $_POST['district'];
     $sector = $_POST['sector'];
@@ -161,29 +176,36 @@ if (isset($_POST["register"])) {
     $village = $_POST['village'];
     $date_of_birth = $_POST['date_of_birth'];
     $id = $_POST['id'];
-    $created_by = $_SESSION['email'];
+    $created_by = $_SESSION['user_email'];
     $email = $_POST['email'];
     $password = $_POST['password'];
     $telephone = $_POST['telephone'];
+    $gender = $_POST['gender'];
+    $salary = $_POST['salary'];
     $role_id = $_GET['role_id'];
 
     // Insert into users table
-    $stmt_user = $pdo->prepare("INSERT INTO users (telephone, email, password, role_id) VALUES (:telephone, :email, :password, :role_id)");
-    $stmt_user->bindParam(':telephone', $telephone);
+    // $stmt_user = $pdo->prepare("INSERT INTO users (email, password,first_name,last_name,full_name,gender,role_id) VALUES (:email, :password,:first_name,:last_name,:full_name,:gender,:role_id)");
+
+    $stmt_user = $pdo->prepare("INSERT INTO users (role_id, email, first_name, last_name, full_name, gender, password)
+    VALUES (:role_id, :email, :first_name, :last_name, :full_name, :gender, :password)");
     $stmt_user->bindParam(':email', $email);
-    $stmt_user->bindParam(':password', $password);
+    $stmt_user->bindParam(':first_name', $firstname);
+    $stmt_user->bindParam(':last_name', $lastname);
+    $stmt_user->bindParam(':full_name', $full_name);
+    $stmt_user->bindParam(':password', $password);         
+    $stmt_user->bindParam(':gender', $gender);         
     $stmt_user->bindParam(':role_id', $role_id);
     $stmt_user->execute();
     $users_id = $pdo->lastInsertId();
 
     // Insert into job_seeker table using the last inserted users_id
-    $stmt_job_seeker = $pdo->prepare("INSERT INTO job_seeker (users_id, role_id, firstname, lastname, fathers_name, mothers_name, province, district, sector, cell, village, date_of_birth, id, created_by) VALUES (:users_id, :role_id, :firstname, :lastname, :fathers_name, :mothers_name, :province, :district, :sector, :cell, :village, :date_of_birth, :id, :created_by)");
+    $stmt_job_seeker = $pdo->prepare("INSERT INTO job_seeker (users_id, role_id, fathers_name, mothers_name,salary, province, district, sector, cell, village, date_of_birth, id) VALUES (:users_id, :role_id, :fathers_name, :mothers_name,:salary, :province, :district, :sector, :cell, :village, :date_of_birth, :id)");
     $stmt_job_seeker->bindParam(':users_id', $users_id);
     $stmt_job_seeker->bindParam(':role_id', $role_id);
-    $stmt_job_seeker->bindParam(':firstname', $firstname);
-    $stmt_job_seeker->bindParam(':lastname', $lastname);
     $stmt_job_seeker->bindParam(':fathers_name', $fathers_name);
     $stmt_job_seeker->bindParam(':mothers_name', $mothers_name);
+    $stmt_job_seeker->bindParam(':salary', $salary);
     $stmt_job_seeker->bindParam(':province', $province);
     $stmt_job_seeker->bindParam(':district', $district);
     $stmt_job_seeker->bindParam(':sector', $sector);
@@ -191,8 +213,6 @@ if (isset($_POST["register"])) {
     $stmt_job_seeker->bindParam(':village', $village);
     $stmt_job_seeker->bindParam(':date_of_birth', $date_of_birth);
     $stmt_job_seeker->bindParam(':id', $id);
-    $stmt_job_seeker->bindParam(':created_by', $created_by);
-
     try {
         if ($stmt_job_seeker->execute()) {
             echo "<script>alert('New job seeker has been added');</script>";

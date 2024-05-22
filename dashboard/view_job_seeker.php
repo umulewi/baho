@@ -62,8 +62,8 @@ include '../connection.php';
     <table class="table">
         <tr>
             <th>ID</th>
-            <th>FIRSTNAME</th>
-            <th>LASTNAME</th>
+            <th>FULL NAME</th>
+           
             <th>FATHERS_NAME</th>
             <th>MOTHERS_NAME</th>
             <th>PROVINCE</th>
@@ -83,8 +83,7 @@ include '../connection.php';
         ?>
         <tr>
             <td><?php echo $i; ?></td>
-            <td><?php echo $row['first_name'];?></td>
-            <td><?php echo $row['last_name'];?></td>
+            <td><?php echo $row['full_name'];?></td>
             <td><?php echo $row['fathers_name'];?></td>
             <td><?php echo $row['mothers_name'];?></td>
             <td><?php echo $row['province'];?></td>
@@ -94,9 +93,6 @@ include '../connection.php';
             <td><?php echo $row['village'];?></td>
             <td><?php echo $row['date_of_birth'];?></td>
             <td><?php echo $row['ID'];?></td>
-            
-            
-            
             <td style="width: -56rem">
             <a class="btn custom-bg shadow-none" style="background-color:#b0b435" href="update_job_seeker.php?job_seeker_id=<?php echo $row['job_seeker_id'];?>"><b>Update</b></a>
            
