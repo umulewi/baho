@@ -152,6 +152,10 @@ include'dashboard.php';
                 <input type="text"  name="id" required>
             </div>
             <div>
+                <label for="bio">BIO:</label>
+                <textarea id="bio" name="bio" required readonly><?php echo ($row['bio']); ?></textarea>
+            </div>
+            <div>
                 <input type="submit" name="register" value="Register" stayle="background-color:red">
             </div>
         </form>
