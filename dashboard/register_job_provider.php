@@ -191,7 +191,7 @@ if (isset($_POST["register"])) {
     $users_id = $pdo->lastInsertId();
 
 
-    $stmt_job_provider = $pdo->prepare("INSERT INTO job_provider (users_id, role_id,  province, district, sector, cell, village, date_of_birth,id) VALUES (:users_id, :role_id, :province, :district, :sector, :cell, :village,:date_of_birth, :id)");
+    $stmt_job_provider = $pdo->prepare("INSERT INTO agent (users_id, role_id,  province, district, sector, cell, village, date_of_birth,id) VALUES (:users_id, :role_id, :province, :district, :sector, :cell, :village,:date_of_birth, :id)");
     $stmt_job_provider->bindParam(':users_id', $users_id);
     $stmt_job_provider->bindParam(':role_id', $role_id);
     $stmt_job_provider->bindParam(':province', $province);

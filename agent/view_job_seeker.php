@@ -5,12 +5,13 @@ if (!isset($_SESSION['user_email'])) {
     exit();
 }
 include('../connection.php');
-$email = $_SESSION['user_email'];
+$user_email = $_SESSION['user_email'];
 $stmt = $pdo->prepare("SELECT users_id FROM users WHERE email = ?");
-$stmt->execute([$email]); 
+$stmt->execute([$user_email]); 
 $user_id = $stmt->fetchColumn(); 
 $stmt->closeCursor(); 
 $pdo = null;
+
 
 ?>
 
@@ -85,16 +86,16 @@ include '../connection.php';
             <th>ACTION</th>
         </tr>
         <?php 
-        echo $email ;
+        echo $user_email;
         $i=1;
-        $stmt = $pdo->prepare("SELECT * FROM job_seeker JOIN users ON job_seeker.users_id = users.users_id WHERE users.users_id = ?");
-        $stmt->execute([$user_id]);
+        $stmt = $pdo->prepare("SELECT * FROM job_seeker JOIN users ON job_seeker.users_id = users.users_id WHERE job_seeker.created_by = ?");
+        $stmt->execute([$user_email]);
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         ?>
         <tr>
             <td><?php echo $i; ?></td>
-            <td><?php echo $row['firstname'];?></td>
-            <td><?php echo $row['lastname'];?></td>
+            <td><?php echo $row['first_name'];?></td>
+            <td><?php echo $row['last_name'];?></td>
             <td><?php echo $row['fathers_name'];?></td>
             <td><?php echo $row['mothers_name'];?></td>
             <td><?php echo $row['province'];?></td>
@@ -104,7 +105,7 @@ include '../connection.php';
             <td><?php echo $row['village'];?></td>
             <td><?php echo $row['date_of_birth'];?></td>
             <td><?php echo $row['ID'];?></td>
-            \
+        
             
             <td style="width: -56rem">
             <a class="btn custom-bg shadow-none" style="background-color:#b0b435" href="update_job_seeker.php?job_seeker_id=<?php echo $row['job_seeker_id'];?>"><b>Update</b></a>
