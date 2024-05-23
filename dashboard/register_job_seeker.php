@@ -38,6 +38,7 @@ include'dashboard.php';
         .form-container input[type="date"],
         .form-container input[type="number"],
         select,
+        textarea,
         .form-container input[type="password"],
 
         .form-container input[type="email"] {
@@ -153,7 +154,7 @@ include'dashboard.php';
             </div>
             <div>
                 <label for="bio">BIO:</label>
-                <textarea id="bio" name="bio" required readonly><?php echo ($row['bio']); ?></textarea>
+                <textarea id="bio" name="bio" required ></textarea>
             </div>
             <div>
                 <input type="submit" name="register" value="Register" stayle="background-color:red">
@@ -185,6 +186,7 @@ if (isset($_POST["register"])) {
     $password = $_POST['password'];
     $telephone = $_POST['telephone'];
     $gender = $_POST['gender'];
+    $bio = $_POST['bio'];
     $salary = $_POST['salary'];
     $role_id = $_GET['role_id'];
 
@@ -204,7 +206,7 @@ if (isset($_POST["register"])) {
     $users_id = $pdo->lastInsertId();
 
     // Insert into job_seeker table using the last inserted users_id
-    $stmt_job_seeker = $pdo->prepare("INSERT INTO job_seeker (users_id, role_id, fathers_name, mothers_name,salary, province, district, sector, cell, village, date_of_birth, id) VALUES (:users_id, :role_id, :fathers_name, :mothers_name,:salary, :province, :district, :sector, :cell, :village, :date_of_birth, :id)");
+    $stmt_job_seeker = $pdo->prepare("INSERT INTO job_seeker (users_id, role_id, fathers_name, mothers_name,salary, province, district, sector, cell, village, date_of_birth,bio, id) VALUES (:users_id, :role_id, :fathers_name, :mothers_name,:salary, :province, :district, :sector, :cell, :village, :date_of_birth, :bio,:id)");
     $stmt_job_seeker->bindParam(':users_id', $users_id);
     $stmt_job_seeker->bindParam(':role_id', $role_id);
     $stmt_job_seeker->bindParam(':fathers_name', $fathers_name);
@@ -216,6 +218,7 @@ if (isset($_POST["register"])) {
     $stmt_job_seeker->bindParam(':cell', $cell);
     $stmt_job_seeker->bindParam(':village', $village);
     $stmt_job_seeker->bindParam(':date_of_birth', $date_of_birth);
+    $stmt_job_seeker->bindParam(':bio', $bio);
     $stmt_job_seeker->bindParam(':id', $id);
     try {
         if ($stmt_job_seeker->execute()) {

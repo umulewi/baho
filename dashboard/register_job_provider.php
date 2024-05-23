@@ -48,6 +48,7 @@ include 'dashboard.php';
         }
         .form-container input[type="text"],
         .form-container input[type="date"],
+        .form-container input[type="password"],
         .form-container input[type="email"] {
             width: 100%;
             padding: 10px;

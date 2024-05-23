@@ -77,24 +77,38 @@ include'dashboard.php';
 <body>
 
 <?php
+
+$email = $_SESSION['user_email'];
 $id = $_GET['job_provider_id'];
-include'../connection.php';
-$stmt = $pdo->prepare("SELECT * FROM job_provider WHERE job_provider_id = :job_provider_id");
-$stmt->bindParam(':job_provider_id', $id);
+include '../connection.php';
+$stmt = $pdo->prepare("SELECT *
+FROM users
+JOIN job_provider ON users.users_id = job_provider.users_id
+WHERE job_provider.job_provider_id = :job_provider_id");
+$stmt->bindParam(':job_provider_id', $id, PDO::PARAM_INT);
 $stmt->execute();
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
-?>
-
+?> 
 <h2 style="text-align:center"></h2><br>
 <div class="form-container">
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Update Job Provider</title>
+</head>
+<body>
     <form action="" method="post">
         <div>
-            <label for="name">JOB FIRTS NAME:</label>
-            <input type="text" name="firstname" value="<?php echo $row['firstname']; ?>" required>
+            <label for="name">JOB FIRST NAME:</label>
+            <input type="text" name="first_name" value="<?php echo $row['first_name']; ?>" required>
         </div>
         <div>
             <label for="name">JOB LAST NAME:</label>
-            <input type="text" name="lastname" value="<?php echo $row['lastname']; ?>" required>
+            <input type="text" name="last_name" value="<?php echo $row['last_name']; ?>" required>
+        </div>
+        <div>
+            <label for="gender">GENDER:</label>
+            <input type="text" id="gender" name="gender" required>
         </div>
         <div>
             <label for="province">PROVINCE:</label>
@@ -129,60 +143,73 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
 </body>
 </html>
 
-
 <?php
 include '../connection.php';
 
 if (isset($_POST['update'])) {
-  $job_provider_id = $_GET['job_provider_id'];
-  $firstname = $_POST['firstname'];
-  $lastname = $_POST['lastname'];
-  $province = $_POST['province'];
-  $district = $_POST['district'];
-  $sector = $_POST['sector'];
-  $village = $_POST['village'];
-  $cell = $_POST['cell'];
-  $ID = $_POST['ID'];
+    $job_provider_id = $_GET['job_provider_id'];
+    $first_name = htmlspecialchars($_POST['first_name']);
+    $last_name = htmlspecialchars($_POST['last_name']);
+    $full_name = $first_name . ' ' . $last_name; 
+    $gender = $_POST['gender'];
+ 
 
-  try {
-    $sql = "UPDATE job_provider 
-            SET users_id =:users_id,
-            firstname = :firstname,
-                lastname = :lastname,
-                province = :province,
-                district = :district,
-                sector = :sector,
-                cell = :cell,
-                village = :village,
-                ID = :ID
-            WHERE job_provider_id = :job_provider_id";
+    $province = htmlspecialchars($_POST['province']);
+    $district = htmlspecialchars($_POST['district']);
+    $sector = htmlspecialchars($_POST['sector']);
+    $village = htmlspecialchars($_POST['village']);
+    $cell = htmlspecialchars($_POST['cell']);
+    $ID = htmlspecialchars($_POST['ID']);
 
-    // Prepare statement
-    $stmt = $pdo->prepare($sql);
+    try {  
+        // Update job_seeker table
+        $sql = "UPDATE job_provider
+                SET
+                    province = :province,
+                    district = :district,
+                    sector = :sector,
+                    cell = :cell,
+                    village = :village,
+                    date_of_birth = :date_of_birth,
+                    ID = :ID
+                WHERE job_provider_id = :job_provider_id";
 
-    // Bind parameters (ensure the number matches placeholders)
-    $stmt->bindParam(':users_id', $user_id);
-    $stmt->bindParam(':firstname', $firstname);
-    $stmt->bindParam(':lastname', $lastname);
-    $stmt->bindParam(':province', $province);
-    $stmt->bindParam(':district', $district);
-    $stmt->bindParam(':sector', $sector);
-    $stmt->bindParam(':cell', $cell);
-    $stmt->bindParam(':village', $village);
-    $stmt->bindParam(':ID', $ID);
-    $stmt->bindParam(':job_provider_id', $job_provider_id);
+        $stmt = $pdo->prepare($sql);
+  
+        $stmt->bindParam(':province', $province);
+        $stmt->bindParam(':district', $district);
+        $stmt->bindParam(':sector', $sector);
+ 
+        $stmt->bindParam(':cell', $cell);
+        $stmt->bindParam(':village', $village);
+        $stmt->bindParam(':date_of_birth', $date_of_birth);
+        $stmt->bindParam(':ID', $ID);
+ 
+        $stmt->bindParam(':job_provider_id', $job_provider_id);
+        $stmt->execute();
 
-    // Execute the statement
-    if ($stmt->execute()) {
-    //   echo "<script>window.location.href = 'view_job-provider.php';</script>";
-    echo"well updated";
-      exit();
-    } else {
-      echo "<script>alert('Error updating record');</script>";
-    }
-  } catch (PDOException $e) {
-    echo "Error: " . $e->getMessage();
-  }
-}
-?>
+        // Update users table
+        $sql2 = "UPDATE users
+                 SET first_name = :first_name,
+                     last_name = :last_name,
+                     full_name=:full_name,
+                     gender = :gender
+                 WHERE users_id = :user_id";
 
+        $stmt2 = $pdo->prepare($sql2);
+        $stmt2->bindParam(':first_name', $first_name);
+        $stmt2->bindParam(':last_name', $last_name);
+        $stmt2->bindParam(':full_name', $full_name);
+        $stmt2->bindParam(':gender', $gender);
+        $stmt2->bindParam(':user_id', $user_id);
+        $stmt2->execute();
+
+        if ($stmt2->rowCount() > 0) { 
+            echo "Well updated";
+        } else {
+            echo "<script>alert('Error updating record');</script>";
+        }
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }}
+    ?>
