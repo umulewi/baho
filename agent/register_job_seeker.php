@@ -217,4 +217,61 @@ if (isset($_POST["register"])) {
     }
 }
 ?>
+<?php
+include '../connection.php';
 
+if (isset($_POST["register"])) {
+    $firstname = $_POST["firstname"];
+    $lastname = $_POST["lastname"];
+    $fathers_name = $_POST['fathers_name'];
+    $mothers_name = $_POST['mothers_name'];
+    $province = $_POST['province'];
+    $district = $_POST['district'];
+    $sector = $_POST['sector'];
+    $cell = $_POST['cell'];
+    $village = $_POST['village'];
+    $date_of_birth = $_POST['date_of_birth'];
+    $id = $_POST['id'];
+    $created_by = $_SESSION['email'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $telephone = $_POST['telephone'];
+    $role_id = $_GET['role_id'];
+
+    // Insert into users table
+    $stmt_user = $pdo->prepare("INSERT INTO users (telephone, email, password, role_id) VALUES (:telephone, :email, :password, :role_id)");
+    $stmt_user->bindParam(':telephone', $telephone);
+    $stmt_user->bindParam(':email', $email);
+    $stmt_user->bindParam(':password', $password);
+    $stmt_user->bindParam(':role_id', $role_id);
+    $stmt_user->execute();
+    $users_id = $pdo->lastInsertId();
+
+    // Insert into job_seeker table using the last inserted users_id
+    $stmt_job_seeker = $pdo->prepare("INSERT INTO job_seeker (users_id, role_id, firstname, lastname, fathers_name, mothers_name, province, district, sector, cell, village, date_of_birth, id, created_by) VALUES (:users_id, :role_id, :firstname, :lastname, :fathers_name, :mothers_name, :province, :district, :sector, :cell, :village, :date_of_birth, :id, :created_by)");
+    $stmt_job_seeker->bindParam(':users_id', $users_id);
+    $stmt_job_seeker->bindParam(':role_id', $role_id);
+    $stmt_job_seeker->bindParam(':firstname', $firstname);
+    $stmt_job_seeker->bindParam(':lastname', $lastname);
+    $stmt_job_seeker->bindParam(':fathers_name', $fathers_name);
+    $stmt_job_seeker->bindParam(':mothers_name', $mothers_name);
+    $stmt_job_seeker->bindParam(':province', $province);
+    $stmt_job_seeker->bindParam(':district', $district);
+    $stmt_job_seeker->bindParam(':sector', $sector);
+    $stmt_job_seeker->bindParam(':cell', $cell);
+    $stmt_job_seeker->bindParam(':village', $village);
+    $stmt_job_seeker->bindParam(':date_of_birth', $date_of_birth);
+    $stmt_job_seeker->bindParam(':id', $id);
+    $stmt_job_seeker->bindParam(':created_by', $created_by);
+
+    try {
+        if ($stmt_job_seeker->execute()) {
+            echo "<script>alert('New job seeker has been added');</script>";
+        } else {
+            echo "<script>alert('Error: Unable to execute statement');</script>";
+        }
+    } catch(PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
+}
+?>
