@@ -68,7 +68,6 @@ include '../connection.php';
                 <th>NAMES</th>
                 <th>PROVINCE</th>
                 <th>DISTRICT</th>
-                <th>DOB</th>
                 <th>ACTION</th>
             </tr>
             <?php 
@@ -81,7 +80,7 @@ include '../connection.php';
                 <td><?php echo $row['full_name'];?></td>
                 <td><?php echo $row['province'];?></td>
                 <td><?php echo $row['district'];?></td>
-                <td><?php echo $row['ID'];?></td>
+               
                 <td style="width: -56rem">
                 <a class="btn update" href="update_job_provider.php?job_provider_id=<?php echo $row['job_provider_id'];?>"><b>Update</b></a>
                 </td>

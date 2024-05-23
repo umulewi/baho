@@ -48,6 +48,7 @@ include 'dashboard.php';
         }
         .form-container input[type="text"],
         .form-container input[type="date"],
+        select,
         .form-container input[type="password"],
         .form-container input[type="email"] {
             width: 100%;
@@ -95,6 +96,13 @@ include 'dashboard.php';
             <div>
                 <label for="physical_code">LASTNAME:</label>
                 <input type="text"  name="lastname" required>
+            </div>
+            <div>
+                <label for="gender">GENDER:</label>
+                <select name="gender">
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
             </div>
             <div>
                 <label for="phone">PROVINCE:</label>
@@ -153,30 +161,35 @@ if (isset($_POST["register"])) {
     $lastname = $_POST["lastname"];
     $province = $_POST['province'];
     $district = $_POST['district'];
+    $full_name = $firstname . ' ' . $lastname; 
     $sector = $_POST['sector'];
+    $gender=$_POST['gender'];
     $cell = $_POST['cell'];
     $village = $_POST['village'];
+    $date_of_birth = $_POST['date_of_birth'];
     $id=$_POST['id'];
-    $created_by = $_SESSION['email'];
     $email = $_POST['email'];
     $password = $_POST['password'];
     $telephone = $_POST['telephone'];
     $role_id = $_GET['role_id'];
 
     //Insert into users table
-    $stmt_user = $pdo->prepare("INSERT INTO users (telephone, email, password, role_id) VALUES (:telephone, :email, :password, :role_id)");
-    $stmt_user->bindParam(':telephone', $telephone);
+    $stmt_user = $pdo->prepare("INSERT INTO users (role_id, email, first_name, last_name, full_name, gender, password)
+    VALUES (:role_id, :email, :first_name, :last_name, :full_name, :gender, :password)");
     $stmt_user->bindParam(':email', $email);
-    $stmt_user->bindParam(':password', $password);
+    $stmt_user->bindParam(':first_name', $firstname);
+    $stmt_user->bindParam(':last_name', $lastname);
+    $stmt_user->bindParam(':full_name', $full_name);
+    $stmt_user->bindParam(':password', $password);         
+    $stmt_user->bindParam(':gender', $gender);         
     $stmt_user->bindParam(':role_id', $role_id);
     $stmt_user->execute();
     $users_id = $pdo->lastInsertId();
 
-    $stmt_job_provider = $pdo->prepare("INSERT INTO job_provider (users_id, role_id, firstname, lastname, province, district, sector, cell, village, id, created_by) VALUES (:users_id, :role_id, :firstname, :lastname,:province, :district, :sector, :cell, :village, :id, :created_by)");
+
+    $stmt_job_provider = $pdo->prepare("INSERT INTO job_provider (users_id, role_id,  province, district, sector, cell, village, id) VALUES (:users_id, :role_id, :province, :district, :sector, :cell, :village, :id)");
     $stmt_job_provider->bindParam(':users_id', $users_id);
     $stmt_job_provider->bindParam(':role_id', $role_id);
-    $stmt_job_provider->bindParam(':firstname', $firstname);
-    $stmt_job_provider->bindParam(':lastname', $lastname);
     $stmt_job_provider->bindParam(':province', $province);
     $stmt_job_provider->bindParam(':district', $district);
     $stmt_job_provider->bindParam(':sector', $sector);
@@ -184,7 +197,6 @@ if (isset($_POST["register"])) {
     $stmt_job_provider->bindParam(':village', $village);
 
     $stmt_job_provider->bindParam(':id', $id);
-    $stmt_job_provider->bindParam(':created_by', $created_by);
     try {
         if ($stmt_job_provider->execute()) {
             echo "<script>alert('New job provider has been added');</script>";

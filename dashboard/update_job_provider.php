@@ -5,26 +5,25 @@ if (!isset($_SESSION['user_email'])) {
     exit();
 }
 include('../connection.php');
-$email = $_SESSION['user_email'];
-$stmt = $pdo->prepare("SELECT users_id FROM users WHERE email = ?");
-$stmt->execute([$email]); 
+
+$job_provider_id = $_GET['job_provider_id'];
+$stmt = $pdo->prepare("SELECT users_id FROM job_provider WHERE job_provider_id = ?");
+$stmt->execute([$job_provider_id]); 
 $user_id = $stmt->fetchColumn(); 
 $stmt->closeCursor(); 
 echo "User ID: " . $user_id;
 $pdo = null;
 ?>
 
-
-
 <?php
-include'dashboard.php';
+include 'dashboard.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update Student</title>
+    <title>Update Job Provider</title>
     <style>
         /* Form container */
         .form-container {
@@ -35,7 +34,6 @@ include'dashboard.php';
             border-radius: 5px;
             background-color: #f9f9f9;
         }
-
         /* Form fields */
         .form-container div {
             margin-bottom: 15px;
@@ -47,6 +45,7 @@ include'dashboard.php';
         }
         .form-container input[type="text"],
         .form-container input[type="password"],
+        .form-container input[type="date"],
         form select,
         .form-container input[type="email"] {
             width: 100%;
@@ -55,8 +54,6 @@ include'dashboard.php';
             border-radius: 5px;
             box-sizing: border-box; 
         }
-
-
         .form-container input[type="submit"] {
             width: 20%;
             padding: 10px;
@@ -67,28 +64,23 @@ include'dashboard.php';
             font-size: 16px;
             cursor: pointer;
         }
-
         .form-container input[type="submit"]:hover {
             background-color: teal;
         }
     </style>
-    
 </head>
 <body>
 
 <?php
-
-$email = $_SESSION['user_email'];
 $id = $_GET['job_provider_id'];
 include '../connection.php';
-$stmt = $pdo->prepare("SELECT *
-FROM users
-JOIN job_provider ON users.users_id = job_provider.users_id
-WHERE job_provider.job_provider_id = :job_provider_id");
+
+// Retrieve job provider details
+$stmt = $pdo->prepare("SELECT * FROM users JOIN job_provider ON users.users_id = job_provider.users_id WHERE job_provider.job_provider_id = :job_provider_id");
 $stmt->bindParam(':job_provider_id', $id, PDO::PARAM_INT);
 $stmt->execute();
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
-?> 
+?>
 <h2 style="text-align:center"></h2><br>
 <div class="form-container">
 <!DOCTYPE html>
@@ -108,7 +100,7 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
         </div>
         <div>
             <label for="gender">GENDER:</label>
-            <input type="text" id="gender" name="gender" required>
+            <input type="text" id="gender" name="gender" value="<?php echo $row['gender']; ?>" required>
         </div>
         <div>
             <label for="province">PROVINCE:</label>
@@ -121,6 +113,10 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
         <div>
             <label for="sector">SECTOR:</label>
             <input type="text" id="sector" name="sector" value="<?php echo $row['sector']; ?>" required>
+        </div>
+        <div>
+            <label for="dob">DATE OF BIRTH:</label>
+            <input type="date" id="dob" name="date_of_birth" value="<?php echo htmlspecialchars($row['date_of_birth']); ?>" required>
         </div>
         <div>
             <label for="village">VILLAGE:</label>
@@ -145,26 +141,21 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
 <?php
 include '../connection.php';
-
 if (isset($_POST['update'])) {
-    $job_provider_id = $_GET['job_provider_id'];
     $first_name = htmlspecialchars($_POST['first_name']);
     $last_name = htmlspecialchars($_POST['last_name']);
     $full_name = $first_name . ' ' . $last_name; 
     $gender = $_POST['gender'];
- 
-
     $province = htmlspecialchars($_POST['province']);
     $district = htmlspecialchars($_POST['district']);
     $sector = htmlspecialchars($_POST['sector']);
     $village = htmlspecialchars($_POST['village']);
-    $cell = htmlspecialchars($_POST['cell']);
+    $date_of_birth = htmlspecialchars($_POST['date_of_birth']);
     $ID = htmlspecialchars($_POST['ID']);
-
     try {  
         // Update job_seeker table
         $sql = "UPDATE job_provider
-                SET
+                SET 
                     province = :province,
                     district = :district,
                     sector = :sector,
@@ -175,16 +166,16 @@ if (isset($_POST['update'])) {
                 WHERE job_provider_id = :job_provider_id";
 
         $stmt = $pdo->prepare($sql);
-  
+        
         $stmt->bindParam(':province', $province);
         $stmt->bindParam(':district', $district);
         $stmt->bindParam(':sector', $sector);
- 
+    
         $stmt->bindParam(':cell', $cell);
         $stmt->bindParam(':village', $village);
         $stmt->bindParam(':date_of_birth', $date_of_birth);
         $stmt->bindParam(':ID', $ID);
- 
+  
         $stmt->bindParam(':job_provider_id', $job_provider_id);
         $stmt->execute();
 
