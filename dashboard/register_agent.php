@@ -47,6 +47,7 @@ include 'dashboard.php';
         .form-container input[type="text"],
         .form-container input[type="date"],
         .form-container input[type="password"],
+       select,
         .form-container input[type="email"] {
             width: 100%;
             padding: 10px;
@@ -99,6 +100,17 @@ include 'dashboard.php';
             <div>
                 <label for="physical_code">LASTNAME:</label>
                 <input type="text"  name="lastname" required>
+            </div>
+            <div>
+                <label for="gender">GENDER:</label>
+                <select name="gender">
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+            </div>
+            <div>
+                <label for="phone">DATE OF BIRTH</label>
+                <input type="date"  name="date_of_birth" required>
             </div>
             <div>
                 <label for="phone">PROVINCE:</label>
@@ -157,57 +169,47 @@ include '../connection.php';
 if (isset($_POST["register"])) {
     $firstname = $_POST["firstname"];
     $lastname = $_POST["lastname"];
-    $fathers_name = $_POST['fathers_name'];
-    $mothers_name = $_POST['mothers_name'];
-    $full_name = $firstname . ' ' . $lastname; 
     $province = $_POST['province'];
     $district = $_POST['district'];
+    $full_name = $firstname . ' ' . $lastname; 
     $sector = $_POST['sector'];
+    $gender=$_POST['gender'];
     $cell = $_POST['cell'];
     $village = $_POST['village'];
     $date_of_birth = $_POST['date_of_birth'];
-    $id = $_POST['id'];
-    $created_by = $_SESSION['user_email'];
+    $id=$_POST['id'];
     $email = $_POST['email'];
     $password = $_POST['password'];
     $telephone = $_POST['telephone'];
-    $gender = $_POST['gender'];
-    $bio = $_POST['bio'];
-    $salary = $_POST['salary'];
     $role_id = $_GET['role_id'];
 
-    
-
+    //Insert into users table
     $stmt_user = $pdo->prepare("INSERT INTO users (role_id, email, first_name, last_name, full_name, gender, password)
     VALUES (:role_id, :email, :first_name, :last_name, :full_name, :gender, :password)");
     $stmt_user->bindParam(':email', $email);
     $stmt_user->bindParam(':first_name', $firstname);
     $stmt_user->bindParam(':last_name', $lastname);
     $stmt_user->bindParam(':full_name', $full_name);
-    $stmt_user->bindParam(':password', $password);    
+    $stmt_user->bindParam(':password', $password);         
     $stmt_user->bindParam(':gender', $gender);         
     $stmt_user->bindParam(':role_id', $role_id);
     $stmt_user->execute();
     $users_id = $pdo->lastInsertId();
 
-    // Insert into job_seeker table using the last inserted users_id
-    $stmt_job_seeker = $pdo->prepare("INSERT INTO agent (users_id, role_id, fathers_name, mothers_name,salary, province, district, sector, cell, village, date_of_birth,bio, id) VALUES (:users_id, :role_id, :fathers_name, :mothers_name,:salary, :province, :district, :sector, :cell, :village, :date_of_birth, :bio,:id)");
-    $stmt_job_seeker->bindParam(':users_id', $users_id);
-    $stmt_job_seeker->bindParam(':role_id', $role_id);
-    $stmt_job_seeker->bindParam(':fathers_name', $fathers_name);
-    $stmt_job_seeker->bindParam(':mothers_name', $mothers_name);
-    $stmt_job_seeker->bindParam(':salary', $salary);
-    $stmt_job_seeker->bindParam(':province', $province);
-    $stmt_job_seeker->bindParam(':district', $district);
-    $stmt_job_seeker->bindParam(':sector', $sector);
-    $stmt_job_seeker->bindParam(':cell', $cell);
-    $stmt_job_seeker->bindParam(':village', $village);
-    $stmt_job_seeker->bindParam(':date_of_birth', $date_of_birth);
-    $stmt_job_seeker->bindParam(':bio', $bio);
-    $stmt_job_seeker->bindParam(':id', $id);
+
+    $stmt_job_provider = $pdo->prepare("INSERT INTO agent (users_id, role_id,  province, district, sector, cell, village, date_of_birth,id) VALUES (:users_id, :role_id, :province, :district, :sector, :cell, :village,:date_of_birth, :id)");
+    $stmt_job_provider->bindParam(':users_id', $users_id);
+    $stmt_job_provider->bindParam(':role_id', $role_id);
+    $stmt_job_provider->bindParam(':province', $province);
+    $stmt_job_provider->bindParam(':district', $district);
+    $stmt_job_provider->bindParam(':sector', $sector);
+    $stmt_job_provider->bindParam(':cell', $cell);
+    $stmt_job_provider->bindParam(':village', $village);
+    $stmt_job_provider->bindParam(':date_of_birth', $date_of_birth);
+    $stmt_job_provider->bindParam(':id', $id);
     try {
-        if ($stmt_job_seeker->execute()) {
-            echo "<script>alert('New agent has been added');</script>";
+        if ($stmt_job_provider->execute()) {
+            echo "<script>alert('New job provider has been added');</script>";
         } else {
             echo "<script>alert('Error: Unable to execute statement');</script>";
         }
