@@ -105,6 +105,10 @@ include 'dashboard.php';
                 </select>
             </div>
             <div>
+                <label for="phone">DATE OF BIRTH</label>
+                <input type="date"  name="date_of_birth" required>
+            </div>
+            <div>
                 <label for="phone">PROVINCE:</label>
                 <input type="text"  name="province" required>
             </div>
@@ -187,7 +191,7 @@ if (isset($_POST["register"])) {
     $users_id = $pdo->lastInsertId();
 
 
-    $stmt_job_provider = $pdo->prepare("INSERT INTO job_provider (users_id, role_id,  province, district, sector, cell, village, id) VALUES (:users_id, :role_id, :province, :district, :sector, :cell, :village, :id)");
+    $stmt_job_provider = $pdo->prepare("INSERT INTO job_provider (users_id, role_id,  province, district, sector, cell, village, date_of_birth,id) VALUES (:users_id, :role_id, :province, :district, :sector, :cell, :village,:date_of_birth, :id)");
     $stmt_job_provider->bindParam(':users_id', $users_id);
     $stmt_job_provider->bindParam(':role_id', $role_id);
     $stmt_job_provider->bindParam(':province', $province);
@@ -195,7 +199,7 @@ if (isset($_POST["register"])) {
     $stmt_job_provider->bindParam(':sector', $sector);
     $stmt_job_provider->bindParam(':cell', $cell);
     $stmt_job_provider->bindParam(':village', $village);
-
+    $stmt_job_provider->bindParam(':date_of_birth', $date_of_birth);
     $stmt_job_provider->bindParam(':id', $id);
     try {
         if ($stmt_job_provider->execute()) {

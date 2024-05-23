@@ -190,8 +190,7 @@ if (isset($_POST["register"])) {
     $salary = $_POST['salary'];
     $role_id = $_GET['role_id'];
 
-    // Insert into users table
-    // $stmt_user = $pdo->prepare("INSERT INTO users (email, password,first_name,last_name,full_name,gender,role_id) VALUES (:email, :password,:first_name,:last_name,:full_name,:gender,:role_id)");
+    
 
     $stmt_user = $pdo->prepare("INSERT INTO users (role_id, email, first_name, last_name, full_name, gender, password)
     VALUES (:role_id, :email, :first_name, :last_name, :full_name, :gender, :password)");
@@ -199,7 +198,7 @@ if (isset($_POST["register"])) {
     $stmt_user->bindParam(':first_name', $firstname);
     $stmt_user->bindParam(':last_name', $lastname);
     $stmt_user->bindParam(':full_name', $full_name);
-    $stmt_user->bindParam(':password', $password);         
+    $stmt_user->bindParam(':password', $password);    
     $stmt_user->bindParam(':gender', $gender);         
     $stmt_user->bindParam(':role_id', $role_id);
     $stmt_user->execute();

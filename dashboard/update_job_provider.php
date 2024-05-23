@@ -83,12 +83,6 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
 ?>
 <h2 style="text-align:center"></h2><br>
 <div class="form-container">
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Update Job Provider</title>
-</head>
-<body>
     <form action="" method="post">
         <div>
             <label for="name">JOB FIRST NAME:</label>
@@ -146,14 +140,20 @@ if (isset($_POST['update'])) {
     $last_name = htmlspecialchars($_POST['last_name']);
     $full_name = $first_name . ' ' . $last_name; 
     $gender = $_POST['gender'];
+
     $province = htmlspecialchars($_POST['province']);
     $district = htmlspecialchars($_POST['district']);
     $sector = htmlspecialchars($_POST['sector']);
     $village = htmlspecialchars($_POST['village']);
+    $cell = htmlspecialchars($_POST['cell']);
     $date_of_birth = htmlspecialchars($_POST['date_of_birth']);
     $ID = htmlspecialchars($_POST['ID']);
-    try {  
-        // Update job_seeker table
+    
+    try {
+        // Debug: Print out the variables before executing the query
+        
+        
+        // Update job_provider table
         $sql = "UPDATE job_provider
                 SET 
                     province = :province,
@@ -166,16 +166,13 @@ if (isset($_POST['update'])) {
                 WHERE job_provider_id = :job_provider_id";
 
         $stmt = $pdo->prepare($sql);
-        
         $stmt->bindParam(':province', $province);
         $stmt->bindParam(':district', $district);
         $stmt->bindParam(':sector', $sector);
-    
         $stmt->bindParam(':cell', $cell);
         $stmt->bindParam(':village', $village);
         $stmt->bindParam(':date_of_birth', $date_of_birth);
         $stmt->bindParam(':ID', $ID);
-  
         $stmt->bindParam(':job_provider_id', $job_provider_id);
         $stmt->execute();
 
@@ -183,7 +180,7 @@ if (isset($_POST['update'])) {
         $sql2 = "UPDATE users
                  SET first_name = :first_name,
                      last_name = :last_name,
-                     full_name=:full_name,
+                     full_name = :full_name,
                      gender = :gender
                  WHERE users_id = :user_id";
 
@@ -195,12 +192,13 @@ if (isset($_POST['update'])) {
         $stmt2->bindParam(':user_id', $user_id);
         $stmt2->execute();
 
-        if ($stmt2->rowCount() > 0) { 
+        if ($stmt->rowCount() > 0 || $stmt2->rowCount() > 0) {
             echo "Well updated";
         } else {
-            echo "<script>alert('Error updating record');</script>";
+            echo "<script>alert('No records updated.');</script>";
         }
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
-    }}
-    ?>
+    }
+}
+?>

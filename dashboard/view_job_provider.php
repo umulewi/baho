@@ -82,6 +82,7 @@ include '../connection.php';
                 <td><?php echo $row['district'];?></td>
                
                 <td style="width: -56rem">
+                <a class="btn update" href="more_providers.php?job_provider_id=<?php echo $row['job_provider_id'];?>"><b>More</b></a>
                 <a class="btn update" href="update_job_provider.php?job_provider_id=<?php echo $row['job_provider_id'];?>"><b>Update</b></a>
                 </td>
             </tr>
