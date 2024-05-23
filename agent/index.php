@@ -1,7 +1,7 @@
 <?php  
 session_start();
-if (!isset($_SESSION['email'])) {
-    header("location: ../index.php");
+if (!isset($_SESSION['user_email'])) {
+    header("location:login.php");
     exit();
 }
 include'../connection.php';
@@ -131,25 +131,7 @@ include'../connection.php';
             <main>
 			
 
-			<ul class="box-info">
-				
-                <li>
-					<i class='bx bxs-calendar-check' ></i>
-					<?php
-                    include'../connection.php';
-                    $sql = "SELECT COUNT(job_seeker_id) AS total FROM job_seeker";
-                    $stmt = $pdo->prepare($sql);
-                    $stmt->execute();
-                    $result = $stmt->fetch(PDO::FETCH_ASSOC);
-                    ?>
-					<span class="text">
-						<h3><?php echo $result['total']?></h3>
-						<p>JOB SEEKER</p>
-					</span>
-				</li>
-                
-				
-			</ul>
+			
 
 
 			

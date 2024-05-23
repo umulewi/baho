@@ -79,10 +79,8 @@ include '../connection.php';
             <td><?php echo $row['province'];?></td>
             <td><?php echo $row['district'];?></td>
             
-            
-            
             <td style="width: -56rem">
-            <a class="btn custom-bg shadow-none" style="background-color:#b0b435" href="more_details.php?agent_id=<?php echo $row['agent_id'];?>"><b>Update</b></a>
+            <a class="btn custom-bg shadow-none" style="background-color:#b0b435" href="more_agent.php?agent_id=<?php echo $row['agent_id'];?>"><b>More</b></a>
             <a class="btn custom-bg shadow-none" style="background-color:#b0b435" href="update_agent.php?agent_id=<?php echo $row['agent_id'];?>"><b>Update</b></a>
            
            

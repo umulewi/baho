@@ -112,47 +112,23 @@ if (!isset($_SESSION['user_email'])) {
                 <?php
                     include'../connection.php';
                     $stmt=$pdo->query("SELECT role_id from role where role_name='agent'");
-                
                     $row = $stmt->fetch(PDO::FETCH_ASSOC);
                     ?>
-                <!-- Dropdown Menu -->
                 <ul class="dropdown-menu">
                     <li><a href="view_agent.php">View Agents</a></li>
-             
                     <li><a href="register_agent.php?role_id=<?php echo $row['role_id'];?>">Register Agent</a></li>
 
                 </ul>
             </li>
-            <li>
-                <a href="#" class="dropdown-toggle" data-nav="top">
-                    <i class='bx bxs-shopping-bag-alt' ></i>
-                    <span class="text"> Agents</span>
-                    <i class='bx bx-chevron-down dropdown-icon'></i>
+            <li class="">
+                <a href="#">
+                    <i class='bx bxs-dashboard' ></i>
+                    <span class="text">View Request</span>
                 </a>
-                <?php
-                    include'../connection.php';
-                    $stmt=$pdo->query("SELECT role_id from role where role_name='agent'");
-                
-                    $row = $stmt->fetch(PDO::FETCH_ASSOC);
-                    ?>
-                <!-- Dropdown Menu -->
-                <ul class="dropdown-menu">
-                    <li><a href="view_agent.php">View Agents</a></li>
-             
-                    <li><a href="register_agent.php?role_id=<?php echo $row['role_id'];?>">Register Agent</a></li>
-
-                </ul>
             </li>
-
-            
         </ul>
         <ul class="side-menu">
-            <li>
-                <a href="#">
-                    <i class='bx bxs-cog' ></i>
-                    <span class="text">Settings</span>
-                </a>
-            </li>
+            
             <li>
                 <a href="logout.php" class="logout">
                     <i class='bx bxs-log-out-circle' ></i>
@@ -170,7 +146,7 @@ if (!isset($_SESSION['user_email'])) {
         <!-- NAVBAR -->
         <nav class="subsequent-nav">
             <i class='bx bx-menu' ></i>
-            <a href="#" class="nav-link">Categories</a>
+            
             <form action="#">
                 <div class="form-input">
                     <input type="search" placeholder="Search...">
@@ -179,13 +155,8 @@ if (!isset($_SESSION['user_email'])) {
             </form>
             <input type="checkbox" id="switch-mode" hidden>
             <label for="switch-mode" class="switch-mode"></label>
-            <a href="#" class="notification">
-                <i class='bx bxs-bell' ></i>
-                <span class="num">8</span>
-            </a>
-            <a href="#" class="profile">
-                <img src="img/people.png">
-            </a>
+            
+            
         </nav>
         <!-- NAVBAR -->
         

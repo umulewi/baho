@@ -1,11 +1,11 @@
 <?php
 session_start();
-if (!isset($_SESSION['email'])) {
+if (!isset($_SESSION['user_email'])) {
     header("location:../index.php");
     exit();
 }
 include('../connection.php');
-$email = $_SESSION['email'];
+$email = $_SESSION['user_email'];
 $stmt = $pdo->prepare("SELECT users_id FROM users WHERE email = ?");
 $stmt->execute([$email]); 
 $user_id = $stmt->fetchColumn(); 
@@ -104,7 +104,7 @@ include '../connection.php';
             <td><?php echo $row['village'];?></td>
             <td><?php echo $row['date_of_birth'];?></td>
             <td><?php echo $row['ID'];?></td>
-            
+            \
             
             <td style="width: -56rem">
             <a class="btn custom-bg shadow-none" style="background-color:#b0b435" href="update_job_seeker.php?job_seeker_id=<?php echo $row['job_seeker_id'];?>"><b>Update</b></a>
