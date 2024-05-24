@@ -95,6 +95,14 @@ include'dashboard.php';
                 <input type="text"  name="lastname" required>
             </div>
             <div>
+                <label for="email">FATHER'S NAME:</label>
+                <input type="text"  name="fathers_name" required>
+            </div>
+            <div>
+                <label for="phone">MOTHER'S NAME:</label>
+                <input type="text"  name="mothers_name" required>
+            </div>
+            <div>
                 <label for="gender">GENDER:</label>
                 <select name="gender">
                     <option value="male">Male</option>
@@ -102,12 +110,21 @@ include'dashboard.php';
                 </select>
             </div>
             <div>
-                <label for="phone">DATE OF BIRTH</label>
-                <input type="date"  name="date_of_birth" required>
-            </div>
+    <label for="date_of_birth">DATE OF BIRTH:</label>
+    <input type="date" name="date_of_birth" id="date_of_birth" required>
+</div>
+
             <div>
                 <label for="phone">PROVINCE:</label>
                 <input type="text"  name="province" required>
+            </div>
+            <div>
+                <label for="province">PROVINCE:</label>
+                <select name="province">
+                    <option value="KIGALI CITY">KIGALI CITY</option>
+                    <option value="WESTERN PROVINCE">WESTERN PROVINCE</option>
+                    <option value="WESTERN PROVINCE">WESTERN PROVINCE</option>
+                </select>
             </div>
             <div>
                 <label for="phone">DISTRICT:</label>
@@ -126,17 +143,17 @@ include'dashboard.php';
                 <input type="text"  name="village" required>
             </div>
             <div>
-            <label for="physical_code">Email:</label>
-            <input type="text" id="email" name="email" required>
+            <label for="physical_code">EMAIL:</label>
+            <input type="email" id="email" name="email" required>
         </div>
         
         <div>
-            <label for="phone">Phone Number:</label>
+            <label for="phone">PHONE NUMBER:</label>
             <input type="text" id="phone" name="telephone" required>
         </div>
 
         <div>
-            <label for="email">Password:</label>
+            <label for="email">PASSWORD:</label>
             <input type="password" id="password" name="password" required>
         </div>
             <div>
@@ -145,7 +162,7 @@ include'dashboard.php';
             </div>
             
             <div>
-                <input type="submit" name="register" value="Register" stayle="background-color:red">
+                <input type="submit" name="register" value="Register" style="width:104px;">
             </div>
         </form>
     </div>
@@ -160,6 +177,8 @@ include '../connection.php';
 if (isset($_POST["register"])) {
     $firstname = $_POST["firstname"];
     $lastname = $_POST["lastname"];
+    $fathers_name = $_POST['fathers_name'];
+    $mothers_name = $_POST['mothers_name'];
     $province = $_POST['province'];
     $district = $_POST['district'];
     $full_name = $firstname . ' ' . $lastname; 
@@ -189,11 +208,13 @@ if (isset($_POST["register"])) {
     $users_id = $pdo->lastInsertId();
 
 
-    $stmt_job_provider = $pdo->prepare("INSERT INTO job_seeker (users_id, role_id,  province, district, sector, cell, village, date_of_birth,id,created_by) VALUES (:users_id, :role_id, :province, :district, :sector, :cell, :village,:date_of_birth, :id,:created_by)");
+    $stmt_job_provider = $pdo->prepare("INSERT INTO job_seeker (users_id, role_id,  province,fathers_name,mothers_name, district, sector, cell, village, date_of_birth,id,created_by) VALUES (:users_id, :role_id, :province,:fathers_name,:mothers_name, :district, :sector, :cell, :village,:date_of_birth, :id,:created_by)");
     $stmt_job_provider->bindParam(':users_id', $users_id);
     $stmt_job_provider->bindParam(':role_id', $role_id);
     $stmt_job_provider->bindParam(':province', $province);
     $stmt_job_provider->bindParam(':district', $district);
+    $stmt_job_provider->bindParam(':fathers_name', $fathers_name);
+    $stmt_job_provider->bindParam(':mothers_name', $mothers_name);
     $stmt_job_provider->bindParam(':sector', $sector);
     $stmt_job_provider->bindParam(':cell', $cell);
     $stmt_job_provider->bindParam(':village', $village);
@@ -211,4 +232,14 @@ if (isset($_POST["register"])) {
     }
 }
 ?>
+
+<script>
+    var today = new Date();
+    var maxDate = new Date();
+    maxDate.setFullYear(today.getFullYear() - 18);
+    var maxDateFormatted = maxDate.toISOString().split('T')[0];
+    document.getElementById("date_of_birth").setAttribute("max", maxDateFormatted);
+</script>
+
+
 
