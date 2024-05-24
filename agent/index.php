@@ -87,12 +87,7 @@ include'../connection.php';
             
         </ul>
         <ul class="side-menu">
-            <li>
-                <a href="#">
-                    <i class='bx bxs-cog' ></i>
-                    <span class="text">Settings</span>
-                </a>
-            </li>
+            
             <li>
                 <a href="logout.php" class="logout">
                     <i class='bx bxs-log-out-circle' ></i>
@@ -121,12 +116,7 @@ include'../connection.php';
             <label for="switch-mode" class="switch-mode"></label>
             
         </nav>
-        <!-- NAVBAR -->
         
-
-
-            <!-- display all content in-->
-
 
             <main>
 			
