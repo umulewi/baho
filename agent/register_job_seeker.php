@@ -108,22 +108,29 @@ include'dashboard.php';
                     <option value="male">Male</option>
                     <option value="female">Female</option>
                 </select>
-            </div>
-            <div>
-    <label for="date_of_birth">DATE OF BIRTH:</label>
-    <input type="date" name="date_of_birth" id="date_of_birth" required>
-</div>
-
-            <div>
-                <label for="phone">PROVINCE:</label>
-                <input type="text"  name="province" required>
-            </div>
-            <div>
-                <label for="province">PROVINCE:</label>
-                <select name="province">
+                <select name="gender" required>
+                <option value="">CHOOSE PROVINCE</option>
                     <option value="KIGALI CITY">KIGALI CITY</option>
                     <option value="WESTERN PROVINCE">WESTERN PROVINCE</option>
+                    <option value="ESTERN PROVINCE">ESTERN PROVINCE</option>
+                    <option value="NORTH PROVINCE">NORTH PROVINCE</option>
+                    <option value="SOUTH PROVINCE">NORTH PROVINCE</option>
+                </select>
+            </div>
+            <div>
+                <label for="date_of_birth">DATE OF BIRTH:</label>
+                <input type="date" name="date_of_birth" id="date_of_birth" required>
+            </div>
+    
+            <div>
+                <label for="province">PROVINCE:</label>
+                <select name="province" required>
+                <option value="">choose province</option>
+                    <option value="KIGALI CITY">KIGALI CITY</option>
                     <option value="WESTERN PROVINCE">WESTERN PROVINCE</option>
+                    <option value="ESTERN PROVINCE">ESTERN PROVINCE</option>
+                    <option value="NORTH PROVINCE">NORTH PROVINCE</option>
+                    <option value="SOUTH PROVINCE">NORTH PROVINCE</option>
                 </select>
             </div>
             <div>
@@ -166,8 +173,7 @@ include'dashboard.php';
             </div>
         </form>
     </div>
-			
-			
+					
 </body>
 </html>
 

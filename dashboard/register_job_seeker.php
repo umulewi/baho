@@ -101,9 +101,16 @@ include'dashboard.php';
             <label for="physical_code">SALARY:</label>
             <input type="number" id="salary" name="salary" required>
         </div>
-            <div>
-                <label for="phone">PROVINCE:</label>
-                <input type="text"  name="province" required>
+        <div>
+                <label for="province">PROVINCE:</label>
+                <select name="province" required>
+                <option value="">CHOOSE PROVINCE</option>
+                    <option value="KIGALI CITY">KIGALI CITY</option>
+                    <option value="WESTERN PROVINCE">WESTERN PROVINCE</option>
+                    <option value="ESTERN PROVINCE">ESTERN PROVINCE</option>
+                    <option value="NORTH PROVINCE">NORTH PROVINCE</option>
+                    <option value="SOUTH PROVINCE">NORTH PROVINCE</option>
+                </select>
             </div>
             <div>
                 <label for="phone">DISTRICT:</label>
@@ -143,14 +150,13 @@ include'dashboard.php';
             <label for="email">PASSWORD:</label>
             <input type="password" id="password" name="password" required>
         </div>
-            
-            <div>
-                <label for="phone">DATE OF BIRTH</label>
-                <input type="date"  name="date_of_birth" required>
+             <div>
+            <label for="date_of_birth">DATE OF BIRTH:</label>
+            <input type="date" name="date_of_birth" id="date_of_birth" required>
             </div>
             <div>
                 <label for="phone">ID</label>
-                <input type="text"  name="id" required>
+                <input type="number"  name="id" required>
             </div>
             <div>
                 <label for="bio">BIO:</label>
@@ -189,8 +195,7 @@ if (isset($_POST["register"])) {
     $bio = $_POST['bio'];
     $salary = $_POST['salary'];
     $role_id = $_GET['role_id'];
-
-    
+    $created_by=$_SESSION['user_email'];
 
     $stmt_user = $pdo->prepare("INSERT INTO users (role_id, email, first_name, last_name, full_name, gender, password)
     VALUES (:role_id, :email, :first_name, :last_name, :full_name, :gender, :password)");
@@ -205,7 +210,7 @@ if (isset($_POST["register"])) {
     $users_id = $pdo->lastInsertId();
 
     // Insert into job_seeker table using the last inserted users_id
-    $stmt_job_seeker = $pdo->prepare("INSERT INTO job_seeker (users_id, role_id, fathers_name, mothers_name,salary, province, district, sector, cell, village, date_of_birth,bio, id) VALUES (:users_id, :role_id, :fathers_name, :mothers_name,:salary, :province, :district, :sector, :cell, :village, :date_of_birth, :bio,:id)");
+    $stmt_job_seeker = $pdo->prepare("INSERT INTO job_seeker (users_id, role_id, fathers_name, mothers_name,salary, province, district, sector, cell, village, date_of_birth,bio, id,created_by) VALUES (:users_id, :role_id, :fathers_name, :mothers_name,:salary, :province, :district, :sector, :cell, :village, :date_of_birth, :bio,:id,:created_by)");
     $stmt_job_seeker->bindParam(':users_id', $users_id);
     $stmt_job_seeker->bindParam(':role_id', $role_id);
     $stmt_job_seeker->bindParam(':fathers_name', $fathers_name);
@@ -219,6 +224,9 @@ if (isset($_POST["register"])) {
     $stmt_job_seeker->bindParam(':date_of_birth', $date_of_birth);
     $stmt_job_seeker->bindParam(':bio', $bio);
     $stmt_job_seeker->bindParam(':id', $id);
+
+    $stmt_job_seeker->bindParam(':created_by', $created_by);
+
     try {
         if ($stmt_job_seeker->execute()) {
             echo "<script>alert('New job seeker has been added');</script>";
@@ -232,3 +240,10 @@ if (isset($_POST["register"])) {
 ?>
 
 
+<script>
+    var today = new Date();
+    var maxDate = new Date();
+    maxDate.setFullYear(today.getFullYear() - 18);
+    var maxDateFormatted = maxDate.toISOString().split('T')[0];
+    document.getElementById("date_of_birth").setAttribute("max", maxDateFormatted);
+</script>

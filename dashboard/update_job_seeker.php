@@ -115,7 +115,7 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
         </div>
         <div>
             <label for="province">PROVINCE:</label>
-            <input type="text" id="province" name="province" value="<?php echo htmlspecialchars($row['province']); ?>" required>
+            <input type="text" id="province" name="province" value="<?php echo htmlspecialchars($row['province']); ?>" required  readonly>
         </div>
         <div>
             <label for="district">DISTRICT:</label>
@@ -154,7 +154,7 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
         </div>
         <div>
             <label for="ID">ID CARDS:</label>
-            <input type="text" id="ID" name="ID" value="<?php echo htmlspecialchars($row['ID']); ?>" required>
+            <input type="number" id="ID" name="ID" value="<?php echo htmlspecialchars($row['ID']); ?>" required>
         </div>
         <div>
             <input type="submit" name="update" value="Update" style="background-color: teal;">
