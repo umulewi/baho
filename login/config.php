@@ -1,7 +1,5 @@
 <?php
-
 require_once 'vendor/autoload.php';
-
 session_start();
 
 // init configuration
@@ -15,7 +13,6 @@ $client->setClientSecret($clientSecret);
 $client->setRedirectUri($redirectUri);
 $client->addScope("email");
 $client->addScope("profile");
-
 // Connect to database
 $hostname = "localhost";
 $username = "root";
