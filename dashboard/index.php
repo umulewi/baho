@@ -74,7 +74,6 @@ if (!isset($_SESSION['user_email'])) {
                 <?php
                     include'../connection.php';
                     $stmt=$pdo->query("SELECT role_id from role where role_name='job_seeker'");
-                    
                     $row = $stmt->fetch(PDO::FETCH_ASSOC);
                     ?>
                 <!-- Dropdown Menu -->
@@ -120,12 +119,7 @@ if (!isset($_SESSION['user_email'])) {
 
                 </ul>
             </li>
-            <li class="">
-                <a href="#">
-                    <i class='bx bxs-dashboard' ></i>
-                    <span class="text">View Request</span>
-                </a>
-            </li>
+            
         </ul>
         <ul class="side-menu">
             
@@ -158,9 +152,7 @@ if (!isset($_SESSION['user_email'])) {
             
             
         </nav>
-        <!-- NAVBAR -->
         
-    <!-- CONTENT -->
     
 
     <script src="script.js"></script>

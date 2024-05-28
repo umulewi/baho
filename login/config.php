@@ -9,7 +9,6 @@ $clientID = '67536973859-u2fsecvceffqtbaik2tnlkj2he7g5scl.apps.googleusercontent
 $clientSecret = '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';
 $redirectUri = 'http://localhost/baho/login/welcome.php';
 
-// create Client Request to access Google API
 $client = new Google_Client();
 $client->setClientId($clientID);
 $client->setClientSecret($clientSecret);
@@ -21,6 +20,6 @@ $client->addScope("profile");
 $hostname = "localhost";
 $username = "root";
 $password = "";
-$database = "baho";
+$database = "google";
 
 $conn = mysqli_connect($hostname, $username, $password, $database);

@@ -1,21 +1,16 @@
 <?php
 include '../connection.php';
 if (isset($_POST['user_login'])) {
-  $email = $_POST['email']; // Change from username to email
+  $email = $_POST['email']; 
   $password = $_POST['password'];
-
-  // Fetch user record from the database (with password check)
   $statement = $pdo->prepare("SELECT users.*, role.role_name FROM users INNER JOIN role ON users.role_id = role.role_id WHERE email=:email AND password=:password");
   $statement->bindParam(':email', $email); // Changed from username to email
   $statement->bindParam(':password', $password); // Note: It's not recommended to store passwords in plain text. Hash them before storing and comparing.
   $statement->execute();
-
   $user = $statement->fetch(PDO::FETCH_ASSOC); 
-
   if ($user) {
     session_start();
     $_SESSION['user_email'] = $email; 
-
     $role_name = $user['role_name'];
     switch ($role_name) {
       case 'agent':

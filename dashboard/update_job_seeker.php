@@ -115,7 +115,7 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
         </div>
         <div>
             <label for="province">PROVINCE:</label>
-            <input type="text" id="province" name="province" value="<?php echo htmlspecialchars($row['province']); ?>" required  readonly>
+            <input type="text" id="province" name="province" value="<?php echo htmlspecialchars($row['province']); ?>" required >
         </div>
         <div>
             <label for="district">DISTRICT:</label>

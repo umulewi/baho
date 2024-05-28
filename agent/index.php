@@ -44,9 +44,49 @@ include'../connection.php';
             display: none;
         }
 
-        /* Add margin to the subsequent nav elements */
+
         .subsequent-nav.pushed-down {
-            margin-top: 50px; /* Adjust this value as needed */
+            margin-top: 50px; 
+        }
+        .job-seeker-container {
+            display: flex;
+            gap: 20px; 
+        }
+
+        .job-seeker-count {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin: 10px 0;
+        }
+
+        .job-seeker-count .bx {
+            font-size: 36px;
+            color: #4CAF50;
+            margin-right: 10px;
+        }
+
+        .job-seeker-count .text {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .job-seeker-count .text h3 {
+            margin: 0;
+            font-size: 24px;
+            color: #333;
+        }
+
+        .job-seeker-count .text p {
+            margin: 0;
+            font-size: 14px;
+            color: #777;
         }
     </style>
 </head>
@@ -116,13 +156,45 @@ include'../connection.php';
             <label for="switch-mode" class="switch-mode"></label>
             
         </nav>
-        
+        <main>
+       
+                
+        <ul class="box-info job-seeker-container">
+                <li class="job-seeker-count">
+                    <i class='bx bxs-calendar-check'></i>
+                    <?php
+                    include'../connection.php';
+                    $sql = "SELECT COUNT(job_seeker_id) AS total FROM job_seeker";
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->execute();
+                    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                    ?>
+                    <span class="text">
+                        <h3><?php echo $result['total']?></h3>
+                        <p>JOB SEEKER</p>
+                    </span>
+                </li>
+                <li class="job-seeker-count">
+                    <i class='bx bxs-calendar-check'></i>
+                    <?php
+                    include'../connection.php';
+                    $sql = "SELECT COUNT(job_seeker_id) AS total FROM job_seeker";
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->execute();
+                    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                    ?>
+                    <span class="text">
+                        <h3><?php echo $result['total']?></h3>
+                        <p>JOB PROVIDER</p>
+                    </span>
+                </li>
+            </ul>
 
-            <main>
+
 			
+		<div>
 
-			
-
+        </div>
 
 			
 		</main>

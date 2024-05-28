@@ -122,12 +122,7 @@
 
                 </ul>
             </li>
-            <li class="">
-                <a href="#">
-                    <i class='bx bxs-dashboard' ></i>
-                    <span class="text">View Request</span>
-                </a>
-            </li>
+            
         </ul>
         <ul class="side-menu">
             

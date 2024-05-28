@@ -60,7 +60,6 @@ if (isset($_GET['code'])) {
         die();
     }
 
-    // checking if user is already exists in database
     $sql = "SELECT * FROM users WHERE token ='{$_SESSION['user_token']}'";
     $result = mysqli_query($conn, $sql);
     if (mysqli_num_rows($result) > 0) {
