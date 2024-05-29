@@ -12,6 +12,7 @@
             padding: 20px;
             border-radius: 5px;
             background-color: #f9f9f9;
+          
         }
      
         .form-container div {
@@ -29,7 +30,7 @@
         .form-container input[type="password"],
         form select,
         .form-container input[type="email"] {
-            width: 100%;
+            width: 1000px;
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;

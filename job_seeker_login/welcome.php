@@ -309,7 +309,11 @@ if ($stmt->rowCount() > 0) {
 <!--alreat-->
 
 
-
+<script>
+        window.onload = function() {
+            alert("remember you have to complete your profile: go to profile and choose Edit profile .");
+        };
+    </script>
 			</main>
 
 		
