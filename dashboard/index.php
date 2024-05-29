@@ -267,6 +267,7 @@ if (!isset($_SESSION['user_email'])) {
         </div>
         <div id="Seekers" class="tabcontent">
         <h3>Latest Seekers</h3>
+        <div class="table-responsive">
         <div class="table-container">
             <table class="table">
        
@@ -303,6 +304,7 @@ if (!isset($_SESSION['user_email'])) {
            
             <button id="load-more-seekers-btn">Load More</button>
         </div>
+            </div>
     </div>
 
     <div id="Agents" class="tabcontent">
