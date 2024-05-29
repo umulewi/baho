@@ -19,19 +19,7 @@
         .btn.update {
             background-color: #b0b435;
         }
-        /* .btn {
-            padding: 8px 12px;
-            text-decoration: none;
-            border-radius: 4px;
-            color: white;
-            font-weight: bold;
-            display: inline-block;
-            margin: 4px;
-        }
         
-        .btn.update {
-            background-color: #b0b435;
-        } */
         @media (max-width: 600px) {
             .btn {
                 display: block;
@@ -44,17 +32,20 @@
 </head>
 <body>
     <table>
-        <!-- Your PHP code will generate rows here -->
-    </table>
+    <tr>
+                    <th>ID</th>
+                    <th>NAMES</th>
+                    <th>PROVINCE</th>
+                    <th>DISTRICT</th>
+                    <th>ACTION</th>
+                </tr>
+    
 </body>
 </html>
 <?php
 include '../connection.php';
 $lastId = isset($_GET['lastId']) ? intval($_GET['lastId']) : 0;
-$limit = 2;
-$stmt = $pdo->prepare("SELECT * FROM agent INNER JOIN users ON users.users_id = agent.users_id WHERE agent_id > :lastId ORDER BY agent_id ASC LIMIT :limit");
-$stmt->bindParam(':lastId', $lastId, PDO::PARAM_INT);
-$stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+$stmt = $pdo->prepare("SELECT * FROM agent INNER JOIN users ON users.users_id = agent.users_id ORDER BY agent_id ");
 $stmt->execute();
 
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
