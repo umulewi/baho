@@ -266,13 +266,81 @@ if (!isset($_SESSION['user_email'])) {
             </div>
         </div>
         <div id="Seekers" class="tabcontent">
-            <h3>Latest Seekers</h3>
-            <p>Content for Latest Seekers...</p>
+        <h3>Latest Seekers</h3>
+        <div class="table-container">
+            <table class="table">
+       
+                <tr>
+                    <th>ID</th>
+                    <th>NAMES</th>
+                    <th>SALARY</th>
+                    <th>BIO</th>
+                    <th>AGE</th>
+                    <th>ACTION</th>
+                </tr>
+         
+                <?php 
+                $i = 1;
+                $stmt = $pdo->query("SELECT * FROM job_seeker INNER JOIN users ON users.users_id = job_seeker.users_id LIMIT 2");
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                ?>
+                
+                <tr>
+                            <td><?php echo $i; ?></td>
+                            <td><?php echo $row['full_name']; ?></td>
+                            <td><?php echo $row['salary']; ?> RW</td>
+                            <td><?php echo $row['bio']; ?></td>
+                            <td><?php echo $row['province']; ?></td>
+                            <td style="width: -56rem">
+                            <a class="btn custom-bg shadow-none" style="background-color:#b0b435" href="details.php?job_seeker_id=<?php echo $row['job_seeker_id']; ?>"><b>MORE</b></a>
+                            <a class="btn custom-bg shadow-none" style="background-color:#b0b435" href="update_job_seeker.php?job_seeker_id=<?php echo $row['job_seeker_id']; ?>"><b>Update</b></a>
+                        </td>
+                <?php
+                    $i++;
+                }
+                ?>
+            </table>
+           
+            <button id="load-more-seekers-btn">Load More</button>
         </div>
-        <div id="Agents" class="tabcontent">
+    </div>
+
+    <div id="Agents" class="tabcontent">
             <h3>Latest Agents</h3>
-            <p>Content for Latest Agents...</p>
-        </div>
+            <p>
+            <table class="table">
+                <tr>
+                    <th>ID</th>
+                    <th>NAMES</th>
+                    <th>PROVINCE</th>
+                    <th>DISTRICT</th>
+                    <th>ACTION</th>
+                </tr>
+                <?php 
+                $i=1;
+                $stmt = $pdo->query("SELECT * FROM agent inner join users on users.users_id=agent.users_id");
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    ?>
+                    <tr>
+                        <td><?php echo $i; ?></td>
+                        <td><?php echo $row['full_name'];?></td>
+                        <td><?php echo $row['province'];?></td>
+                        <td><?php echo $row['district'];?></td>
+                        <td style="width: -56rem">
+                        <a class="btn custom-bg shadow-none" style="background-color:#b0b435" href="more_agent.php?agent_id=<?php echo $row['agent_id'];?>"><b>More</b></a>
+                        <a class="btn custom-bg shadow-none" style="background-color:#b0b435" href="update_agent.php?agent_id=<?php echo $row['agent_id'];?>"><b>Update</b></a>
+                    </td>
+                </tr>
+                <?php
+                $i++;
+            }
+            ?>
+            </table>
+            <button id="load-more-agents-btn">Load More</button>
+        </p>
+    </div>
+</div>
+        
     </div>
 </section>
 
@@ -303,7 +371,6 @@ if (!isset($_SESSION['user_email'])) {
         var table = document.getElementById("providers-table");
         var lastRow = table.rows[table.rows.length - 1];
         var lastId = lastRow ? lastRow.cells[0].innerText : 0;
-
         fetch('load_more_providers.php?lastId=' + lastId)
             .then(response => response.text())
             .then(data => {
@@ -319,13 +386,8 @@ if (!isset($_SESSION['user_email'])) {
             });
     });
 });
-
 </script>
 
-
-
-
-here
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -399,11 +461,54 @@ here
         function showContent(content) {
             document.getElementById("content").innerHTML = content;
         }
-
         document.getElementById("sidebarToggleBtn").addEventListener("click", function() {
             document.getElementById("sidebar").classList.toggle("collapsed");
             document.getElementById("mainContent").classList.toggle("collapsed");
         });
     </script>
+
+<!-- job_seeker-->
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("load-more-seekers-btn").addEventListener("click", function() {
+        var loadMoreBtn = this;
+        var table = document.querySelector("#Seekers table");
+        var lastRow = table.rows[table.rows.length - 1];
+        var lastId = lastRow ? lastRow.cells[0].innerText : 0;
+        fetch('load_more_seekers.php?lastId=' + lastId)
+            .then(response => response.text())
+            .then(data => {
+                // Append new rows
+                var newRows = document.createElement('tbody');
+                newRows.innerHTML = data;
+                table.appendChild(newRows);
+            });
+    });
+});
+</script>
+
+<!-- agent-->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("load-more-agents-btn").addEventListener("click", function() {
+        var loadMoreBtn = this;
+        var table = document.querySelector("#Agents table");
+        var lastRow = table.rows[table.rows.length - 1];
+        var lastId = lastRow ? lastRow.cells[0].innerText : 0;
+        fetch('load_more_agents.php?lastId=' + lastId)
+            .then(response => response.text())
+            .then(data => {
+                // Append new rows
+                var newRows = document.createElement('tbody');
+                newRows.innerHTML = data;
+                table.appendChild(newRows);
+            });
+    });
+});
+
+</script>
+
+
 </body>
 </html>

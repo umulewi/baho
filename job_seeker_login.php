@@ -51,7 +51,6 @@ ini_set('display_errors', 1);
 }
 
 ?>
-
 <?php
 require_once 'job_seeker_login/config.php';
 
