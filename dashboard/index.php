@@ -308,8 +308,10 @@ if (!isset($_SESSION['user_email'])) {
     </div>
 
     <div id="Agents" class="tabcontent">
+
             <h3>Latest Agents</h3>
             <p>
+            <div class="table-responsive">
             <table class="table">
                 <tr>
                     <th>ID</th>
@@ -338,6 +340,7 @@ if (!isset($_SESSION['user_email'])) {
             }
             ?>
             </table>
+        </div>
             <button id="load-more-agents-btn">Load More</button>
         </p>
     </div>
