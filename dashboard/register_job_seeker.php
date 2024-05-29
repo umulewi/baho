@@ -16,18 +16,19 @@ include'dashboard.php';
     <title>Document</title>
     <style>
         /* Form container */
-        .form-container {
-            max-width: 500px;
+        .form-container { 
+            max-width: 1000px;
             margin: 0 auto;
             padding: 20px;
-            border: 1px solid #ccc;
             border-radius: 5px;
             background-color: #f9f9f9;
+          
         }
-
-        /* Form fields */
+     
         .form-container div {
             margin-bottom: 15px;
+            display: flex;
+            flex-wrap: wrap;
         }
         .form-container label {
             display: block;
@@ -36,27 +37,18 @@ include'dashboard.php';
         }
         .form-container input[type="text"],
         .form-container input[type="date"],
-        .form-container input[type="number"],
-        select,
-        textarea,
         .form-container input[type="password"],
-
+        .form-container input[type="number"],
+        form select,
+        textarea,
         .form-container input[type="email"] {
-            width: 100%;
+            width: 1000px;
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
             box-sizing: border-box; 
+            margin-bottom: 10px;
         }
-        .form-container input[type="tel"] {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box; 
-        }
-
-        
         .form-container input[type="submit"] {
             width: 20%;
             padding: 10px;
@@ -67,86 +59,113 @@ include'dashboard.php';
             font-size: 16px;
             cursor: pointer;
         }
-
         .form-container input[type="submit"]:hover {
             background-color: teal;
+        }
+
+      
+        @media screen and (min-width: 768px) {
+            .form-container div {
+                justify-content: space-between;
+                align-items: flex-start;
+            }
+            .form-container div > div {
+                width: 46%;
+            }
         }
     </style>
     
 </head>
 <body>
-
     <h2 style="text-align:center;margin-top:2rem">Register Job Seeker</h2><br>
-
-<div class="form-container">
-    
+    <div class="form-container">
         <form action="" method="post">
             <div>
-                <label for="name">FIRSTNAME:</label>
-                <input type="text"  name="firstname" required>
+                <div>
+                    <label for="name">FIRSTNAME:</label>
+                    <input type="text"  name="firstname" required>
+                </div>
+                <div>
+                    <label for="physical_code">LASTNAME:</label>
+                    <input type="text"  name="lastname" required>
+                </div>
             </div>
             <div>
-                <label for="physical_code">LASTNAME:</label>
-                <input type="text"  name="lastname" required>
+                <div>
+                    <label for="email">FATHER'S NAME:</label>
+                    <input type="email"  name="fathers_name" required>
+                </div>
+                <div>
+                    <label for="phone">MOTHER'S NAME:</label>
+                    <input type="text"  name="mothers_name" required>
+                </div>
             </div>
             <div>
-                <label for="email">FATHER'S NAME:</label>
-                <input type="email"  name="fathers_name" required>
+                <div>
+                    <label for="physical_code">SALARY:</label>
+                    <input type="number" id="salary" name="salary" required>
+                </div>
+                <div>
+                    <label for="province">PROVINCE:</label>
+                    <select name="province" required>
+                        <option value="">CHOOSE PROVINCE</option>
+                        <option value="KIGALI CITY">KIGALI CITY</option>
+                        <option value="WESTERN PROVINCE">WESTERN PROVINCE</option>
+                        <option value="ESTERN PROVINCE">ESTERN PROVINCE</option>
+                        <option value="NORTH PROVINCE">NORTH PROVINCE</option>
+                        <option value="SOUTH PROVINCE">NORTH PROVINCE</option>
+                    </select>
+                </div>
             </div>
             <div>
-                <label for="phone">MOTHER'S NAME:</label>
-                <input type="text"  name="mothers_name" required>
+                <div>
+                    <label for="phone">DISTRICT:</label>
+                    <input type="text"  name="district" required>
+                </div>
+                <div>
+                    <label for="phone">SECTOR:</label>
+                    <input type="text"  name="sector" required>
+                </div>
             </div>
             <div>
-            <label for="physical_code">SALARY:</label>
-            <input type="number" id="salary" name="salary" required>
-        </div>
-        <div>
-                <label for="province">PROVINCE:</label>
-                <select name="province" required>
-                <option value="">CHOOSE PROVINCE</option>
-                    <option value="KIGALI CITY">KIGALI CITY</option>
-                    <option value="WESTERN PROVINCE">WESTERN PROVINCE</option>
-                    <option value="ESTERN PROVINCE">ESTERN PROVINCE</option>
-                    <option value="NORTH PROVINCE">NORTH PROVINCE</option>
-                    <option value="SOUTH PROVINCE">NORTH PROVINCE</option>
-                </select>
-            </div>
-            <div>
-                <label for="phone">DISTRICT:</label>
-                <input type="text"  name="district" required>
-            </div>
-            <div>
-                <label for="phone">SECTOR:</label>
-                <input type="text"  name="sector" required>
-            </div>
-            <div>
-                <label for="phone">CELL:</label>
-                <input type="text"  name="cell" required>
-            </div>
-            <div>
-                <label for="phone">VILLAGE:</label>
-                <input type="text"  name="village" required>
-            </div>
-            <div>
-                <label for="gender">GENDER:</label>
-                <select name="gender">
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                </select>
+                <div>
+                    <label for="phone">SECTOR:</label>
+                    <input type="text"  name="sector" required>
+                </div>
+                <div>
+                    <label for="phone">CELL:</label>
+                    <input type="text"  name="cell" required>
+                </div>
             </div>
 
             <div>
-            <label for="physical_code">EMAIL:</label>
-            <input type="text" id="email" name="email" required>
-        </div>
-        
-        <div>
-            <label for="phone">PHONE NUMBER:</label>
-            <input type="text" id="phone" name="telephone" required>
-        </div>
+                <div>
+                    <label for="phone">VILLAGE:</label>
+                    <input type="text"  name="village" required>
+                </div>
+                <div>
+                    <label for="gender">GENDER:</label>
+                    <select name="gender">
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                </div>
+            </div>
 
-        <div>
+                
+                
+                <div>
+                    <div>
+                        <label for="physical_code">EMAIL:</label>
+                        <input type="text" id="email" name="email" required>
+                    </div>
+                    <div>
+                        <label for="phone">PHONE NUMBER:</label>
+                        <input type="text" id="phone" name="telephone" required>
+                    </div>
+                </div>
+                <div>
+                <div>
             <label for="email">PASSWORD:</label>
             <input type="password" id="password" name="password" required>
         </div>
@@ -154,7 +173,10 @@ include'dashboard.php';
             <label for="date_of_birth">DATE OF BIRTH:</label>
             <input type="date" name="date_of_birth" id="date_of_birth" required>
             </div>
-            <div>
+                </div>
+
+                <div>
+                <div>
                 <label for="phone">ID</label>
                 <input type="number"  name="id" required>
             </div>
@@ -162,6 +184,10 @@ include'dashboard.php';
                 <label for="bio">BIO:</label>
                 <textarea id="bio" name="bio" required ></textarea>
             </div>
+
+                </div>
+       
+           
             <div>
                 <input type="submit" name="register" value="Register" stayle="background-color:red">
             </div>
