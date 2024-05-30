@@ -76,7 +76,6 @@ include 'dashboard.php';
             font-size: 16px;
             cursor: pointer;
         }
-
         .form-container input[type="submit"]:hover {
             background-color: teal;
         }

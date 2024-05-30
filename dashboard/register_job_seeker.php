@@ -24,7 +24,6 @@ include'dashboard.php';
             background-color: #f9f9f9;
           
         }
-     
         .form-container div {
             margin-bottom: 15px;
             display: flex;
