@@ -16,40 +16,45 @@ include'dashboard.php';
     <title>Document</title>
     <style>
         /* Form container */
-        .form-container { 
-            max-width: 1000px;
+       /* Form container */
+       .form-container {
+            max-width: 800px;
             margin: 0 auto;
             padding: 20px;
+            border: 1px solid #ccc;
             border-radius: 5px;
             background-color: #f9f9f9;
-          
         }
+
+        /* Form fields */
         .form-container div {
             margin-bottom: 15px;
-            display: flex;
-            flex-wrap: wrap;
         }
+
         .form-container label {
             display: block;
             font-weight: bold;
             margin-bottom: 5px;
         }
+
         .form-container input[type="text"],
         .form-container input[type="date"],
         .form-container input[type="password"],
+        .form-container input[type="email"],xta
+        .form-container input[type="tel"],
         .form-container input[type="number"],
-        form select,
+        select,
         textarea,
-        .form-container input[type="email"] {
-            width: 1000px;
+        select {
+            width: 100%;
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
-            box-sizing: border-box; 
-            margin-bottom: 10px;
+            box-sizing: border-box;
         }
+
         .form-container input[type="submit"] {
-            width: 20%;
+            width: 100%;
             padding: 10px;
             border: none;
             border-radius: 5px;
@@ -58,18 +63,26 @@ include'dashboard.php';
             font-size: 16px;
             cursor: pointer;
         }
+
         .form-container input[type="submit"]:hover {
-            background-color: teal;
+            background-color: darkslategray;
         }
 
-      
-        @media screen and (min-width: 768px) {
-            .form-container div {
-                justify-content: space-between;
-                align-items: flex-start;
-            }
-            .form-container div > div {
-                width: 46%;
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .form-row > div {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .form-row > div {
+                min-width: 100%;
             }
         }
     </style>
@@ -79,7 +92,7 @@ include'dashboard.php';
     <h2 style="text-align:center;margin-top:2rem">Register Job Seeker</h2><br>
     <div class="form-container">
         <form action="" method="post">
-            <div>
+        <div class="form-row">
                 <div>
                     <label for="name">FIRSTNAME:</label>
                     <input type="text"  name="firstname" required>
@@ -89,7 +102,7 @@ include'dashboard.php';
                     <input type="text"  name="lastname" required>
                 </div>
             </div>
-            <div>
+            <div class="form-row">
                 <div>
                     <label for="email">FATHER'S NAME:</label>
                     <input type="email"  name="fathers_name" required>
@@ -99,7 +112,7 @@ include'dashboard.php';
                     <input type="text"  name="mothers_name" required>
                 </div>
             </div>
-            <div>
+            <div class="form-row">
                 <div>
                     <label for="physical_code">SALARY:</label>
                     <input type="number" id="salary" name="salary" required>
@@ -116,7 +129,7 @@ include'dashboard.php';
                     </select>
                 </div>
             </div>
-            <div>
+            <div class="form-row">
                 <div>
                     <label for="phone">DISTRICT:</label>
                     <input type="text"  name="district" required>
@@ -126,7 +139,7 @@ include'dashboard.php';
                     <input type="text"  name="sector" required>
                 </div>
             </div>
-            <div>
+            <div class="form-row">
                 <div>
                     <label for="phone">SECTOR:</label>
                     <input type="text"  name="sector" required>
@@ -137,7 +150,7 @@ include'dashboard.php';
                 </div>
             </div>
 
-            <div>
+            <div class="form-row">
                 <div>
                     <label for="phone">VILLAGE:</label>
                     <input type="text"  name="village" required>
@@ -153,7 +166,7 @@ include'dashboard.php';
 
                 
                 
-                <div>
+            <div class="form-row">
                     <div>
                         <label for="physical_code">EMAIL:</label>
                         <input type="text" id="email" name="email" required>
@@ -163,7 +176,7 @@ include'dashboard.php';
                         <input type="text" id="phone" name="telephone" required>
                     </div>
                 </div>
-                <div>
+                <div class="form-row">
                 <div>
             <label for="email">PASSWORD:</label>
             <input type="password" id="password" name="password" required>
@@ -174,7 +187,7 @@ include'dashboard.php';
             </div>
                 </div>
 
-                <div>
+                <div class="form-row">
                 <div>
                 <label for="phone">ID</label>
                 <input type="number"  name="id" required>

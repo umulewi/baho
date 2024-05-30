@@ -24,10 +24,15 @@ include 'dashboard.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         /* Form container */
         .form-container {
-            max-width: 500px;
+            max-width: 800px;
             margin: 0 auto;
             padding: 20px;
             border: 1px solid #ccc;
@@ -39,39 +44,28 @@ include 'dashboard.php';
         .form-container div {
             margin-bottom: 15px;
         }
+
         .form-container label {
             display: block;
             font-weight: bold;
             margin-bottom: 5px;
         }
+
         .form-container input[type="text"],
         .form-container input[type="date"],
         .form-container input[type="password"],
-       select,
-        .form-container input[type="email"] {
+        .form-container input[type="email"],
+        .form-container input[type="tel"],
+        select {
             width: 100%;
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
-            box-sizing: border-box; /* Ensure padding and border are included in width */
-        }
-        .form-container input[type="tel"] {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box; 
-        }
-        .form-container input[type="password"] {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box; 
+            box-sizing: border-box;
         }
 
         .form-container input[type="submit"] {
-            width: 20%;
+            width: 100%;
             padding: 10px;
             border: none;
             border-radius: 5px;
@@ -82,86 +76,109 @@ include 'dashboard.php';
         }
 
         .form-container input[type="submit"]:hover {
-            background-color: teal;
+            background-color: darkslategray;
+        }
+
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .form-row > div {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .form-row > div {
+                min-width: 100%;
+            }
         }
     </style>
-    
 </head>
 <body>
- 
-    <h2 style="text-align:center;margin-top:2rem">Register Agent</h2><br>
+
+<h2 style="text-align:center;margin-top:2rem">Register Agent</h2><br>
 <div class="form-container">
-    
-        <form action="" method="post">
+    <form action="" method="post">
+        <div class="form-row">
             <div>
-                <label for="name">FIRSTNAME:</label>
-                <input type="text"  name="firstname" required>
+                <label for="firstname">FIRSTNAME:</label>
+                <input type="text" name="firstname" required>
             </div>
             <div>
-                <label for="physical_code">LASTNAME:</label>
-                <input type="text"  name="lastname" required>
+                <label for="lastname">LASTNAME:</label>
+                <input type="text" name="lastname" required>
             </div>
+        </div>
+        <div class="form-row">
             <div>
                 <label for="gender">GENDER:</label>
-                <select name="gender">
+                <select name="gender" required>
                     <option value="male">Male</option>
                     <option value="female">Female</option>
                 </select>
             </div>
             <div>
-                <label for="phone">DATE OF BIRTH</label>
-                <input type="date"  name="date_of_birth" required>
+                <label for="date_of_birth">DATE OF BIRTH:</label>
+                <input type="date" name="date_of_birth" required>
             </div>
-            <div>
-                <label for="phone">PROVINCE:</label>
-                <input type="text"  name="province" required>
-            </div>
-            <div>
-                <label for="phone">DISTRICT:</label>
-                <input type="text"  name="district" required>
-            </div>
-            <div>
-                <label for="phone">SECTOR:</label>
-                <input type="text"  name="sector" required>
-            </div>
-            <div>
-                <label for="phone">CELL:</label>
-                <input type="text"  name="cell" required>
-            </div>
-            <div>
-                <label for="phone">VILLAGE:</label>
-                <input type="text"  name="village" required>
-            </div>
-            <div>
-            <label for="physical_code">Email:</label>
-            <input type="text" id="email" name="email" required>
         </div>
-        
+        <div class="form-row">
+            <div>
+                <label for="province">PROVINCE:</label>
+                <input type="text" name="province" required>
+            </div>
+            <div>
+                <label for="district">DISTRICT:</label>
+                <input type="text" name="district" required>
+            </div>
+        </div>
+        <div class="form-row">
+            <div>
+                <label for="sector">SECTOR:</label>
+                <input type="text" name="sector" required>
+            </div>
+            <div>
+                <label for="cell">CELL:</label>
+                <input type="text" name="cell" required>
+            </div>
+        </div>
+        <div class="form-row">
+            <div>
+                <label for="village">VILLAGE:</label>
+                <input type="text" name="village" required>
+            </div>
+            <div>
+                <label for="email">EMAIL:</label>
+                <input type="email" name="email" required>
+            </div>
+        </div>
+        <div class="form-row">
+            <div>
+                <label for="telephone">PHONE NUMBER:</label>
+                <input type="tel" name="telephone" required>
+            </div>
+            <div>
+                <label for="password">PASSWORD:</label>
+                <input type="password" name="password" required>
+            </div>
+        </div>
         <div>
-            <label for="phone">Phone Number:</label>
-            <input type="text" id="phone" name="telephone" required>
+            <label for="id">ID:</label>
+            <input type="text" name="id" required>
         </div>
-
         <div>
-            <label for="email">Password:</label>
-            <input type="password" id="password" name="password" required>
+            <input type="submit" name="register" value="Register">
         </div>
+    </form>
+</div>
 
-            <div>
-                <label for="phone">ID</label>
-                <input type="text"  name="id" required>
-            </div>
-
-            
-            <div>
-                <input type="submit" name="register" value="Register" stayle="background-color:red">
-            </div>
-        </form>
-    </div>
-			
-			
 </body>
 </html>
+
 
 <?php
 include '../connection.php';

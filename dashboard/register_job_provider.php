@@ -28,8 +28,9 @@ include 'dashboard.php';
     <title>Document</title>
     <style>
         /* Form container */
-        .form-container {
-            max-width: 500px;
+       /* Form container */
+       .form-container {
+            max-width: 800px;
             margin: 0 auto;
             padding: 20px;
             border: 1px solid #ccc;
@@ -41,33 +42,28 @@ include 'dashboard.php';
         .form-container div {
             margin-bottom: 15px;
         }
+
         .form-container label {
             display: block;
             font-weight: bold;
             margin-bottom: 5px;
         }
+
         .form-container input[type="text"],
         .form-container input[type="date"],
-        select,
         .form-container input[type="password"],
-        .form-container input[type="email"] {
+        .form-container input[type="email"],
+        .form-container input[type="tel"],
+        select {
             width: 100%;
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
-            box-sizing: border-box; /* Ensure padding and border are included in width */
-        }
-        .form-container input[type="tel"] {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box; /* Ensure padding and border are included in width */
+            box-sizing: border-box;
         }
 
-        /* Submit button */
         .form-container input[type="submit"] {
-            width: 20%;
+            width: 100%;
             padding: 10px;
             border: none;
             border-radius: 5px;
@@ -76,8 +72,27 @@ include 'dashboard.php';
             font-size: 16px;
             cursor: pointer;
         }
+
         .form-container input[type="submit"]:hover {
-            background-color: teal;
+            background-color: darkslategray;
+        }
+
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .form-row > div {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .form-row > div {
+                min-width: 100%;
+            }
         }
     </style>
     
@@ -88,6 +103,7 @@ include 'dashboard.php';
 <div class="form-container">
     
         <form action="" method="post">
+        <div class="form-row">
             <div>
                 <label for="name">FIRSTNAME:</label>
                 <input type="text"  name="firstname" required>
@@ -96,7 +112,9 @@ include 'dashboard.php';
                 <label for="physical_code">LASTNAME:</label>
                 <input type="text"  name="lastname" required>
             </div>
-            <div>
+        </div>
+        <div class="form-row">
+        <div>
                 <label for="gender">GENDER:</label>
                 <select name="gender">
                     <option value="male">Male</option>
@@ -107,7 +125,10 @@ include 'dashboard.php';
                 <label for="phone">DATE OF BIRTH</label>
                 <input type="date"  name="date_of_birth" required>
             </div>
-            <div>
+        </div>
+            
+        <div class="form-row">
+        <div>
                 <label for="phone">PROVINCE:</label>
                 <input type="text"  name="province" required>
             </div>
@@ -115,7 +136,11 @@ include 'dashboard.php';
                 <label for="phone">DISTRICT:</label>
                 <input type="text"  name="district" required>
             </div>
-            <div>
+
+        </div>
+            
+        <div class="form-row">
+        <div>
                 <label for="phone">SECTOR:</label>
                 <input type="text"  name="sector" required>
             </div>
@@ -123,23 +148,33 @@ include 'dashboard.php';
                 <label for="phone">CELL:</label>
                 <input type="text"  name="cell" required>
             </div>
+        </div>
+        <div class="form-row">
             <div>
                 <label for="phone">VILLAGE:</label>
                 <input type="text"  name="village" required>
             </div>
             <div>
-            <label for="physical_code">Email:</label>
+            <label for="physical_code">EMAIL:</label>
             <input type="text" id="email" name="email" required>
         </div>
-        
-        <div>
-            <label for="phone">Phone Number:</label>
+            </div>
+
+            <div class="form-row">
+            <div>
+            <label for="phone">PHONE:</label>
             <input type="text" id="phone" name="telephone" required>
         </div>
 
         <div>
-            <label for="email">Password:</label>
+            <label for="email">PASSWORD:</label>
             <input type="password" id="password" name="password" required>
+        </div>
+
+            </div>
+        <div>
+
+
         </div>
             <div>
                 <label for="phone">ID</label>
