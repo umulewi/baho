@@ -226,7 +226,7 @@ if (isset($_POST["register"])) {
     $stmt_job_provider->bindParam(':id', $id);
     try {
         if ($stmt_job_provider->execute()) {
-            echo "<script>alert('New job provider has been added');</script>";
+            echo "<script>alert('New agent has been added');</script>";
         } else {
             echo "<script>alert('Error: Unable to execute statement');</script>";
         }

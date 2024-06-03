@@ -117,12 +117,22 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
     <div class="form-row">
         <div>
-            <label for="name">JOB SEEKER NAME:</label>
+            <label for="name">SEEKER'S FIRSTNAME:</label>
             <input type="text" name="first_name" value="<?php echo htmlspecialchars($row['first_name']); ?>" required readonly>
         </div>
         <div>
-            <label for="name">JOB SEEKER LAST NAME:</label>
+            <label for="name">SEEKER'S LAST NAME:</label>
             <input type="text" name="last_name" value="<?php echo htmlspecialchars($row['last_name']); ?>" required readonly>
+        </div>
+    </div>
+    <div class="form-row">
+        <div>
+            <label for="name">FATHERS'S NAME:</label>
+            <input type="text" name="first_name" value="<?php echo htmlspecialchars($row['fathers_name']); ?>" required readonly>
+        </div>
+        <div>
+            <label for="name">MOTHER'S NAME:</label>
+            <input type="text" name="last_name" value="<?php echo htmlspecialchars($row['mothers_name']); ?>" required readonly>
         </div>
     </div>
     <div class="form-row">
