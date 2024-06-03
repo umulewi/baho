@@ -138,8 +138,6 @@ include'../connection.php';
     </section> 
     <!-- SIDEBAR -->
 
-
-
     <!-- CONTENT -->
     <section id="content">
         <!-- NAVBAR -->
@@ -189,9 +187,6 @@ include'../connection.php';
                     </span>
                 </li>
             </ul>
-
-
-			
 		<div>
 
         </div>
