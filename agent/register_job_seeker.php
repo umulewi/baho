@@ -181,13 +181,18 @@ include'dashboard.php';
             <label for="bio">BIO:</label>
             <textarea id="bio" name="bio" required></textarea>
         </div>
+        <div>
+                <label for="date_of_birth">DATE OF BIRTH:</label>
+                <input type="date" name="date_of_birth" id="date_of_birth" required>
+        </div>
+    </div>
+    <div class="form-row">
 
         <div>
             <label for="email">PASSWORD:</label>
             <input type="password" id="password" name="password" required>
         </div>
-           </div>
-      
+
             <div>
                 <label for="phone">ID</label>
                 <input type="number"  name="id" required>
