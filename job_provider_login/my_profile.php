@@ -5,10 +5,8 @@ if (!isset($_SESSION['user_email'])) {
     exit();
 }
 $user_email = $_SESSION['user_email']; 
-echo  $user_email;
 
 ?>
-
 <?php
 include'dashboard.php';
 ?>
@@ -17,11 +15,10 @@ include'dashboard.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update Student</title>
+    <title></title>
     <style>
-        /* Form container */
-        .form-container { 
-            max-width: 500px;
+        .form-container {
+            max-width: 800px;
             margin: 0 auto;
             padding: 20px;
             border: 1px solid #ccc;
@@ -33,24 +30,30 @@ include'dashboard.php';
         .form-container div {
             margin-bottom: 15px;
         }
+
         .form-container label {
             display: block;
             font-weight: bold;
             margin-bottom: 5px;
         }
+
         .form-container input[type="text"],
         .form-container input[type="date"],
         .form-container input[type="password"],
-        form select,
-        .form-container input[type="email"] {
+        .form-container input[type="email"],
+        .form-container input[type="tel"],
+        .form-container input[type="number"],
+
+        select {
             width: 100%;
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
-            box-sizing: border-box; 
+            box-sizing: border-box;
         }
+
         .form-container input[type="submit"] {
-            width: 20%;
+            width: 100%;
             padding: 10px;
             border: none;
             border-radius: 5px;
@@ -61,7 +64,25 @@ include'dashboard.php';
         }
 
         .form-container input[type="submit"]:hover {
-            background-color: teal;
+            background-color: darkslategray;
+        }
+
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .form-row > div {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .form-row > div {
+                min-width: 100%;
+            }
         }
     </style>
     
@@ -74,11 +95,14 @@ $stmt->bindParam(':user_email', $user_email);
 $stmt->execute();
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
 ?>
-<h2 style="text-align:center"></h2><br>
+<h2 style="text-align:center">My Profile</h2><br>
 <div class="form-container">
+
     <form action="" method="post">
+       
     <input type="hidden" name="job_provider_id" value="<?php echo $row['job_provider_id']; ?>">
-        <div>
+    <div class="form-row">
+    <div>
             <label for="name">FIRST NAME:</label>
             <input type="text" name="first_name" value="<?php echo $row['first_name']; ?>" required>
         </div>
@@ -86,6 +110,8 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
             <label for="name">LAST NAME:</label>
             <input type="text" name="last_name" value="<?php echo $row['last_name']; ?>" required>
         </div>
+    </div>
+    <div class="form-row"> 
         <div>
             <label for="name">DATE OF BIRTH:</label>
             <input type="date" name="date_of_birth" value="<?php echo $row['date_of_birth']; ?>" required>
@@ -95,6 +121,8 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
             <label for="province">PROVINCE:</label>
             <input type="text" id="province" name="province" value="<?php echo $row['province']; ?>" required>
         </div>
+    </div>
+    <div class="form-row">
         <div>
             <label for="district">DISTRICT:</label>
             <input type="text" id="district" name="district" value="<?php echo $row['district']; ?>" required>
@@ -103,6 +131,8 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
             <label for="sector">SECTOR:</label>
             <input type="text" id="sector" name="sector" value="<?php echo $row['sector']; ?>" required>
         </div>
+    </div>
+    <div class="form-row">
         <div>
             <label for="village">VILLAGE:</label>
             <input type="text" id="village" name="village" value="<?php echo $row['village']; ?>" required>
@@ -117,14 +147,19 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
                     <option value="female">Female</option>
                 </select>
         </div>
+    </div>
+    <div class="form-row">
         <div>
             <label for="cell">CELL:</label>
             <input type="text" id="cell" name="cell" value="<?php echo $row['cell']; ?>" required>
         </div>
         <div>
-            <label for="id">IDENTIFICATION CARD</label>
-            <input type="text" id="ID" name="ID" value="<?php echo $row['ID']; ?>" required>
-        </div>
+    <label for="id">IDENTIFICATION CARD</label>
+    <input type="number" id="ID" name="ID" value="<?php echo $row['ID']; ?>" required  maxlength="16" oninput="if(this.value.length > 16) this.value = this.value.slice(0, 16);">
+</div>
+
+    </div>
+    <div class="form-row">
         <div>
             <label for="id">TELEPHONE:</label>
             <input type="text" id="ID" name="telephone" value="<?php echo $row['telephone']; ?>" required>
@@ -133,6 +168,7 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
             <label for="id">PASSWORD:</label>
             <input type="text" id="ID" name="password" value="<?php echo $row['password']; ?>" required>
         </div>
+    </div>
         <div>
             <input type="submit" name="update" value="Update" style="background-color: teal;">
         </div>

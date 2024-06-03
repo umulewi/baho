@@ -20,9 +20,8 @@ include'dashboard.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Update Student</title>
     <style>
-        /* Form container */
-        .form-container { 
-            max-width: 500px;
+        .form-container {
+            max-width: 800px;
             margin: 0 auto;
             padding: 20px;
             border: 1px solid #ccc;
@@ -34,27 +33,38 @@ include'dashboard.php';
         .form-container div {
             margin-bottom: 15px;
         }
+
         .form-container label {
             display: block;
             font-weight: bold;
             margin-bottom: 5px;
         }
+
         .form-container input[type="text"],
-        textarea,
-        .form-container input[type="password"],
         .form-container input[type="date"],
-        form select,
-        .form-container input[type="email"] {
+        .form-container input[type="password"],
+        .form-container input[type="email"],
+        .form-container input[type="tel"],
+        .form-container input[type="number"],
+   
+        textarea,
+
+        select {
             width: 100%;
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
-            box-sizing: border-box; 
+            box-sizing: border-box;
         }
-
-
+        button{
+            width: 40%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
         .form-container input[type="submit"] {
-            width: 20%;
+            width: 100%;
             padding: 10px;
             border: none;
             border-radius: 5px;
@@ -65,27 +75,28 @@ include'dashboard.php';
         }
 
         .form-container input[type="submit"]:hover {
-            background-color: teal;
+            background-color: darkslategray;
         }
-        <style>
-        .currency-input {
-            position: relative;
-            display: inline-block;
-            width: fit-content;
+
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
         }
-        .currency-input input {
-            padding-right: 0px; /* Adjust based on the width of the "USD" text */
+
+        .form-row > div {
+            flex: 1;
+            min-width: 300px;
         }
-        .currency-input .currency-text {
-            position: absolute;
-            right: 10px; /* Adjust to position the text correctly */
-            top: 90%;
-            transform: translateY(-0%);
-            pointer-events: none; /* Make sure the span doesn't block the input field */
-            color: #000; /* Adjust color to match the input field text */
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .form-row > div {
+                min-width: 100%;
+            }
         }
     </style>
-    </style>
+    
     
 </head>
 <body>
@@ -113,8 +124,8 @@ $salaryWithCurrency = $row['salary'] . ' RWF';
         <div style="display: flex; justify-content: center; width: 100%;">
             <img src="sample.png" alt="Avatar" style="width: 30%;">
         </div>
-
-        <div>
+        <div class="form-row">
+            <div>
             <label for="first_name">FIRST NAME:</label>
             <input type="text" name="first_name" value="<?php echo ($row['first_name']); ?>" required readonly>
         </div>
@@ -122,6 +133,8 @@ $salaryWithCurrency = $row['salary'] . ' RWF';
             <label for="last_name">LAST NAME:</label>
             <input type="text" name="last_name" value="<?php echo ($row['last_name']); ?>" required readonly>
         </div>
+    </div>
+    <div class="form-row">
         <div>
             <label for="date_of_birth">DATE OF BIRTH:</label>
             <input type="date" name="date_of_birth" value="<?php echo ($row['date_of_birth']); ?>" required readonly>
@@ -131,6 +144,9 @@ $salaryWithCurrency = $row['salary'] . ' RWF';
             <label for="province">PROVINCE:</label>
             <input type="text" id="province" name="province" value="<?php echo ($row['province']); ?>" required readonly>
         </div>
+
+    </div>
+    <div class="form-row">
         <div>
             <label for="district">DISTRICT:</label>
             <input type="text" id="district" name="district" value="<?php echo ($row['district']); ?>" required readonly>
@@ -139,8 +155,9 @@ $salaryWithCurrency = $row['salary'] . ' RWF';
             <label for="sector">SECTOR:</label>
             <input type="text" id="sector" name="sector" value="<?php echo ($row['sector']); ?>" required readonly>
         </div>
+    </div>
         
-        
+    <div class="form-row">
         <div>
             <label for="cell">CELL:</label>
             <input type="text" id="cell" name="cell" value="<?php echo ($row['cell']); ?>" required readonly>
@@ -149,7 +166,8 @@ $salaryWithCurrency = $row['salary'] . ' RWF';
             <label for="gender">GENDER:</label>
             <input type="text" id="gender" name="gender" value="<?php echo ($row['gender']); ?>" required readonly>
         </div>
-        
+    </div>
+    <div class="form-row">
         <div>
             <label for="salary">SALARY:</label>
             <div class="currency-input">
@@ -160,6 +178,7 @@ $salaryWithCurrency = $row['salary'] . ' RWF';
     <label for="bio">BIO:</label>
     <textarea id="bio" name="bio" required readonly><?php echo ($row['bio']); ?></textarea>
 </div>
+    </div>
 
         <button style="display: inline-block; padding: 10px 20px; margin: 10px 0; font-size: 16px; cursor: pointer; text-align: center; text-decoration: none; outline: none; color: #fff; background-color: teal; border: none; border-radius: 5px;">hire me</button>
     </form>
