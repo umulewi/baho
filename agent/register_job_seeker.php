@@ -22,9 +22,8 @@ include'dashboard.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        /* Form container */
         .form-container {
-            max-width: 500px;
+            max-width: 800px;
             margin: 0 auto;
             padding: 20px;
             border: 1px solid #ccc;
@@ -36,34 +35,31 @@ include'dashboard.php';
         .form-container div {
             margin-bottom: 15px;
         }
+
         .form-container label {
             display: block;
             font-weight: bold;
             margin-bottom: 5px;
         }
+
         .form-container input[type="text"],
         .form-container input[type="date"],
         .form-container input[type="password"],
-        select,
+        .form-container input[type="email"],
+        .form-container input[type="tel"],
+        .form-container input[type="number"],
         textarea,
-        .form-container input[type="email"] {
+
+        select {
             width: 100%;
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
-            box-sizing: border-box; /* Ensure padding and border are included in width */
-        }
-        .form-container input[type="tel"] {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box; /* Ensure padding and border are included in width */
+            box-sizing: border-box;
         }
 
-        /* Submit button */
         .form-container input[type="submit"] {
-            width: 20%;
+            width: 100%;
             padding: 10px;
             border: none;
             border-radius: 5px;
@@ -74,7 +70,25 @@ include'dashboard.php';
         }
 
         .form-container input[type="submit"]:hover {
-            background-color: teal;
+            background-color: darkslategray;
+        }
+
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .form-row > div {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .form-row > div {
+                min-width: 100%;
+            }
         }
     </style>
     
@@ -85,7 +99,8 @@ include'dashboard.php';
 <div class="form-container">
     
 <form action="" method="post">
-            <div>
+<div class="form-row">
+    <div>
                 <label for="name">FIRSTNAME:</label>
                 <input type="text"  name="firstname" required>
             </div>
@@ -93,6 +108,8 @@ include'dashboard.php';
                 <label for="physical_code">LASTNAME:</label>
                 <input type="text"  name="lastname" required>
             </div>
+    </div>
+    <div class="form-row">
             <div>
                 <label for="email">FATHER'S NAME:</label>
                 <input type="text"  name="fathers_name" required>
@@ -101,7 +118,9 @@ include'dashboard.php';
                 <label for="phone">MOTHER'S NAME:</label>
                 <input type="text"  name="mothers_name" required>
             </div>
-            <div>
+        </div>
+        <div class="form-row">
+        <div>
                 <label for="gender">GENDER:</label>
                 <select name="gender">
                     <option value="male">Male</option>
@@ -110,34 +129,22 @@ include'dashboard.php';
 
                 
             </div>
+
             <div>
-            <select name="gender" required>
-                <option value="">CHOOSE PROVINCE</option>
-                    <option value="KIGALI CITY">KIGALI CITY</option>
+            <label for="PROVINCE">PROVINCE:</label>
+                <select name="province">
+                <option value="KIGALI CITY">KIGALI CITY</option>
                     <option value="WESTERN PROVINCE">WESTERN PROVINCE</option>
                     <option value="ESTERN PROVINCE">ESTERN PROVINCE</option>
                     <option value="NORTH PROVINCE">NORTH PROVINCE</option>
                     <option value="SOUTH PROVINCE">NORTH PROVINCE</option>
                 </select>
-            </div>
 
+            
+            </div>
+        </div>
 
-            <div>
-                <label for="date_of_birth">DATE OF BIRTH:</label>
-                <input type="date" name="date_of_birth" id="date_of_birth" required>
-            </div>
-    
-            <div>
-                <label for="province">PROVINCE:</label>
-                <select name="province" required>
-                <option value="">choose province</option>
-                    <option value="KIGALI CITY">KIGALI CITY</option>
-                    <option value="WESTERN PROVINCE">WESTERN PROVINCE</option>
-                    <option value="ESTERN PROVINCE">ESTERN PROVINCE</option>
-                    <option value="NORTH PROVINCE">NORTH PROVINCE</option>
-                    <option value="SOUTH PROVINCE">NORTH PROVINCE</option>
-                </select>
-            </div>
+            <div class="form-row">
             <div>
                 <label for="phone">DISTRICT:</label>
                 <input type="text"  name="district" required>
@@ -146,6 +153,8 @@ include'dashboard.php';
                 <label for="phone">SECTOR:</label>
                 <input type="text"  name="sector" required>
             </div>
+            </div>
+            <div class="form-row">
             <div>
                 <label for="phone">CELL:</label>
                 <input type="text"  name="cell" required>
@@ -154,7 +163,9 @@ include'dashboard.php';
                 <label for="phone">VILLAGE:</label>
                 <input type="text"  name="village" required>
             </div>
-            <div>
+            </div>
+           <div class="form-row">
+           <div>
             <label for="physical_code">EMAIL:</label>
             <input type="email" id="email" name="email" required>
         </div>
@@ -163,7 +174,10 @@ include'dashboard.php';
             <label for="phone">PHONE NUMBER:</label>
             <input type="text" id="phone" name="telephone" required>
         </div>
-        <div>
+           </div>
+            
+           <div class="form-row">
+           <div>
             <label for="bio">BIO:</label>
             <textarea id="bio" name="bio" required></textarea>
         </div>
@@ -172,9 +186,11 @@ include'dashboard.php';
             <label for="email">PASSWORD:</label>
             <input type="password" id="password" name="password" required>
         </div>
+           </div>
+      
             <div>
                 <label for="phone">ID</label>
-                <input type="text"  name="id" required>
+                <input type="number"  name="id" required>
             </div>
             
             <div>

@@ -196,10 +196,7 @@ include'dashboard.php';
                 <label for="bio">BIO:</label>
                 <textarea id="bio" name="bio" required ></textarea>
             </div>
-
                 </div>
-       
-           
             <div>
                 <input type="submit" name="register" value="Register" stayle="background-color:red">
             </div>
