@@ -16,14 +16,10 @@ include'dashboard.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        .table-responsive {
-            overflow-x: auto;
-        }
         table {
             width: 100%;
             border-collapse: collapse;
             border-spacing: 0;
-            min-width: 600px; 
         }
         th, td {
             padding: 10px;
@@ -46,12 +42,20 @@ include'dashboard.php';
             border-radius: 4px;
             color: white;
             font-weight: bold;
+            margin: 2px; /* Add margin to separate buttons */
         }
         .btn.delete {
             background-color: crimson;
         }
         .btn.update {
             background-color: #b0b435;
+        }
+        .table-container {
+            overflow-x: auto;
+        }
+        .action-buttons {
+            display: flex;
+            flex-wrap: wrap; 
         }
     </style>
 </head>
@@ -80,8 +84,7 @@ include '../connection.php';
                 <td><?php echo $row['full_name'];?></td>
                 <td><?php echo $row['province'];?></td>
                 <td><?php echo $row['district'];?></td>
-               
-                <td style="width: -56rem">
+                <td>
                 <a class="btn update" href="more_providers.php?job_provider_id=<?php echo $row['job_provider_id'];?>"><b>More</b></a>
                 <a class="btn update" href="update_job_provider.php?job_provider_id=<?php echo $row['job_provider_id'];?>"><b>Update</b></a>
                 </td>

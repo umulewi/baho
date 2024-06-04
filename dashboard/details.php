@@ -118,70 +118,70 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
                 <form action="" method="post">
                 <div class="form-row">
             <div>
-                <label for="name">JOB SEEKER NAME:</label>
+                <label for="name">Seeker's First Name:</label>
                 <input type="text" name="first_name" value="<?php echo htmlspecialchars($row['first_name']); ?>" required readonly>
             </div>
             <div>
-                <label for="name">JOB SEEKER LAST NAME:</label>
+                <label for="name">Seeker's Last Name :</label>
                 <input type="text" name="last_name" value="<?php echo htmlspecialchars($row['last_name']); ?>" required readonly>
             </div>
         </div>
         <div class="form-row">
             <div>
-                <label for="fathers_name">FATHER'S NAME:</label>
+                <label for="fathers_name">Father's Name:</label>
                 <input type="text" id="fathers_name" name="fathers_name" value="<?php echo htmlspecialchars($row['fathers_name']); ?>" required readonly>
             </div>
             <div>
-                <label for="mothers_name">MOTHER'S NAME:</label>
+                <label for="mothers_name">Mothers Name:</label>
                 <input type="text" id="mothers_name" name="mothers_name" value="<?php echo htmlspecialchars($row['mothers_name']); ?>" required readonly>
             </div>
         </div>
         
         <div class="form-row">
         <div>
-            <label for="email">EMAIL:</label>
+            <label for="email">Email:</label>
             <input type="text" id="email" name="email" value="<?php echo htmlspecialchars($row['email']); ?>" required readonly>
         </div>
         <div>
-            <label for="province">PROVINCE:</label>
+            <label for="province">Province:</label>
             <input type="text" id="province" name="province" value="<?php echo htmlspecialchars($row['province']); ?>" required readonly>
         </div>
         </div>
 
         <div class="form-row">
         <div>
-            <label for="district">DISTRICT:</label>
+            <label for="district">District:</label>
             <input type="text" id="district" name="district" value="<?php echo htmlspecialchars($row['district']); ?>" required readonly>
         </div>
         <div>
-            <label for="sector">SECTOR:</label>
+            <label for="sector">Sector:</label>
             <input type="text" id="sector" name="sector" value="<?php echo htmlspecialchars($row['sector']); ?>" required readonly>
         </div>
         </div>
         
         <div class="form-row">
         <div>
-            <label for="village">VILLAGE:</label>
+            <label for="village">Villaage:</label>
             <input type="text" id="village" name="village" value="<?php echo htmlspecialchars($row['village']); ?>" required readonly>
         </div>
         <div>
-            <label for="cell">CELL:</label>
+            <label for="cell">Cell:</label>
             <input type="text" id="cell" name="cell" value="<?php echo htmlspecialchars($row['cell']); ?>" required readonly>
         </div>
         </div>
         <div class="form-row">
         <div>
-            <label for="dob">DATE OF BIRTH:</label>
+            <label for="dob">Date Of Birth:</label>
             <input type="date" id="dob" name="date_of_birth" value="<?php echo htmlspecialchars($row['date_of_birth']); ?>" required readonly>
         </div>
         <div>
-            <label for="dob">GENDER:</label>
+            <label for="dob">Gender:</label>
             <input type="text" id="gender" name="gender" value="<?php echo htmlspecialchars($row['gender']); ?>" required readonly>
         </div>
         </div>
         <div class="form-row">
         <div>
-            <label for="bio">BIO:</label>
+            <label for="bio">Bio:</label>
             <textarea id="bio" name="bio" required readonly><?php echo ($row['bio']); ?></textarea>
         </div>
         <div>
@@ -190,7 +190,7 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
         </div>
         </div>
         <div>
-            <label for="ID">ID CARDS:</label>
+            <label for="ID">ID Cards:</label>
             <input type="text" id="ID" name="ID" value="<?php echo htmlspecialchars($row['ID']); ?>" required readonly>
         </div>
         
