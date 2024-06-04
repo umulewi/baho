@@ -32,10 +32,7 @@ include 'dashboard.php';
        .form-container {
             max-width: 800px;
             margin: 0 auto;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #f9f9f9;
+        
         }
 
         /* Form fields */
@@ -46,7 +43,7 @@ include 'dashboard.php';
         .form-container label {
             display: block;
             font-weight: bold;
-            margin-bottom: 5px;
+          
         }
 
         .form-container input[type="text"],
@@ -58,12 +55,12 @@ include 'dashboard.php';
             width: 100%;
             padding: 10px;
             border: 1px solid #ccc;
-            border-radius: 5px;
+            border-radius: 15px;
             box-sizing: border-box;
         }
 
         .form-container input[type="submit"] {
-            width: 100%;
+            width: 30%;
             padding: 10px;
             border: none;
             border-radius: 5px;
@@ -99,9 +96,11 @@ include 'dashboard.php';
 </head>
 <body>
  
-    <h2 style="text-align:center;margin-top:2rem">Register Job Provider</h2><br>
-<div class="form-container">
-    
+  
+    <div class="form-container">
+        <main>
+       <div class="table-data">
+       <h2 style="text-align:center;margin-top:2rem">Register Job Provider</h2><br>
         <form action="" method="post">
         <div class="form-row">
             <div>
