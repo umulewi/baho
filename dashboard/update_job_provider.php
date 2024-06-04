@@ -25,35 +25,39 @@ include 'dashboard.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Update Job Provider</title>
     <style>
-        /* Form container */
         .form-container {
-            max-width: 500px;
+            max-width: 900px;
             margin: 0 auto;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #f9f9f9;
+           
         }
+
         /* Form fields */
         .form-container div {
             margin-bottom: 15px;
         }
+
         .form-container label {
             display: block;
             font-weight: bold;
             margin-bottom: 5px;
         }
+
         .form-container input[type="text"],
-        .form-container input[type="password"],
         .form-container input[type="date"],
-        form select,
-        .form-container input[type="email"] {
+        .form-container input[type="password"],
+        .form-container input[type="email"],
+        .form-container input[type="tel"],
+        .form-container input[type="number"],
+        textarea,
+
+        select {
             width: 100%;
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
-            box-sizing: border-box; 
+            box-sizing: border-box;
         }
+
         .form-container input[type="submit"] {
             width: 20%;
             padding: 10px;
@@ -64,9 +68,31 @@ include 'dashboard.php';
             font-size: 16px;
             cursor: pointer;
         }
+
         .form-container input[type="submit"]:hover {
-            background-color: teal;
+            background-color: darkslategray;
         }
+
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .form-row > div {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .form-row > div {
+                min-width: 100%;
+            }
+        }
+        
+
+        
     </style>
 </head>
 <body>
@@ -83,6 +109,9 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
 ?>
 <h2 style="text-align:center"></h2><br>
 <div class="form-container">
+		
+		<main>
+            <div class="table-data">
     <form action="" method="post">
         <div class="form-row">
 
@@ -96,9 +125,12 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
         </div>
     </div>
     <div class="form-row">
-        <div>
+    <div>
             <label for="gender">GENDER:</label>
-            <input type="text" id="gender" name="gender" value="<?php echo $row['gender']; ?>" required>
+            <select name="gender">
+                <option value="male" <?php echo ($row['gender'] == 'male') ? 'selected' : ''; ?>>Male</option>
+                <option value="female" <?php echo ($row['gender'] == 'female') ? 'selected' : ''; ?>>Female</option>
+            </select>
         </div>
         <div>
             <label for="province">PROVINCE:</label>
@@ -131,14 +163,18 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
             <input type="text" id="cell" name="cell" value="<?php echo $row['cell']; ?>" required>
         </div>
         <div>
-            <label for="id">ID CARDS:</label>
-            <input type="text" id="ID" name="ID" value="<?php echo $row['ID']; ?>" required>
+            <label for="ID">ID CARDS:</label>
+            <input type="number"  value="<?php echo htmlspecialchars($row['ID']);?>" id="id" name="id" maxlength="16" pattern="[0-9]{16}"  title="Please enter a 16-digit ID number." >
+            
         </div>
     </div>
         <div>
             <input type="submit" name="update" value="Update" style="background-color: teal;">
         </div>
     </form>
+    </div>
+    </main>
+    <div>
 </div>
 
 </body>
@@ -158,7 +194,7 @@ if (isset($_POST['update'])) {
     $village = htmlspecialchars($_POST['village']);
     $cell = htmlspecialchars($_POST['cell']);
     $date_of_birth = htmlspecialchars($_POST['date_of_birth']);
-    $ID = htmlspecialchars($_POST['ID']);
+
     
     try {
         // Debug: Print out the variables before executing the query
@@ -204,7 +240,7 @@ if (isset($_POST['update'])) {
         $stmt2->execute();
 
         if ($stmt->rowCount() > 0 || $stmt2->rowCount() > 0) {
-            echo "Well updated";
+            echo "<script>alert('well updated.');</script>";
         } else {
             echo "<script>alert('No records updated.');</script>";
         }
@@ -213,3 +249,14 @@ if (isset($_POST['update'])) {
     }
 }
 ?>
+
+<script>
+const idInput = document.getElementById("id");
+idInput.addEventListener("input", function() {
+  const value = idInput.value;
+  if (value.length > 16) {
+    idInput.value = value.slice(0, 16); 
+  }
+  
+});
+</script>
