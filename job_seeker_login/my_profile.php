@@ -18,12 +18,9 @@ include 'dashboard.php';
     <style>
         /* Form container */
         .form-container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #f9f9f9;
+            
         }
 
         /* Form fields */
@@ -53,7 +50,7 @@ include 'dashboard.php';
         }
 
         .form-container input[type="submit"] {
-            width: 100%;
+            width: 30%;
             padding: 10px;
             border: none;
             border-radius: 5px;
@@ -94,8 +91,10 @@ $stmt->bindParam(':user_email', $user_email);
 $stmt->execute();
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
 ?>
-<h2 style="text-align:center"></h2><br>
-<div class="form-container">
+   <div class="form-container">
+   <main>
+       <div class="table-data">
+
     <form action="" method="post">
     <input type="hidden" name="job_seeker_id" value="<?php echo $row['job_seeker_id']; ?>">
     <div class="form-row">
@@ -174,6 +173,8 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
         </div>
     </form>
 </div>
+    </main>
+    </div>
 
 </body>
 </html>

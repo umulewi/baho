@@ -1,3 +1,4 @@
+
 <?php
 session_start();
 if (!isset($_SESSION['user_email'])) {
@@ -78,12 +79,50 @@ if ($stmt->rowCount() > 0) {
     }
 }
 ?>
+<main>
+<ul class="box-info">
+                
+				<li>
+					<i class='bx bxs-calendar-check' ></i>
+                    <?php
+                    include'../connection.php';
+                    $stmt = $pdo->prepare("SELECT users_id FROM users WHERE email = ?");
+                    $stmt->execute([$user_email]);
+                    $user_id = $stmt->fetchColumn();
+                    $stmt->closeCursor();
+                    $stmt = $pdo->prepare("SELECT COUNT(*) AS total_seekers FROM job_seeker JOIN users ON job_seeker.users_id = users.users_id WHERE job_seeker.created_by = ?");
+                    $stmt->execute([$user_email]);
+                    $total_seekers = $stmt->fetchColumn();
+                    $stmt->closeCursor();
+                    $pdo = null;
+                    ?>
+					<span class="text">
+						<h3><?php echo $total_seekers;  ?></h3>
+						<p>My Seekers</p>
+					</span>
+				</li>
+				<li>
+					<i class='bx bxs-group' ></i>
+                    <?php
+                    include'../connection.php';
+                    $sql = "SELECT COUNT(job_seeker_id) AS total FROM job_seeker";
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->execute();
+                    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                    ?>
+					<span class="text">
+						<h3><?php echo $result['total']?></h3>
+						<p>All Seekers</p>
+					</span>
+				</li>
+				
+			</ul>
 
 
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Application Progress</title>
+
     <style>
         .progress {
             width: 400px;
@@ -102,7 +141,7 @@ if ($stmt->rowCount() > 0) {
     </style>
 </head>
 <body>
-<div class="form-container">
+<div class="">
     <h2>
         Job Application Progress
     </h2>
@@ -115,7 +154,7 @@ if ($stmt->rowCount() > 0) {
 
 </body>
 </html>
-
+    </main>
 
 
 <script>
