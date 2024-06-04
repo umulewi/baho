@@ -84,6 +84,8 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
 <h2 style="text-align:center"></h2><br>
 <div class="form-container">
     <form action="" method="post">
+        <div class="form-row">
+
         <div>
             <label for="name">JOB FIRST NAME:</label>
             <input type="text" name="first_name" value="<?php echo $row['first_name']; ?>" required>
@@ -92,6 +94,8 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
             <label for="name">JOB LAST NAME:</label>
             <input type="text" name="last_name" value="<?php echo $row['last_name']; ?>" required>
         </div>
+    </div>
+    <div class="form-row">
         <div>
             <label for="gender">GENDER:</label>
             <input type="text" id="gender" name="gender" value="<?php echo $row['gender']; ?>" required>
@@ -100,6 +104,8 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
             <label for="province">PROVINCE:</label>
             <input type="text" id="province" name="province" value="<?php echo $row['province']; ?>" required>
         </div>
+    </div>
+    <div class="form-row">
         <div>
             <label for="district">DISTRICT:</label>
             <input type="text" id="district" name="district" value="<?php echo $row['district']; ?>" required>
@@ -108,6 +114,8 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
             <label for="sector">SECTOR:</label>
             <input type="text" id="sector" name="sector" value="<?php echo $row['sector']; ?>" required>
         </div>
+    </div>
+    <div class="form-row">
         <div>
             <label for="dob">DATE OF BIRTH:</label>
             <input type="date" id="dob" name="date_of_birth" value="<?php echo htmlspecialchars($row['date_of_birth']); ?>" required>
@@ -116,6 +124,8 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
             <label for="village">VILLAGE:</label>
             <input type="text" id="village" name="village" value="<?php echo $row['village']; ?>" required>
         </div>
+    </div>
+    <div class="form-row">
         <div>
             <label for="cell">CELL:</label>
             <input type="text" id="cell" name="cell" value="<?php echo $row['cell']; ?>" required>
@@ -124,6 +134,7 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
             <label for="id">ID CARDS:</label>
             <input type="text" id="ID" name="ID" value="<?php echo $row['ID']; ?>" required>
         </div>
+    </div>
         <div>
             <input type="submit" name="update" value="Update" style="background-color: teal;">
         </div>
