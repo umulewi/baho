@@ -1,11 +1,16 @@
-<?php  
+<?php
 session_start();
 if (!isset($_SESSION['user_email'])) {
-    header("location:login.php");
+    header("location:../index.php");
     exit();
 }
-include'../connection.php';
-
+include('../connection.php');
+$user_email = $_SESSION['user_email'];
+$stmt = $pdo->prepare("SELECT users_id FROM users WHERE email = ?");
+$stmt->execute([$user_email]); 
+$user_id = $stmt->fetchColumn(); 
+$stmt->closeCursor(); 
+$pdo = null;
 ?>
 
 <!DOCTYPE html>
@@ -121,10 +126,8 @@ include'../connection.php';
                 <ul class="dropdown-menu">
                     <li><a href="view_job_seeker.php">View Seekers</a></li>
                    <li><a href="register_job_seeker.php?role_id=<?php echo $row['role_id'];?>">Register Seeker</a></li>
-                    
                 </ul>
-            </li>
-            
+            </li>  
         </ul>
         <ul class="side-menu">
             
@@ -157,9 +160,30 @@ include'../connection.php';
         <main>
        
                 
-        <ul class="box-info job-seeker-container">
-                <li class="job-seeker-count">
-                    <i class='bx bxs-calendar-check'></i>
+        
+        <ul class="box-info">
+                
+				<li>
+					<i class='bx bxs-calendar-check' ></i>
+                    <?php
+                    include'../connection.php';
+                    $stmt = $pdo->prepare("SELECT users_id FROM users WHERE email = ?");
+                    $stmt->execute([$user_email]);
+                    $user_id = $stmt->fetchColumn();
+                    $stmt->closeCursor();
+                    $stmt = $pdo->prepare("SELECT COUNT(*) AS total_seekers FROM job_seeker JOIN users ON job_seeker.users_id = users.users_id WHERE job_seeker.created_by = ?");
+                    $stmt->execute([$user_email]);
+                    $total_seekers = $stmt->fetchColumn();
+                    $stmt->closeCursor();
+                    $pdo = null;
+                    ?>
+					<span class="text">
+						<h3><?php echo $total_seekers;  ?></h3>
+						<p>My Seekers</p>
+					</span>
+				</li>
+				<li>
+					<i class='bx bxs-group' ></i>
                     <?php
                     include'../connection.php';
                     $sql = "SELECT COUNT(job_seeker_id) AS total FROM job_seeker";
@@ -167,30 +191,13 @@ include'../connection.php';
                     $stmt->execute();
                     $result = $stmt->fetch(PDO::FETCH_ASSOC);
                     ?>
-                    <span class="text">
-                        <h3><?php echo $result['total']?></h3>
-                        <p>JOB SEEKER</p>
-                    </span>
-                </li>
-                <li class="job-seeker-count">
-                    <i class='bx bxs-calendar-check'></i>
-                    <?php
-                    include'../connection.php';
-                    $sql = "SELECT COUNT(job_seeker_id) AS total FROM job_seeker";
-                    $stmt = $pdo->prepare($sql);
-                    $stmt->execute();
-                    $result = $stmt->fetch(PDO::FETCH_ASSOC);
-                    ?>
-                    <span class="text">
-                        <h3><?php echo $result['total']?></h3>
-                        <p>JOB PROVIDER</p>
-                    </span>
-                </li>
-            </ul>
-		<div>
-
-        </div>
-
+					<span class="text">
+						<h3><?php echo $result['total']?></h3>
+						<p>All Seekers</p>
+					</span>
+				</li>
+				
+			</ul>
 			
 		</main>
 

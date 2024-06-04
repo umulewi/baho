@@ -1,113 +1,20 @@
 <?php
-session_start();
-if (!isset($_SESSION['user_email'])) {
-    header("location:../index.php");
-    exit();
-}
+
+$user_email='agent@gmail.com';
+
 include('../connection.php');
-$user_email = $_SESSION['user_email'];
+
+
 $stmt = $pdo->prepare("SELECT users_id FROM users WHERE email = ?");
-$stmt->execute([$user_email]); 
-$user_id = $stmt->fetchColumn(); 
-$stmt->closeCursor(); 
+$stmt->execute([$user_email]);
+$user_id = $stmt->fetchColumn();
+$stmt->closeCursor();
+$stmt = $pdo->prepare("SELECT COUNT(*) AS total_seekers FROM job_seeker JOIN users ON job_seeker.users_id = users.users_id WHERE job_seeker.created_by = ?");
+$stmt->execute([$user_email]);
+$total_seekers = $stmt->fetchColumn();
+$stmt->closeCursor();
 $pdo = null;
-?>
+echo "Total Job Seekers Created by You: " . $total_seekers;
 
-<?php
-include'dashboard.php';
-?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            border-spacing: 0;
-        }
-        th, td {
-            padding: 10px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-        th {
-            background-color: teal;
-            color: white;
-        }
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-        tr:hover {
-            background-color: #ddd;
-        }
-        .btn {
-            padding: 8px 12px;
-            text-decoration: none;
-            border-radius: 4px;
-            color: white;
-            font-weight: bold;
-            margin: 2px; /* Add margin to separate buttons */
-        }
-        .btn.delete {
-            background-color: crimson;
-        }
-        .btn.update {
-            background-color: #b0b435;
-        }
-        .table-container {
-            overflow-x: auto;
-        }
-        .action-buttons {
-            display: flex;
-            flex-wrap: wrap; 
-        }
-    </style>
-</head>
-<body>
-<?php
-include '../connection.php';
-?>
 
-<center><h5 style="color:teal;margin-top:2rem">List Of All JOB SEEKERS</h5></center>
-<div class="table-container">
-    <table class="table-data">
-        <tr>
-            <th>ID</th>
-            <th>NAMES</th>
-            <th>SALARY</th>
-            <th>BIO</th>
-            <th>AGE</th>
-            <th>ACTION</th>
-        </tr>
-        <?php 
-        $i=1;
-        $stmt = $pdo->query("SELECT * FROM agent inner join users on users.users_id=agent.users_id");
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        ?>
-        <tr>
-            <td><?php echo $i; ?></td>
-            <td><?php echo $row['full_name'];?></td>
-            <td><?php echo $row['province'];?></td>
-            <td><?php echo $row['district'];?></td>
-            
-            <td>
-            <div class="action-buttons">
-            <a class="btn custom-bg shadow-none" style="background-color:#b0b435" href="more_agent.php?agent_id=<?php echo $row['agent_id'];?>"><b>More</b></a>
-            <a class="btn custom-bg shadow-none" style="background-color:#b0b435" href="update_agent.php?agent_id=<?php echo $row['agent_id'];?>"><b>Update</b></a>
-        </div>
-           
-           
-            </td>
-        </tr>
-        <?php
-$i++;
-    }
-
-        ?>
-    </table>
-</div>
-</body>
-</html>
+?>

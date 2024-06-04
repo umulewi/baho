@@ -235,6 +235,63 @@ if (!isset($_SESSION['user_email'])) {
         <input type="checkbox" id="switch-mode" hidden>
         <label for="switch-mode" class="switch-mode"></label>
     </nav>
+
+
+    <main>
+			
+				
+				
+			
+
+			<ul class="box-info">
+                <li class="job-seeker-count">
+                    <i class='bx bxs-group'></i>
+                    <?php
+                    include'../connection.php';
+                    $sql = "SELECT COUNT(job_provider_id) AS total FROM job_provider";
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->execute();
+                    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                    ?>
+                    <span class="text">
+                        <h3><?php echo $result['total']?></h3>
+                        <p> Providers</p>
+                    </span>
+                </li>
+				<li>
+					<i class='bx bxs-calendar-check' ></i>
+                    <?php
+                    include'../connection.php';
+                    $sql = "SELECT COUNT(job_seeker_id) AS total FROM job_seeker";
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->execute();
+                    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                    ?>
+					<span class="text">
+						<h3><?php echo $result['total']?></h3>
+						<p>Seekers</p>
+					</span>
+				</li>
+				<li>
+					<i class='bx bxs-group' ></i>
+                    <?php
+                    include'../connection.php';
+                    $sql = "SELECT COUNT(hired_id) AS total FROM hired_seekers";
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->execute();
+                    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                    ?>
+					<span class="text">
+						<h3><?php echo $result['total']?></h3>
+						<p>Employeees</p>
+					</span>
+				</li>
+				
+			</ul>
+
+
+			
+		
     <div class="form-container">
         <div class="tabs">
             <button class="tablinks" onclick="openTab(event, 'Providers')">Latest Providers</button>
@@ -242,7 +299,7 @@ if (!isset($_SESSION['user_email'])) {
             <button class="tablinks" onclick="openTab(event, 'Agents')">Latest Agents</button>
         </div>
         <div id="Providers" class="tabcontent active">
-            <h3>Latest Providers</h3>
+        
            
             <div class="table-responsive">
                 <table class="table" id="providers-table">
@@ -265,7 +322,7 @@ if (!isset($_SESSION['user_email'])) {
                         <td><?php echo $row['province']; ?></td>
                         <td><?php echo $row['district']; ?></td>
                         <td style="width: -56rem">
-                            <a class="btn update" href="more_providers.php?job_provider_id=<?php echo $row['job_provider_id']; ?>"><b>More</b></a>
+                            <a class="btn update" href="More_providers.php?job_provider_id=<?php echo $row['job_provider_id']; ?>"><b>More</b></a>
                             <a class="btn update" href="update_job_provider.php?job_provider_id=<?php echo $row['job_provider_id']; ?>"><b>Update</b></a>
                         </td>
                     </tr>
@@ -275,12 +332,12 @@ if (!isset($_SESSION['user_email'])) {
                     ?>
                 </table>
                
-                <button class="btn custom-bg shadow-none" style="background-color:#b0b435; margin-top:12px; border: none; cursor: pointer;" id="load-more-btn">Load More</button>
+                <button class="btn custom-bg shadow-none" style="background-color:#b0b435; margin-top:12px; border: none; cursor: pointer;" id="load-More-btn">Load More</button>
                 
             </div>
         </div>
         <div id="Seekers" class="tabcontent">
-        <h3>Latest Seekers</h3>
+      
         <div class="table-responsive">
         <div class="table-container">
             <table class="table">
@@ -307,7 +364,7 @@ if (!isset($_SESSION['user_email'])) {
                             <td><?php echo $row['bio']; ?></td>
                             <td><?php echo $row['province']; ?></td>
                             <td style="width: -56rem">
-                            <a class="btn custom-bg shadow-none" style="background-color:#b0b435" href="details.php?job_seeker_id=<?php echo $row['job_seeker_id']; ?>"><b>MORE</b></a>
+                            <a class="btn custom-bg shadow-none" style="background-color:#b0b435" href="details.php?job_seeker_id=<?php echo $row['job_seeker_id']; ?>"><b>More</b></a>
                             <a class="btn custom-bg shadow-none" style="background-color:#b0b435" href="update_job_seeker.php?job_seeker_id=<?php echo $row['job_seeker_id']; ?>"><b>Update</b></a>
                         </td>
                 <?php
@@ -315,7 +372,7 @@ if (!isset($_SESSION['user_email'])) {
                 }
                 ?>
             </table>    
-            <button class="btn custom-bg shadow-none" style="background-color:#b0b435; margin-top:12px; border: none; cursor: pointer;" id="load-more-seekers-btn">Load More</button>
+            <button class="btn custom-bg shadow-none" style="background-color:#b0b435; margin-top:12px; border: none; cursor: pointer;" id="load-More-seekers-btn">Load More</button>
 
         </div>
             </div>
@@ -323,7 +380,7 @@ if (!isset($_SESSION['user_email'])) {
 
     <div id="Agents" class="tabcontent">
 
-            <h3>Latest Agents</h3>
+         
             <p>
             <div class="table-responsive">
             <table class="table">
@@ -345,7 +402,7 @@ if (!isset($_SESSION['user_email'])) {
                         <td><?php echo $row['province'];?></td>
                         <td><?php echo $row['district'];?></td>
                         <td style="width: -56rem">
-                        <a class="btn custom-bg shadow-none" style="background-color:#b0b435" href="more_agent.php?agent_id=<?php echo $row['agent_id'];?>"><b>More</b></a>
+                        <a class="btn custom-bg shadow-none" style="background-color:#b0b435" href="More_agent.php?agent_id=<?php echo $row['agent_id'];?>"><b>More</b></a>
                         <a class="btn custom-bg shadow-none" style="background-color:#b0b435" href="update_agent.php?agent_id=<?php echo $row['agent_id'];?>"><b>Update</b></a>
                     </td>
                 </tr>
@@ -358,7 +415,7 @@ if (!isset($_SESSION['user_email'])) {
            
 
 
-            <button class="btn custom-bg shadow-none" style="background-color:#b0b435; margin-top:12px; border: none; cursor: pointer;" id="load-more-agents-btn">Load More</button>
+            <button class="btn custom-bg shadow-none" style="background-color:#b0b435; margin-top:12px; border: none; cursor: pointer;" id="load-More-agents-btn">Load More</button>
         </p>
     </div>
 </div>
@@ -366,39 +423,7 @@ if (!isset($_SESSION['user_email'])) {
     </div>
 
 
-    <main>
-			<div class="head-title">
-				
-				
-			</div>
-
-			<ul class="box-info">
-				<li>
-					<i class='bx bxs-calendar-check' ></i>
-					<span class="text">
-						<h3>1020</h3>
-						<p>EMPLOYEES</p>
-					</span>
-				</li>
-				<li>
-					<i class='bx bxs-group' ></i>
-					<span class="text">
-						<h3>2834</h3>
-						<p>Visitors</p>
-					</span>
-				</li>
-				<li>
-					<i class='bx bxs-dollar-circle' ></i>
-					<span class="text">
-						<h3>SEEKERS</h3>
-						<p>123</p>
-					</span>
-				</li>
-			</ul>
-
-
-			
-		</main>
+        </main>
 </section>
 
 
@@ -426,12 +451,12 @@ if (!isset($_SESSION['user_email'])) {
             tabcontents[i].style.display = "none";
         }
 
-        document.getElementById("load-more-btn").addEventListener("click", function() {
+        document.getElementById("load-More-btn").addEventListener("click", function() {
             var loadMoreBtn = this;
             var table = document.getElementById("providers-table");
             var lastRow = table.rows[table.rows.length - 1];
             var lastId = lastRow ? lastRow.cells[0].innerText : 0;
-            fetch('load_more_providers.php?lastId=' + lastId)
+            fetch('load_More_providers.php?lastId=' + lastId)
                 .then(response => response.text())
                 .then(data => {
                     // Remove existing rows except the header row
@@ -444,7 +469,7 @@ if (!isset($_SESSION['user_email'])) {
                     newRows.innerHTML = data;
                     table.appendChild(newRows);
 
-                    // Remove the "Load More" button after fetching more data
+                    // Remove the "Load More" button after fetching More data
                     loadMoreBtn.parentNode.removeChild(loadMoreBtn);
                 });
         });
@@ -534,13 +559,13 @@ if (!isset($_SESSION['user_email'])) {
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-    var loadMoreBtn = document.getElementById("load-more-seekers-btn");
+    var loadMoreBtn = document.getElementById("load-More-seekers-btn");
     loadMoreBtn.addEventListener("click", function() {
         var table = document.querySelector("#Seekers table");
         var lastRow = table.rows[table.rows.length - 1];
         var lastId = lastRow ? lastRow.cells[0].innerText : 0;
 
-        fetch('load_more_seekers.php?lastId=' + lastId)
+        fetch('load_More_seekers.php?lastId=' + lastId)
             .then(response => response.text())
             .then(data => {
                 // Clear existing rows in the tbody
@@ -571,13 +596,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-    var loadMoreBtn = document.getElementById("load-more-agents-btn");
+    var loadMoreBtn = document.getElementById("load-More-agents-btn");
     loadMoreBtn.addEventListener("click", function() {
         var table = document.querySelector("#Agents table");
         var lastRow = table.rows[table.rows.length - 1];
         var lastId = lastRow ? lastRow.cells[0].innerText : 0;
 
-        fetch('load_more_agents.php?lastId=' + lastId)
+        fetch('load_More_agents.php?lastId=' + lastId)
             .then(response => response.text())
             .then(data => {
                 // Clear existing rows in the tbody
