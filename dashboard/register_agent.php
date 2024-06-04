@@ -34,10 +34,7 @@ include 'dashboard.php';
         .form-container {
             max-width: 800px;
             margin: 0 auto;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #f9f9f9;
+         
         }
 
         /* Form fields */
@@ -100,10 +97,15 @@ include 'dashboard.php';
 </head>
 <body>
 
-<h2 style="text-align:center;margin-top:2rem">Register Agent</h2><br>
+
 <div class="form-container">
+        <main>
+       <div class="table-data">
+       <h2 style="text-align:center;margin-top:2rem;color:teal">Register Agent</h2><br>
     <form action="" method="post">
+    
         <div class="form-row">
+            
             <div>
                 <label for="firstname">FIRSTNAME:</label>
                 <input type="text" name="firstname" required>
@@ -175,6 +177,8 @@ include 'dashboard.php';
         </div>
     </form>
 </div>
+    </main>
+    </div>
 
 </body>
 </html>
