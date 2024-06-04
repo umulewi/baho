@@ -170,7 +170,7 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
         <div class="form-row">
         <div>
             <label for="dob">DATE OF BIRTH:</label>
-            <input type="date" id="dob" name="date_of_birth" value="<?php echo htmlspecialchars($row['date_of_birth']); ?>" required>
+            <input type="date" id="dob" name="date_of_birth" id="date_of_birth" value="<?php echo htmlspecialchars($row['date_of_birth']); ?>" required>
         </div>
         <div>
             <label for="gender">GENDER:</label>
@@ -284,3 +284,11 @@ if (isset($_POST['update'])) {
     }
 }
 ?>
+
+<script>
+    var today = new Date();
+    var maxDate = new Date();
+    maxDate.setFullYear(today.getFullYear() - 18);
+    var maxDateFormatted = maxDate.toISOString().split('T')[0];
+    document.getElementById("date_of_birth").setAttribute("max", maxDateFormatted);
+</script>
