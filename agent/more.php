@@ -26,12 +26,8 @@ include 'dashboard.php';
     <title>Update Student</title>
     <style>
         .form-container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #f9f9f9;
+            max-width: 900px;
+            
         }
 
         /* Form fields */
@@ -113,6 +109,8 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
 <h2 style="text-align:center"></h2><br>
 <div class="form-container">
+        <main>
+       <div class="table-data">
     <form action="" method="post">
 
     <div class="form-row">
@@ -185,6 +183,8 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
     </form>
 </div>
+    </main>
+    </div>
 
 </body>
 </html>

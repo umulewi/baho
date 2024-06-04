@@ -7,7 +7,7 @@
     <!-- Boxicons -->
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <!-- My CSS -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../dashboard/style.css">
     <title>baho house  Maids</title>
     <style>
         /* Additional CSS for dropdown icon */
@@ -55,7 +55,7 @@
         </a>
         <ul class="side-menu top">
             <li class="active">
-                <a href="check">
+                <a href="index.php">
                     <i class='bx bxs-dashboard' ></i>
                     <span class="text">Dashboard</span>
                 </a>
