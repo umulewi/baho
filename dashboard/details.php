@@ -183,10 +183,15 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
             <textarea id="bio" name="bio" required readonly><?php echo ($row['bio']); ?></textarea>
         </div>
         <div>
+            <label for="bio">Salary:</label>
+            <input type="text" id="salary" name="salary" value="<?php echo htmlspecialchars($row['salary']); ?>" required readonly>
+        </div>
+        </div>
+        <div>
             <label for="ID">ID CARDS:</label>
             <input type="text" id="ID" name="ID" value="<?php echo htmlspecialchars($row['ID']); ?>" required readonly>
         </div>
-        </div>
+       
         
 
     </form>
