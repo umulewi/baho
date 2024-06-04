@@ -23,10 +23,7 @@ include'dashboard.php';
         .form-container {
             max-width: 800px;
             margin: 0 auto;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #f9f9f9;
+           
         }
 
         /* Form fields */
@@ -98,81 +95,83 @@ $stmt->bindParam(':user_email', $user_email);
 $stmt->execute();
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
 ?>
-<h2 style="text-align:center"></h2><br>
 <div class="form-container">
+        <main>
+       <div class="table-data">
     <form action="" method="post">
     <input type="hidden" name="job_provider_id" value="<?php echo $row['job_provider_id']; ?>">
     <div class="form-row">
     <div>
-            <label for="name">FIRST NAME:</label>
+            <label for="name">First Name:</label>
             <input type="text" name="first_name" value="<?php echo $row['first_name']; ?>" required readonly >
         </div>
         <div>
-            <label for="name">LAST NAME:</label>
+            <label for="name">Last Name:</label>
             <input type="text" name="last_name" value="<?php echo $row['last_name']; ?>" required readonly>
         </div>
 
     </div>
     <div class="form-row">
         <div>
-            <label for="name">DATE OF BIRTH:</label>
+            <label for="name">Date of birth:</label>
             <input type="date" name="date_of_birth" value="<?php echo $row['date_of_birth']; ?>" required readonly>
         </div>
         
         <div>
-            <label for="province">PROVINCE:</label>
+            <label for="province">Province:</label>
             <input type="text" id="province" name="province" value="<?php echo $row['province']; ?>" required readonly>
         </div>
     </div>
 
     <div class="form-row">
         <div>
-            <label for="district">DISTRICT:</label>
+            <label for="district">District:</label>
             <input type="text" id="district" name="district" value="<?php echo $row['district']; ?>" required readonly>
         </div>
         <div>
-            <label for="sector">SECTOR:</label>
+            <label for="sector">Sector:</label>
             <input type="text" id="sector" name="sector" value="<?php echo $row['sector']; ?>" required readonly>
         </div>
     </div>
     <div class="form-row">
         <div>
-            <label for="village">VILLAGE:</label>
+            <label for="village">Village:</label>
             <input type="text" id="village" name="village" value="<?php echo $row['village']; ?>" required readonly>
    
         </div>
         
         <div>
-            <label for="village">GENDER:</label>
+            <label for="village">Gender:</label>
             <input type="text" id="gender" name="gender" value="<?php echo $row['gender']; ?>" required readonly>
    
         </div>
         </div>
         <div class="form-row">
         <div>
-            <label for="cell">CELL:</label>
+            <label for="cell">Cell:</label>
             <input type="text" id="cell" name="cell" value="<?php echo $row['cell']; ?>" required readonly>
         </div>
         <div>
-            <label for="id">IDENTIFICATION CARD</label>
+            <label for="id">Id Card</label>
             <input type="number" id="ID" name="ID" value="<?php echo $row['ID']; ?>" required readonly>
         </div>
     </div>
     <div class="form-row">
 
         <div>
-            <label for="id">TELEPHONE:</label>
+            <label for="id">Telephone:</label>
             <input type="text" id="ID" name="telephone" value="<?php echo $row['telephone']; ?>" required readonly>
         </div>
         <div>
-            <label for="id">PASSWORD:</label>
+            <label for="id">Password:</label>
             <input type="text" id="ID" name="password" value="<?php echo $row['password']; ?>" required readonly>
         </div>
     </div>
         
     </form>
 </div>
-
+    </main>
+    </div>
 </body>
 </html>
 

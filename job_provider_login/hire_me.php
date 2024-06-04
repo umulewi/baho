@@ -23,10 +23,7 @@ include'dashboard.php';
         .form-container {
             max-width: 800px;
             margin: 0 auto;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #f9f9f9;
+          
         }
 
         /* Form fields */
@@ -117,8 +114,9 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
 $salaryWithCurrency = $row['salary'] . ' RWF';
 ?>
 
-<h2 style="text-align:center"></h2><br>
 <div class="form-container">
+        <main>
+       <div class="table-data">
     <form action="" method="post">
 
         <div style="display: flex; justify-content: center; width: 100%;">
@@ -183,7 +181,8 @@ $salaryWithCurrency = $row['salary'] . ' RWF';
         <button style="display: inline-block; padding: 10px 20px; margin: 10px 0; font-size: 16px; cursor: pointer; text-align: center; text-decoration: none; outline: none; color: #fff; background-color: teal; border: none; border-radius: 5px;">hire me</button>
     </form>
 </div>
-
+    </main>
+    </div>
 
 </body>
 </html>
@@ -210,7 +209,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     ]);
     $existing_entry = $stmt->fetch(PDO::FETCH_ASSOC);
     if ($existing_entry) {
-        echo "This job seeker has already been hired by you.";
+      
+        echo "<script>alert('This job seeker has already been hired by you..');</script>";
+        
     } else {
         $sql = "INSERT INTO hired_seekers (job_seeker_id, job_provider_id) 
                 VALUES (:job_seeker_id, :job_provider_id)";
@@ -220,7 +221,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ':job_seeker_id' => $job_seeker_id,
                 ':job_provider_id' => $job_provider_id,
             ]);
-            echo "Thank you for hiring our seeker, we shall communicate with you soon.<br>";
+            echo "<script>alert('Thank you for hiring our seeker, we shall communicate with you soon.');</script>";
+           
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage() . "<br>";
         }

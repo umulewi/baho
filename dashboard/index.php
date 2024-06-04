@@ -283,7 +283,7 @@ if (!isset($_SESSION['user_email'])) {
                     ?>
 					<span class="text">
 						<h3><?php echo $result['total']?></h3>
-						<p>Employeees</p>
+						<p>Employers</p>
 					</span>
 				</li>
 				

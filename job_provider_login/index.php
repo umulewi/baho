@@ -1,6 +1,6 @@
 <?php  
 session_start();
-if (!isset($_SESSION['email'])) {
+if (!isset($_SESSION['user_email'])) {
     header("location: ../index.php");
     exit();
 }
@@ -168,10 +168,53 @@ include'../connection.php';
 
             <main>
 			
+         
 
-			<div class="form-container" style="margin-left:12px;">
-               knsjajsj
-            </div>
+			<ul class="box-info">
+                <li class="job-seeker-count">
+                    <i class='bx bxs-group'></i>
+                    <?php
+                    include'../connection.php';
+                    $sql = "SELECT COUNT(job_provider_id) AS total FROM job_provider";
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->execute();
+                    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                    ?>
+                    <span class="text">
+                        <h3><?php echo $result['total']?></h3>
+                        <p> Providers</p>
+                    </span>
+                </li>
+				<li>
+					<i class='bx bxs-calendar-check' ></i>
+                    <?php
+                    include'../connection.php';
+                    $sql = "SELECT COUNT(job_seeker_id) AS total FROM job_seeker";
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->execute();
+                    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                    ?>
+					<span class="text">
+						<h3><?php echo $result['total']?></h3>
+						<p>Seekers</p>
+					</span>
+				</li>
+				<li>
+					<i class='bx bxs-group' ></i>
+                    <?php
+                    include'../connection.php';
+                    $sql = "SELECT COUNT(hired_id) AS total FROM hired_seekers";
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->execute();
+                    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                    ?>
+					<span class="text">
+						<h3><?php echo $result['total']?></h3>
+						<p>Employeees</p>
+					</span>
+				</li>
+				
+			</ul>
 
 
 			

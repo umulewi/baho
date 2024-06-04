@@ -18,12 +18,9 @@ include'dashboard.php';
     <title></title>
     <style>
         .form-container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #f9f9f9;
+           
         }
 
         /* Form fields */
@@ -53,7 +50,7 @@ include'dashboard.php';
         }
 
         .form-container input[type="submit"] {
-            width: 100%;
+            width: 30%;
             padding: 10px;
             border: none;
             border-radius: 5px;
@@ -95,15 +92,14 @@ $stmt->bindParam(':user_email', $user_email);
 $stmt->execute();
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
 ?>
-<h2 style="text-align:center">My Profile</h2><br>
-<div class="form-container">
 
-    <form action="" method="post">
-       
-    <input type="hidden" name="job_provider_id" value="<?php echo $row['job_provider_id']; ?>">
-    <div class="form-row">
-    <div>
-            <label for="name">FIRST NAME:</label>
+<div class="form-container">
+        <main>
+       <div class="table-data">
+        <form action="" method="post">
+            <input type="hidden" name="job_provider_id" value="<?php echo $row['job_provider_id']; ?>">
+            <div class="form-row">
+                <div><label for="name">FIRST NAME:</label>
             <input type="text" name="first_name" value="<?php echo $row['first_name']; ?>" required>
         </div>
         <div>
@@ -174,6 +170,8 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
         </div>
     </form>
 </div>
+    </main>
+    </div>
 
 </body>
 </html>
@@ -228,7 +226,6 @@ $stmt->bindParam(':cell', $cell);
 $stmt->bindParam(':village', $village);
 $stmt->bindParam(':ID', $ID);
 $stmt->bindParam(':date_of_birth', $date_of_birth);
-
 $stmt->bindParam(':job_provider_id', $job_provider_id);
 $stmt->bindParam(':telephone', $telephone);
 $stmt_user->bindParam(':full_name', $full_name);
