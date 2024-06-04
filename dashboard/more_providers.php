@@ -25,8 +25,7 @@ include 'dashboard.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Update Job Provider</title>
     <style>
-        /* Form container */
-       /* Form container */
+        
        .form-container {
             max-width: 800px;
             margin: 0 auto;
@@ -110,6 +109,7 @@ $stmt->execute();
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
 ?>
 <h2 style="text-align:center"></h2><br>
+
 <div class="form-container">
     <form action="" method="post">
         <div class="form-row">

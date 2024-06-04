@@ -112,13 +112,9 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
 <div class="form-container">
 		
 		<main>
-			
-
-			
-
             <div class="table-data">
 			
-            <div class="table-data">
+            
                 <form action="" method="post">
                 <div class="form-row">
             <div>
