@@ -11,7 +11,7 @@ $stmt = $pdo->prepare("SELECT users_id FROM job_provider WHERE job_provider_id =
 $stmt->execute([$job_provider_id]); 
 $user_id = $stmt->fetchColumn(); 
 $stmt->closeCursor(); 
-echo "User ID: " . $user_id;
+
 $pdo = null;
 ?>
 
@@ -26,36 +26,45 @@ include 'dashboard.php';
     <title>Update Job Provider</title>
     <style>
         /* Form container */
-        .form-container {
-            max-width: 500px;
+       /* Form container */
+       .form-container {
+            max-width: 800px;
             margin: 0 auto;
             padding: 20px;
             border: 1px solid #ccc;
             border-radius: 5px;
             background-color: #f9f9f9;
         }
+
         /* Form fields */
         .form-container div {
             margin-bottom: 15px;
         }
+
         .form-container label {
             display: block;
             font-weight: bold;
             margin-bottom: 5px;
         }
+
         .form-container input[type="text"],
-        .form-container input[type="password"],
         .form-container input[type="date"],
-        form select,
-        .form-container input[type="email"] {
+        .form-container input[type="password"],
+        .form-container input[type="email"],xta
+        .form-container input[type="tel"],
+        .form-container input[type="number"],
+        select,
+        textarea,
+        select {
             width: 100%;
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
-            box-sizing: border-box; 
+            box-sizing: border-box;
         }
+
         .form-container input[type="submit"] {
-            width: 20%;
+            width: 100%;
             padding: 10px;
             border: none;
             border-radius: 5px;
@@ -64,8 +73,27 @@ include 'dashboard.php';
             font-size: 16px;
             cursor: pointer;
         }
+
         .form-container input[type="submit"]:hover {
-            background-color: teal;
+            background-color: darkslategray;
+        }
+
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .form-row > div {
+            flex: 1;
+            min-width: 300px;
+        }
+
+
+        @media (max-width: 600px) {
+            .form-row > div {
+                min-width: 100%;
+            }
         }
     </style>
 </head>
@@ -84,6 +112,7 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
 <h2 style="text-align:center"></h2><br>
 <div class="form-container">
     <form action="" method="post">
+        <div class="form-row">
         <div>
             <label for="name">JOB FIRST NAME:</label>
             <input type="text" name="first_name" value="<?php echo $row['first_name']; ?>" required>
@@ -92,6 +121,8 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
             <label for="name">JOB LAST NAME:</label>
             <input type="text" name="last_name" value="<?php echo $row['last_name']; ?>" required>
         </div>
+        </div>
+        <div class="form-row">
         <div>
             <label for="gender">GENDER:</label>
             <input type="text" id="gender" name="gender" value="<?php echo $row['gender']; ?>" required>
@@ -100,6 +131,9 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
             <label for="province">PROVINCE:</label>
             <input type="text" id="province" name="province" value="<?php echo $row['province']; ?>" required>
         </div>
+        </div>
+        
+        <div class="form-row">
         <div>
             <label for="district">DISTRICT:</label>
             <input type="text" id="district" name="district" value="<?php echo $row['district']; ?>" required>
@@ -108,6 +142,8 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
             <label for="sector">SECTOR:</label>
             <input type="text" id="sector" name="sector" value="<?php echo $row['sector']; ?>" required>
         </div>
+        </div>
+        <div class="form-row">
         <div>
             <label for="dob">DATE OF BIRTH:</label>
             <input type="date" id="dob" name="date_of_birth" value="<?php echo htmlspecialchars($row['date_of_birth']); ?>" required>
@@ -116,6 +152,8 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
             <label for="village">VILLAGE:</label>
             <input type="text" id="village" name="village" value="<?php echo $row['village']; ?>" required>
         </div>
+        </div>
+        <div class="form-row">
         <div>
             <label for="cell">CELL:</label>
             <input type="text" id="cell" name="cell" value="<?php echo $row['cell']; ?>" required>
@@ -124,6 +162,8 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
             <label for="id">ID CARDS:</label>
             <input type="text" id="ID" name="ID" value="<?php echo $row['ID']; ?>" required>
         </div>
+        </div>  
+        
         
     </form>
 </div>

@@ -26,12 +26,9 @@ include 'dashboard.php';
     <title>Update Student</title>
     <style>
         .form-container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #f9f9f9;
+           
         }
 
         /* Form fields */
@@ -111,10 +108,19 @@ $stmt->execute();
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
 ?> 
 
-<h2 style="text-align:center"></h2><br>
+
 <div class="form-container">
-    <form action="" method="post">
-        <div class="form-row">
+		
+		<main>
+			
+
+			
+
+            <div class="table-data">
+			
+            <div class="table-data">
+                <form action="" method="post">
+                <div class="form-row">
             <div>
                 <label for="name">JOB SEEKER NAME:</label>
                 <input type="text" name="first_name" value="<?php echo htmlspecialchars($row['first_name']); ?>" required readonly>
@@ -191,11 +197,13 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
             <label for="ID">ID CARDS:</label>
             <input type="text" id="ID" name="ID" value="<?php echo htmlspecialchars($row['ID']); ?>" required readonly>
         </div>
-       
         
-
     </form>
 </div>
+			
+		</main>
+		<!-- MAIN -->
+	</section>
 
 </body>
 </html>

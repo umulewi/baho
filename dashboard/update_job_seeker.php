@@ -93,6 +93,8 @@ include 'dashboard.php';
                 min-width: 100%;
             }
         }
+
+        
     </style>
 </head>
 <body>
@@ -193,8 +195,8 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
         
         <div>
             <label for="ID">ID CARDS:</label>
+            <input type="number"  value="<?php echo htmlspecialchars($row['ID']);?>" id="id" name="id" maxlength="16" pattern="[0-9]{16}"  title="Please enter a 16-digit ID number." >
             
-            <input type="number" id="ID" name="ID" value="<?php echo htmlspecialchars($row['ID']); ?>" required>
         </div>
         <div>
             <input type="submit" name="update" value="Update" style="background-color: teal;">
@@ -225,7 +227,7 @@ if (isset($_POST['update'])) {
     $cell = htmlspecialchars($_POST['cell']);
     $bio = htmlspecialchars($_POST['bio']);
     $date_of_birth = htmlspecialchars($_POST['date_of_birth']);
-    $ID = htmlspecialchars($_POST['ID']);
+    
 
 
     try {

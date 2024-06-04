@@ -228,7 +228,8 @@ if (!isset($_SESSION['user_email'])) {
         <form action="#">
             <div class="form-input">
                 <input type="search" placeholder="Search...">
-                <button type="submit" class="search-btn"><i class='bx bx-search'></i></button>
+                <button type="submit" class="search-btn">
+                    <i class='bx bx-search'></i></button>
             </div>
         </form>
         <input type="checkbox" id="switch-mode" hidden>
@@ -242,6 +243,7 @@ if (!isset($_SESSION['user_email'])) {
         </div>
         <div id="Providers" class="tabcontent active">
             <h3>Latest Providers</h3>
+           
             <div class="table-responsive">
                 <table class="table" id="providers-table">
                     <tr>
@@ -362,7 +364,45 @@ if (!isset($_SESSION['user_email'])) {
 </div>
         
     </div>
+
+
+    <main>
+			<div class="head-title">
+				
+				
+			</div>
+
+			<ul class="box-info">
+				<li>
+					<i class='bx bxs-calendar-check' ></i>
+					<span class="text">
+						<h3>1020</h3>
+						<p>EMPLOYEES</p>
+					</span>
+				</li>
+				<li>
+					<i class='bx bxs-group' ></i>
+					<span class="text">
+						<h3>2834</h3>
+						<p>Visitors</p>
+					</span>
+				</li>
+				<li>
+					<i class='bx bxs-dollar-circle' ></i>
+					<span class="text">
+						<h3>SEEKERS</h3>
+						<p>123</p>
+					</span>
+				</li>
+			</ul>
+
+
+			
+		</main>
 </section>
+
+
+
 
 <script src="script.js"></script>
 <script>
