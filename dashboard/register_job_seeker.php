@@ -20,10 +20,7 @@ include'dashboard.php';
        .form-container {
             max-width: 800px;
             margin: 0 auto;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #f9f9f9;
+          
         }
 
         /* Form fields */
@@ -54,7 +51,7 @@ include'dashboard.php';
         }
 
         .form-container input[type="submit"] {
-            width: 100%;
+            width: 30%;
             padding: 10px;
             border: none;
             border-radius: 5px;
@@ -89,8 +86,12 @@ include'dashboard.php';
     
 </head>
 <body>
-    <h2 style="text-align:center;margin-top:2rem">Register Job Seeker</h2><br>
+ 
     <div class="form-container">
+   
+		<main>
+            <div class="table-data">
+            <h2 style="text-align:center;margin-top:2rem">Register Job Seeker</h2><br>
         <form action="" method="post">
         <div class="form-row">
                 <div>
@@ -201,6 +202,8 @@ include'dashboard.php';
                 <input type="submit" name="register" value="Register" stayle="background-color:red">
             </div>
         </form>
+    </div>
+    </main>
     </div>
 			
 			
