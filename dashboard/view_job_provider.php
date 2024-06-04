@@ -65,8 +65,7 @@ include '../connection.php';
 ?>
 
     <center><h5 style="color:teal;margin-top:2rem">List Of All JOB PROVIDERS</h5></center>
-    <div class="table-responsive">
-        <table class="table">
+        <table class="">
             <tr>
                 <th>ID</th>
                 <th>NAMES</th>

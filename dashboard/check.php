@@ -83,26 +83,29 @@ include '../connection.php';
             <th>ACTION</th>
         </tr>
         <?php 
-        $i = 1;
-        $stmt = $pdo->query("SELECT * FROM job_seeker INNER JOIN users ON users.users_id = job_seeker.users_id");
+        $i=1;
+        $stmt = $pdo->query("SELECT * FROM agent inner join users on users.users_id=agent.users_id");
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         ?>
         <tr>
-        <td><?php echo $i; ?></td>
-            <td><?php echo $row['full_name']; ?></td>
-            <td><?php echo $row['salary']; ?> RW</td>
-            <td><?php echo $row['bio']; ?></td>
-            <td><?php echo $row['province']; ?></td>
+            <td><?php echo $i; ?></td>
+            <td><?php echo $row['full_name'];?></td>
+            <td><?php echo $row['province'];?></td>
+            <td><?php echo $row['district'];?></td>
+            
             <td>
-                <div class="action-buttons">
-                <a class="btn custom-bg shadow-none" style="background-color:#b0b435" href="details.php?job_seeker_id=<?php echo $row['job_seeker_id']; ?>"><b>MORE</b></a>
-                <a class="btn custom-bg shadow-none" style="background-color:#b0b435" href="update_job_seeker.php?job_seeker_id=<?php echo $row['job_seeker_id']; ?>"><b>Update</b></a>
-                </div>
+            <div class="action-buttons">
+            <a class="btn custom-bg shadow-none" style="background-color:#b0b435" href="more_agent.php?agent_id=<?php echo $row['agent_id'];?>"><b>More</b></a>
+            <a class="btn custom-bg shadow-none" style="background-color:#b0b435" href="update_agent.php?agent_id=<?php echo $row['agent_id'];?>"><b>Update</b></a>
+        </div>
+           
+           
             </td>
         </tr>
         <?php
-            $i++;
-        }
+$i++;
+    }
+
         ?>
     </table>
 </div>

@@ -11,7 +11,7 @@ $stmt = $pdo->prepare("SELECT users_id FROM job_provider WHERE job_provider_id =
 $stmt->execute([$job_provider_id]); 
 $user_id = $stmt->fetchColumn(); 
 $stmt->closeCursor(); 
-echo "User ID: " . $user_id;
+// echo "User ID: " . $user_id;
 $pdo = null;
 ?>
 
@@ -33,9 +33,8 @@ include 'dashboard.php';
 
         /* Form fields */
         .form-container div {
-            margin-bottom: 15px;
+            margin-bottom: 5px;
         }
-
         .form-container label {
             display: block;
             font-weight: bold;

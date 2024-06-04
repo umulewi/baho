@@ -26,12 +26,9 @@ include 'dashboard.php';
     <title>Update Student</title>
     <style>
         .form-container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #f9f9f9;
+           
         }
 
         /* Form fields */
@@ -62,7 +59,7 @@ include 'dashboard.php';
         }
 
         .form-container input[type="submit"] {
-            width: 100%;
+            width: 20%;
             padding: 10px;
             border: none;
             border-radius: 5px;
@@ -93,6 +90,7 @@ include 'dashboard.php';
                 min-width: 100%;
             }
         }
+        
 
         
     </style>
@@ -113,47 +111,50 @@ $stmt->execute();
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
 ?> 
 
-<h2 style="text-align:center"></h2><br>
+
 <div class="form-container">
-    <form action="" method="post">
-        <div class="form-row">
+		
+		<main>
+            <div class="table-data">
+                <form action="" method="post">
+                <div class="form-row">
         <div>
-            <label for="name">JOB SEEKER NAME:</label>
+            <label for="name">Seeke's first name:</label>
             <input type="text" name="first_name" value="<?php echo htmlspecialchars($row['first_name']); ?>" required>
         </div>
         <div>
-            <label for="name">JOB SEEKER LAST NAME:</label>
+            <label for="name">Seeker's last name:</label>
             <input type="text" name="last_name" value="<?php echo htmlspecialchars($row['last_name']); ?>" required>
         </div>
         </div>
         <div class="form-row">
         <div>
-            <label for="fathers_name">FATHER'S NAME:</label>
+            <label for="fathers_name">Father;s name:</label>
             <input type="text" id="fathers_name" name="fathers_name" value="<?php echo htmlspecialchars($row['fathers_name']); ?>" required>
         </div>
         <div>
-            <label for="mothers_name">MOTHER'S NAME:</label>
+            <label for="mothers_name">Mothers'name:</label>
             <input type="text" id="mothers_name" name="mothers_name" value="<?php echo htmlspecialchars($row['mothers_name']); ?>" required>
         </div>
         </div>
         
         <div class="form-row">
         <div>
-            <label for="email">EMAIL:</label>
+            <label for="email">Email:</label>
             <input type="text" id="email" name="email" value="<?php echo htmlspecialchars($row['email']); ?>" required>
         </div>
         <div>
-            <label for="province">PROVINCE:</label>
+            <label for="province">Province:</label>
             <input type="text" id="province" name="province" value="<?php echo htmlspecialchars($row['province']); ?>" required >
         </div>
         </div>
         <div class="form-row">
         <div>
-            <label for="district">DISTRICT:</label>
+            <label for="district">District:</label>
             <input type="text" id="district" name="district" value="<?php echo htmlspecialchars($row['district']); ?>" required>
         </div>
         <div>
-            <label for="sector">SECTOR:</label>
+            <label for="sector">Sector:</label>
             <input type="text" id="sector" name="sector" value="<?php echo htmlspecialchars($row['sector']); ?>" required>
         </div>
 
@@ -161,11 +162,11 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
         
         <div class="form-row">
         <div>
-            <label for="village">VILLAGE:</label>
+            <label for="village">Village:</label>
             <input type="text" id="village" name="village" value="<?php echo htmlspecialchars($row['village']); ?>" required>
         </div>
         <div>
-            <label for="cell">CELL:</label>
+            <label for="cell">Cell:</label>
             <input type="text" id="cell" name="cell" value="<?php echo htmlspecialchars($row['cell']); ?>" required>
         </div>
         </div>
@@ -188,7 +189,7 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
             <input type="number" id="cell" name="salary" value="<?php echo htmlspecialchars($row['salary']);?>" required>
         </div>
         <div>
-            <label for="bio">BIO:</label>
+            <label for="bio" class="">BIO:</label>
             <textarea id="bio" name="bio" required><?php echo ($row['bio']); ?></textarea>
         </div>
         </div>
@@ -200,9 +201,15 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
         </div>
         <div>
             <input type="submit" name="update" value="Update" style="background-color: teal;">
-        </div>
+        </div>    
+               
+        
     </form>
 </div>
+			
+		</main>
+		<!-- MAIN -->
+	</section>
 
 </body>
 </html>

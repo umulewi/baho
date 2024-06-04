@@ -1,13 +1,20 @@
-<?php  
+<?php
 session_start();
 if (!isset($_SESSION['user_email'])) {
- header("location:../index.php");
+    header("location:../index.php");
+    exit();
 }
- ?>
+include('../connection.php');
+$user_email = $_SESSION['user_email'];
+$stmt = $pdo->prepare("SELECT users_id FROM users WHERE email = ?");
+$stmt->execute([$user_email]); 
+$user_id = $stmt->fetchColumn(); 
+$stmt->closeCursor(); 
+$pdo = null;
+?>
 
 <?php
 include'dashboard.php';
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -42,6 +49,7 @@ include'dashboard.php';
             border-radius: 4px;
             color: white;
             font-weight: bold;
+            margin: 2px; /* Add margin to separate buttons */
         }
         .btn.delete {
             background-color: crimson;
@@ -49,24 +57,30 @@ include'dashboard.php';
         .btn.update {
             background-color: #b0b435;
         }
+        .table-container {
+            overflow-x: auto;
+        }
+        .action-buttons {
+            display: flex;
+            flex-wrap: wrap; 
+        }
     </style>
 </head>
 <body>
 <?php
 include '../connection.php';
-
 ?>
 
-
-    <center><h5 style="color:teal;margin-top:2rem">ALL AGENTS</h5></center>
-    <table class="table">
+<center><h5 style="color:teal;margin-top:2rem">List Of All JOB SEEKERS</h5></center>
+<div class="table-container">
+    <table class="table-data">
         <tr>
             <th>ID</th>
-            <th>NAMES</th>
-            <th>PROVINCE</th>
-            <th>DISTRICT</th>
+            <th>Names</th>
+            <th>Province</th>
+            <th>district</th>
+           
             <th>ACTION</th>
-
         </tr>
         <?php 
         $i=1;
@@ -79,9 +93,11 @@ include '../connection.php';
             <td><?php echo $row['province'];?></td>
             <td><?php echo $row['district'];?></td>
             
-            <td style="width: -56rem">
+            <td>
+            <div class="action-buttons">
             <a class="btn custom-bg shadow-none" style="background-color:#b0b435" href="more_agent.php?agent_id=<?php echo $row['agent_id'];?>"><b>More</b></a>
             <a class="btn custom-bg shadow-none" style="background-color:#b0b435" href="update_agent.php?agent_id=<?php echo $row['agent_id'];?>"><b>Update</b></a>
+        </div>
            
            
             </td>
@@ -91,8 +107,7 @@ $i++;
     }
 
         ?>
-</table>
-</span>
-
+    </table>
+</div>
 </body>
 </html>
