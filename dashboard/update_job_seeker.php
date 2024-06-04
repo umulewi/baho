@@ -170,7 +170,7 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
         <div class="form-row">
         <div>
             <label for="dob">DATE OF BIRTH:</label>
-            <input type="date" id="dob" name="date_of_birth" id="date_of_birth" value="<?php echo htmlspecialchars($row['date_of_birth']); ?>" required>
+            <input type="date"  name="date_of_birth" id="date_of_birth" value="<?php echo htmlspecialchars($row['date_of_birth']); ?>" required>
         </div>
         <div>
             <label for="gender">GENDER:</label>
@@ -193,6 +193,7 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
         
         <div>
             <label for="ID">ID CARDS:</label>
+            
             <input type="number" id="ID" name="ID" value="<?php echo htmlspecialchars($row['ID']); ?>" required>
         </div>
         <div>
@@ -291,4 +292,15 @@ if (isset($_POST['update'])) {
     maxDate.setFullYear(today.getFullYear() - 18);
     var maxDateFormatted = maxDate.toISOString().split('T')[0];
     document.getElementById("date_of_birth").setAttribute("max", maxDateFormatted);
+</script>
+
+<script>
+const idInput = document.getElementById("id");
+idInput.addEventListener("input", function() {
+  const value = idInput.value;
+  if (value.length > 16) {
+    idInput.value = value.slice(0, 16); 
+  }
+  
+});
 </script>

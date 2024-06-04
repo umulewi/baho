@@ -189,8 +189,8 @@ include'dashboard.php';
 
                 <div class="form-row">
                 <div>
-                <label for="phone">ID</label>
-                <input type="number"  name="id" required>
+                <label for="id">ID</label>
+                <input type="number" id="id" name="id" maxlength="16" pattern="[0-9]{16}" title="Please enter a 16-digit ID number." required>
             </div>
             <div>
                 <label for="bio">BIO:</label>
@@ -281,4 +281,15 @@ if (isset($_POST["register"])) {
     maxDate.setFullYear(today.getFullYear() - 18);
     var maxDateFormatted = maxDate.toISOString().split('T')[0];
     document.getElementById("date_of_birth").setAttribute("max", maxDateFormatted);
+</script>
+
+<script>
+const idInput = document.getElementById("id");
+idInput.addEventListener("input", function() {
+  const value = idInput.value;
+  if (value.length > 16) {
+    idInput.value = value.slice(0, 16); 
+  }
+  
+});
 </script>
