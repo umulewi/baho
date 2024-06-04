@@ -17,6 +17,8 @@ include'dashboard.php';
     <style>
         .table-container {
             overflow-x: auto;
+            width: 80%; /* Adjust the width as needed */
+            margin: 0 auto; /* Center the table */
         }
         table {
             width: 100%;
@@ -51,6 +53,7 @@ include'dashboard.php';
         .btn.update {
             background-color: #b0b435;
         }
+        
     </style>
 </head>
 <body>
@@ -59,8 +62,9 @@ include '../connection.php';
 ?>
 
 <center><h5 style="color:teal;margin-top:2rem">List Of All JOB SEEKERS</h5></center>
+
 <div class="table-container">
-    <table class="table">
+    <table class="table-data">
         <tr>
             <th>ID</th>
             <th>NAMES</th>

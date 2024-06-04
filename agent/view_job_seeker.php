@@ -62,7 +62,7 @@ include'dashboard.php';
         }
         .action-buttons {
             display: flex;
-            flex-wrap: wrap; /* Allows buttons to wrap on small screens */
+            flex-wrap: wrap; 
         }
     </style>
 </head>
