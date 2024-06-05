@@ -1,47 +1,47 @@
-<?php
-include 'connection.php';
+  <?php
+  include 'connection.php';
 
-if (isset($_POST['user_login'])) {
-  $email = $_POST['email']; // Change from username to email
-  $password = $_POST['password'];
+  if (isset($_POST['user_login'])) {
+    $email = $_POST['email']; // Change from username to email
+    $password = $_POST['password'];
 
-  // Fetch user record from the database (with password check)
-  $statement = $pdo->prepare("SELECT users.*, role.role_name FROM users INNER JOIN role ON users.role_id = role.role_id WHERE email=:email AND password=:password");
-  $statement->bindParam(':email', $email); // Changed from username to email
-  $statement->bindParam(':password', $password); // Note: It's not recommended to store passwords in plain text. Hash them before storing and comparing.
-  $statement->execute();
+    // Fetch user record from the database (with password check)
+    $statement = $pdo->prepare("SELECT users.*, role.role_name FROM users INNER JOIN role ON users.role_id = role.role_id WHERE email=:email AND password=:password");
+    $statement->bindParam(':email', $email); // Changed from username to email
+    $statement->bindParam(':password', $password); // Note: It's not recommended to store passwords in plain text. Hash them before storing and comparing.
+    $statement->execute();
 
-  $user = $statement->fetch(PDO::FETCH_ASSOC); 
+    $user = $statement->fetch(PDO::FETCH_ASSOC); 
 
-  if ($user) {
-    session_start();
-    $_SESSION['user_email'] = $email; 
+    if ($user) {
+      session_start();
+      $_SESSION['user_email'] = $email; 
 
-    $role_name = $user['role_name'];
-    switch ($role_name) {
-      case 'admin':
-        header("Location: dashboard/index.php");
-        exit();
-      case 'job_seeker':
-        header("Location: job_seeker_login/my_profile.php");
-       
-        exit();
-      case 'job_provider':
-        header("Location: job_provider_login/my_profile.php");
-        exit();
-      case 'agent':
-        header("Location: agent/index.php");
-        exit();
-      default:
-        // Default redirect if role is not recognized
-        header("Location: default_dashboard.php");
-        exit();
+      $role_name = $user['role_name'];
+      switch ($role_name) {
+        case 'admin':
+          header("Location: dashboard/index.php");
+          exit();
+        case 'job_seeker':
+          header("Location: job_seeker_login/my_profile.php");
+        
+          exit();
+        case 'job_provider':
+          header("Location: job_provider_login/my_profile.php");
+          exit();
+        case 'agent':
+          header("Location: agent/index.php");
+          exit();
+        default:
+          // Default redirect if role is not recognized
+          header("Location: default_dashboard.php");
+          exit();
+      }
+    } else {
+      echo "<script>alert('Incorrect email or password');</script>";
     }
-  } else {
-    echo "<script>alert('Incorrect email or password');</script>";
   }
-}
-?>
+  ?>
 
 
 
@@ -63,17 +63,16 @@ if (isset($_POST['user_login'])) {
             <h2>continue with google:</h2>
             <?php
             include'connection.php';
-function getRoleId($pdo, $roleName) {
-    $stmt = $pdo->prepare("SELECT role_id FROM role WHERE role_name = :role_name");
-    $stmt->execute(array(':role_name' => $roleName));
-    $row = $stmt->fetch(PDO::FETCH_ASSOC);
-    return $row['role_id'];
-}
-$roleId = getRoleId($pdo, 'job_seeker');
-$link = "<a href='job_seeker_login.php?role_id=$roleId'>AS JOB SEEKER</a>";
-
-echo $link;
-?>
+            function getRoleId($pdo, $roleName) {
+              $stmt = $pdo->prepare("SELECT role_id FROM role WHERE role_name = :role_name");
+              $stmt->execute(array(':role_name' => $roleName));
+              $row = $stmt->fetch(PDO::FETCH_ASSOC);
+              return $row['role_id'];
+            }
+            $roleId = getRoleId($pdo, 'job_seeker');
+            $link = "<a href='job_seeker_login.php?role_id=$roleId'>AS JOB SEEKER</a>";
+            echo $link;
+            ?>
 <br><br>
 <?php
 function getRoleId2($pdo, $roleName) {

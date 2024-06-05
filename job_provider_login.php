@@ -47,13 +47,14 @@ ini_set('display_errors', 1);
     echo "Message: " . $message;
 }
 ?>
+
 <?php
-require_once 'job_provider_login/config.php';
-if (isset($_SESSION['user_token'])) {
-  header("Location: job_provider_login/welcome.php");
-} else {
-  echo "<a href='" . $client->createAuthUrl() . "'>Google Login</a>";
-}
+// require_once 'job_provider_login/config.php';
+// if (isset($_SESSION['user_token'])) {
+//   header("Location: job_provider_login/welcome.php");
+// } else {
+//   echo "<a href='" . $client->createAuthUrl() . "'>Google Login</a>";
+// }
 
 ?>
 </body>
