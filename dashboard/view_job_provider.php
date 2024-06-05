@@ -30,12 +30,7 @@ include'dashboard.php';
             background-color: teal;
             color: white;
         }
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-        tr:hover {
-            background-color: #ddd;
-        }
+       
         .btn {
             padding: 8px 12px;
             text-decoration: none;
@@ -64,37 +59,49 @@ include'dashboard.php';
 include '../connection.php';
 ?>
 
-    <center><h5 style="color:teal;margin-top:2rem">List Of All JOB PROVIDERS</h5></center>
-        <table class="">
-            <tr>
-                <th>ID</th>
-                <th>NAMES</th>
-                <th>PROVINCE</th>
-                <th>DISTRICT</th>
-                <th>ACTION</th>
-            </tr>
-            <?php 
-            $i=1;
-            $stmt = $pdo->query("SELECT * FROM job_provider inner join users on users.users_id=job_provider.users_id");
-            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            ?>
-            <tr>
-                <td><?php echo $i; ?></td>
-                <td><?php echo $row['full_name'];?></td>
-                <td><?php echo $row['province'];?></td>
-                <td><?php echo $row['district'];?></td>
-                <td>
-                <div class="action-buttons">
-                <a class="btn update" href="more_providers.php?job_provider_id=<?php echo $row['job_provider_id'];?>"><b>More</b></a>
-                <a class="btn update" href="update_job_provider.php?job_provider_id=<?php echo $row['job_provider_id'];?>"><b>Update</b></a>
-                </td>
+
+<main>
+			
+			
+
+
+			<div class="table-data">
+                <?php
+                include '../connection.php';
+                ?>
+                <h5 style="color:teal;margin-top:2rem">ALL JOB PROVIDERS</h5>
+                <table class="">
+                    <tr>
+                        <th>ID</th>
+                        <th>NAMES</th>
+                        <th>PROVINCE</th>
+                        <th>DISTRICT</th>
+                        <th>ACTION</th>
+                    </tr>
+                    <?php 
+                    $i=1;
+                    $stmt = $pdo->query("SELECT * FROM job_provider inner join users on users.users_id=job_provider.users_id");
+                    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                        ?>
+                        <tr>
+                            <td><?php echo $i; ?></td>
+                            <td><?php echo $row['full_name'];?></td>
+                            <td><?php echo $row['province'];?></td>
+                            <td><?php echo $row['district'];?></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <a class="btn update" href="more_providers.php?job_provider_id=<?php echo $row['job_provider_id'];?>"><b>More</b></a>
+                                    <a class="btn update" href="update_job_provider.php?job_provider_id=<?php echo $row['job_provider_id'];?>"><b>Update</b></a>
+                                </td>
+                            </div>
+                        </tr>
+                        <?php
+                        $i++;
+                    }
+                    ?>
+                    </table>
+                </div>
             </div>
-            </tr>
-            <?php
-            $i++;
-            }
-            ?>
-        </table>
-    </div>
+        </main>
 </body>
 </html>

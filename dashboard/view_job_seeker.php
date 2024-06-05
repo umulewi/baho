@@ -37,12 +37,7 @@ include'dashboard.php';
             background-color: teal;
             color: white;
         }
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-        tr:hover {
-            background-color: #ddd;
-        }
+        
         .btn {
             padding: 8px 12px;
             text-decoration: none;
@@ -71,6 +66,7 @@ include'dashboard.php';
 include '../connection.php';
 ?>
 
+<main>
 <center><h5 style="color:teal;margin-top:2rem">List Of All JOB SEEKERS</h5></center>
 <div class="table-container">
     <table class="table-data">
@@ -106,5 +102,6 @@ include '../connection.php';
         ?>
     </table>
 </div>
+    </main>
 </body>
 </html>

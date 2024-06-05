@@ -1,283 +1,183 @@
-<?php
-session_start();
-if (!isset($_SESSION['user_email'])) {
-    header("location:../index.php");
-    exit();
-}
-include('../connection.php');
-$user_email = $_SESSION['user_email'];
-$stmt = $pdo->prepare("SELECT users_id FROM users WHERE email = ?");
-$stmt->execute([$user_email]); 
-$user_id = $stmt->fetchColumn(); 
-$stmt->closeCursor(); 
-$pdo = null;
-?>
-<?php
-include'dashboard.php';
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!-- Boxicons -->
+	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+	<!-- My CSS -->
+	<link rel="stylesheet" href="style.css">
     <style>
-        .form-container {
-            max-width: 800px;
-            margin: 0 auto;
-          
-        }
-
-        /* Form fields */
-        .form-container div {
-            margin-bottom: 15px;
-        }
-
-        .form-container label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-
-        .form-container input[type="text"],
-        .form-container input[type="date"],
-        .form-container input[type="password"],
-        .form-container input[type="email"],
-        .form-container input[type="tel"],
-        .form-container input[type="number"],
-        textarea,
-
-        select {
+        table {
             width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
+            border-collapse: collapse;
+            border-spacing: 0;
         }
-
-        .form-container input[type="submit"] {
-            width: 100%;
+        th, td {
             padding: 10px;
-            border: none;
-            border-radius: 5px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
             background-color: teal;
-            color: #fff;
-            font-size: 16px;
-            cursor: pointer;
+            color: white;
         }
-
-        .form-container input[type="submit"]:hover {
-            background-color: darkslategray;
+        
+        .btn {
+            padding: 8px 12px;
+            text-decoration: none;
+            border-radius: 4px;
+            color: white;
+            font-weight: bold;
+            margin: 2px; /* Add margin to separate buttons */
         }
-
-        .form-row {
+        .btn.delete {
+            background-color: crimson;
+        }
+        .btn.update {
+            background-color: #b0b435;
+        }
+        .table-container {
+            overflow-x: auto;
+        }
+        .action-buttons {
             display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .form-row > div {
-            flex: 1;
-            min-width: 300px;
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 600px) {
-            .form-row > div {
-                min-width: 100%;
-            }
+            flex-wrap: wrap; 
         }
     </style>
-    
+
+	<title>AdminHub</title>
 </head>
 <body>
- 
-    <h2 style="text-align:center;margin-top:2rem">Register Job Seeker</h2><br>
-    <div class="form-container">
-        <main>
-       <div class="table-data">
-        <form action="" method="post">
-            <div class="form-row">
-                <div>
-                <label for="name">FIRSTNAME:</label>
-                <input type="text"  name="firstname" required>
-            </div>
-            <div>
-                <label for="physical_code">LASTNAME:</label>
-                <input type="text"  name="lastname" required>
-            </div>
-    </div>
-    <div class="form-row">
-            <div>
-                <label for="email">FATHER'S NAME:</label>
-                <input type="text"  name="fathers_name" required>
-            </div>
-            <div>
-                <label for="phone">MOTHER'S NAME:</label>
-                <input type="text"  name="mothers_name" required>
-            </div>
-        </div>
-        <div class="form-row">
-        <div>
-                <label for="gender">GENDER:</label>
-                <select name="gender">
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                </select>
 
-                
-            </div>
 
-            <div>
-            <label for="PROVINCE">PROVINCE:</label>
-                <select name="province">
-                <option value="KIGALI CITY">KIGALI CITY</option>
-                    <option value="WESTERN PROVINCE">WESTERN PROVINCE</option>
-                    <option value="ESTERN PROVINCE">ESTERN PROVINCE</option>
-                    <option value="NORTH PROVINCE">NORTH PROVINCE</option>
-                    <option value="SOUTH PROVINCE">NORTH PROVINCE</option>
-                </select>
+	<!-- SIDEBAR -->
+	<section id="sidebar">
+		<a href="#" class="brand">
+			<i class='bx bxs-smile'></i>
+			<span class="text">AdminHub</span>
+		</a>
+		<ul class="side-menu top">
+			<li class="active">
+				<a href="#">
+					<i class='bx bxs-dashboard' ></i>
+					<span class="text">Dashboard</span>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					<i class='bx bxs-shopping-bag-alt' ></i>
+					<span class="text">My Store</span>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					<i class='bx bxs-doughnut-chart' ></i>
+					<span class="text">Analytics</span>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					<i class='bx bxs-message-dots' ></i>
+					<span class="text">Message</span>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					<i class='bx bxs-group' ></i>
+					<span class="text">Team</span>
+				</a>
+			</li>
+		</ul>
+		<ul class="side-menu">
+			<li>
+				<a href="#">
+					<i class='bx bxs-cog' ></i>
+					<span class="text">Settings</span>
+				</a>
+			</li>
+			<li>
+				<a href="#" class="logout">
+					<i class='bx bxs-log-out-circle' ></i>
+					<span class="text">Logout</span>
+				</a>
+			</li>
+		</ul>
+	</section>
+	<!-- SIDEBAR -->
 
-            
-            </div>
-        </div>
 
-            <div class="form-row">
-            <div>
-                <label for="phone">DISTRICT:</label>
-                <input type="text"  name="district" required>
-            </div>
-            <div>
-                <label for="phone">SECTOR:</label>
-                <input type="text"  name="sector" required>
-            </div>
-            </div>
-            <div class="form-row">
-            <div>
-                <label for="phone">CELL:</label>
-                <input type="text"  name="cell" required>
-            </div>
-            <div>
-                <label for="phone">VILLAGE:</label>
-                <input type="text"  name="village" required>
-            </div>
-            </div>
-           <div class="form-row">
-           <div>
-            <label for="physical_code">EMAIL:</label>
-            <input type="email" id="email" name="email" required>
-        </div>
-        
-        <div>
-            <label for="phone">PHONE NUMBER:</label>
-            <input type="text" id="phone" name="telephone" required>
-        </div>
-           </div>
-            
-           <div class="form-row">
-           <div>
-            <label for="bio">BIO:</label>
-            <textarea id="bio" name="bio" required></textarea>
-        </div>
-        <div>
-                <label for="date_of_birth">DATE OF BIRTH:</label>
-                <input type="date" name="date_of_birth" id="date_of_birth" required>
-        </div>
-    </div>
-    <div class="form-row">
 
-        <div>
-            <label for="email">PASSWORD:</label>
-            <input type="password" id="password" name="password" required>
-        </div>
+	<!-- CONTENT -->
+	<section id="content">
+		<!-- NAVBAR -->
+		<nav>
+			<i class='bx bx-menu' ></i>
+			<a href="#" class="nav-link">Categories</a>
+			<form action="#">
+				<div class="form-input">
+					<input type="search" placeholder="Search...">
+					<button type="submit" class="search-btn"><i class='bx bx-search' ></i></button>
+				</div>
+			</form>
+			<input type="checkbox" id="switch-mode" hidden>
+			<label for="switch-mode" class="switch-mode"></label>
+			<a href="#" class="notification">
+				<i class='bx bxs-bell' ></i>
+				<span class="num">8</span>
+			</a>
+			<a href="#" class="profile">
+				<img src="img/people.png">
+			</a>
+		</nav>
+		<!-- NAVBAR -->
 
-            <div>
-                <label for="phone">ID</label>
-                <input type="number"  name="id" required>
+		<!-- MAIN -->
+		<main>
+			
+			
+
+
+			<div class="table-data">
+                <?php
+                include '../connection.php';
+                ?>
+                <h5 style="color:teal;margin-top:2rem">ALL JOB PROVIDERS</h5>
+                <table class="">
+                    <tr>
+                        <th>ID</th>
+                        <th>NAMES</th>
+                        <th>PROVINCE</th>
+                        <th>DISTRICT</th>
+                        <th>ACTION</th>
+                    </tr>
+                    <?php 
+                    $i=1;
+                    $stmt = $pdo->query("SELECT * FROM job_provider inner join users on users.users_id=job_provider.users_id");
+                    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                        ?>
+                        <tr>
+                            <td><?php echo $i; ?></td>
+                            <td><?php echo $row['full_name'];?></td>
+                            <td><?php echo $row['province'];?></td>
+                            <td><?php echo $row['district'];?></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <a class="btn update" href="more_providers.php?job_provider_id=<?php echo $row['job_provider_id'];?>"><b>More</b></a>
+                                    <a class="btn update" href="update_job_provider.php?job_provider_id=<?php echo $row['job_provider_id'];?>"><b>Update</b></a>
+                                </td>
+                            </div>
+                        </tr>
+                        <?php
+                        $i++;
+                    }
+                    ?>
+                    </table>
+                </div>
             </div>
-            
-            <div>
-                <input type="submit" name="register" value="Register" style="width:104px;">
-            </div>
-        </form>
-    </div>
-    </main>
-    </div>
-					
+        </main>
+    </section>
+    <script src="script.js"></script>
 </body>
 </html>
-
-<?php
-include '../connection.php';
-
-if (isset($_POST["register"])) {
-    $firstname = $_POST["firstname"];
-    $lastname = $_POST["lastname"];
-    $fathers_name = $_POST['fathers_name'];
-    $mothers_name = $_POST['mothers_name'];
-    $province = $_POST['province'];
-    $district = $_POST['district'];
-    $full_name = $firstname . ' ' . $lastname; 
-    $sector = $_POST['sector'];
-    $gender=$_POST['gender'];
-    $cell = $_POST['cell'];
-    $village = $_POST['village'];
-    $date_of_birth = $_POST['date_of_birth'];
-    $id=$_POST['id'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $bio = $_POST['bio'];
-    $telephone = $_POST['telephone'];
-    $role_id = $_GET['role_id'];
-    $created_by=$user_email;
-
-    //Insert into users table
-    $stmt_user = $pdo->prepare("INSERT INTO users (role_id, email, first_name, last_name, full_name, gender, password)
-    VALUES (:role_id, :email, :first_name, :last_name, :full_name, :gender, :password)");
-    $stmt_user->bindParam(':email', $email);
-    $stmt_user->bindParam(':first_name', $firstname);
-    $stmt_user->bindParam(':last_name', $lastname);
-    $stmt_user->bindParam(':full_name', $full_name);
-    $stmt_user->bindParam(':password', $password);         
-    $stmt_user->bindParam(':gender', $gender);         
-    $stmt_user->bindParam(':role_id', $role_id);
-    $stmt_user->execute();
-    $users_id = $pdo->lastInsertId();
-
-
-    $stmt_job_provider = $pdo->prepare("INSERT INTO job_seeker (users_id, role_id,  province,fathers_name,mothers_name, district, sector, cell, village, date_of_birth,id,bio,created_by) VALUES (:users_id, :role_id, :province,:fathers_name,:mothers_name, :district, :sector, :cell, :village,:date_of_birth, :id,:bio,:created_by)");
-    $stmt_job_provider->bindParam(':users_id', $users_id);
-    $stmt_job_provider->bindParam(':role_id', $role_id);
-    $stmt_job_provider->bindParam(':province', $province);
-    $stmt_job_provider->bindParam(':district', $district);
-    $stmt_job_provider->bindParam(':fathers_name', $fathers_name);
-    $stmt_job_provider->bindParam(':mothers_name', $mothers_name);
-    $stmt_job_provider->bindParam(':sector', $sector);
-    $stmt_job_provider->bindParam(':cell', $cell);
-    $stmt_job_provider->bindParam(':village', $village);
-    $stmt_job_provider->bindParam(':bio', $bio);
-    $stmt_job_provider->bindParam(':date_of_birth', $date_of_birth);
-    $stmt_job_provider->bindParam(':id', $id);
-    $stmt_job_provider->bindParam(':created_by', $created_by);
-    try {
-        if ($stmt_job_provider->execute()) {
-            echo "<script>alert('New job seeker has been added');</script>";
-        } else {
-            echo "<script>alert('Error: Unable to execute statement');</script>";
-        }
-    } catch(PDOException $e) {
-        echo "Error: " . $e->getMessage();
-    }
-}
-?>
-
-<script>
-    var today = new Date();
-    var maxDate = new Date();
-    maxDate.setFullYear(today.getFullYear() - 18);
-    var maxDateFormatted = maxDate.toISOString().split('T')[0];
-    document.getElementById("date_of_birth").setAttribute("max", maxDateFormatted);
-</script>
-
-
-

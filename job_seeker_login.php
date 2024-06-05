@@ -1,6 +1,7 @@
 
 <?php
 session_start();
+error_reporting(0);
 include 'connection.php';
 
 if (isset($_POST['login'])) {
@@ -265,6 +266,35 @@ button:hover{
                                 
                         
                             <button  name ="user_login"class="btn-signup">Sign up</button>
+
+                            <?php
+                            require_once 'job_provider_login/config.php';
+                            if (isset($_SESSION['user_token'])) {
+                                header("Location: job_provider_login/welcome.php");
+                            } else {
+                                echo "<a href='" . $client->createAuthUrl() . "' style='
+    display: block;
+    width: 30%;
+    height: 40px;
+    margin: 10px auto;
+    justify-content: center;
+    color: #fff;
+    background: #EA60A7;
+    font-size: 1em;
+    font-weight: bold;
+    margin-top: 20px;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    transition: .2s ease-in;
+    text-decoration:none;
+    cursor: pointer;
+    text-align: center;
+    line-height: 40px;
+'>Google Login</a>";
+
+                            }
+                            ?>
                         </form>
                         
                     </div>
