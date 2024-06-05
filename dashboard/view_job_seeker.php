@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['user_email'])) {
-    header("location:../index.php");
+    header("location:login.php");
     exit();
 }
 include('../connection.php');
@@ -67,9 +67,10 @@ include '../connection.php';
 ?>
 
 <main>
-<center><h5 style="color:teal;margin-top:2rem">List Of All JOB SEEKERS</h5></center>
-<div class="table-container">
-    <table class="table-data">
+
+<div class="table-data">
+<h5 style="color:teal;margin-top:2rem">List of all seekeers</h5>
+    <table class="">
         <tr>
             <th>ID</th>
             <th>NAMES</th>

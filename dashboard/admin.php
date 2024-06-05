@@ -1,9 +1,11 @@
-<?php  
-// session_start();
-// if (!isset($_SESSION['username'])) {
-//  header("location:../index.php");
-// }
- ?>
+<?php
+session_start();
+if (!isset($_SESSION['user_email'])) {
+    header("location:login.php");
+    exit();
+}
+include('../connection.php');
+?>
 
 <!DOCTYPE html>
 <html lang="en">

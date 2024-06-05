@@ -23,7 +23,7 @@ if (isset($_POST['login'])) {
         exit();
       default:
         // Default redirect if role is not recognized
-        header("Location: default_dashboard.php");
+        echo "<script>alert('Incorrect email or password');</script>";
         exit();
     }
   } else {

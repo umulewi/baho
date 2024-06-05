@@ -1,5 +1,15 @@
 <?php
-include '../connection.php';
+session_start();
+if (!isset($_SESSION['user_email'])) {
+    header("location:login.php");
+    exit();
+}
+include('../connection.php');
+?>
+
+
+<?php
+
 
 // Check if lastId is set, otherwise set it to 0
 $lastId = isset($_GET['lastId']) ? $_GET['lastId'] : 0;
