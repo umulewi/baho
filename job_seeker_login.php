@@ -1,3 +1,4 @@
+
 <?php
 session_start();
 include 'connection.php';
@@ -5,7 +6,7 @@ include 'connection.php';
 if (isset($_POST['login'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
-    $statement = $pdo->prepare("SELECT * FROM users WHERE email=:email AND password=:password");
+    $statement = $pdo->prepare("SELECT users.*, role.role_name FROM users INNER JOIN role ON users.role_id = role.role_id WHERE email=:email AND password=:password");
     $statement->bindParam(':email', $email);
     $statement->bindParam(':password', $password);
     $statement->execute();
@@ -14,15 +15,21 @@ if (isset($_POST['login'])) {
 
     if ($user) {
         $_SESSION['user_email'] = $email;
-        header("Location: job_seeker_login/my_profile.php");
-        exit();
+
+        $role_name = $user['role_name'];
+        switch ($role_name) {
+            case 'job_seeker':
+                header("Location: job_seeker_login/my_profile.php");
+                exit();
+            default:
+                header("Location: default_dashboard.php");
+                exit();
+        }
     } else {
         echo "<script>alert('Incorrect email or password');</script>";
     }
 }
 ?>
-
-
 
 
 <!DOCTYPE html>
