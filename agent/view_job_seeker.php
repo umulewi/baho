@@ -121,7 +121,7 @@ include '../connection.php';
     </div>
     </main>
     <div class="table-container">
-<div class="table-data">
+        <div class="table-data">
     <?php
     include '../connection.php';
     ?>
