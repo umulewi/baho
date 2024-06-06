@@ -102,7 +102,6 @@ if (!isset($_SESSION['user_email'])) {
             width: 100%;
             border-collapse: collapse;
             border-spacing: 0;
-            min-width: 600px; 
         }
         th, td {
             padding: 10px;
@@ -113,11 +112,27 @@ if (!isset($_SESSION['user_email'])) {
             background-color: teal;
             color: white;
         }
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
+        
+        .btn {
+            padding: 8px 12px;
+            text-decoration: none;
+            border-radius: 4px;
+            color: white;
+            font-weight: bold;
+            margin: 2px; /* Add margin to separate buttons */
         }
-        tr:hover {
-            background-color: #ddd;
+        .btn.delete {
+            background-color: crimson;
+        }
+        .btn.update {
+            background-color: #b0b435;
+        }
+        .table-container {
+            overflow-x: auto;
+        }
+        .action-buttons {
+            display: flex;
+            flex-wrap: wrap; 
         }
         
 
@@ -302,6 +317,9 @@ if (!isset($_SESSION['user_email'])) {
         
            
             <div class="table-responsive">
+                <main>
+
+                <div class="table-data">
                 <table class="table" id="providers-table">
                     <tr>
                         <th>ID</th>
@@ -331,6 +349,8 @@ if (!isset($_SESSION['user_email'])) {
                     }
                     ?>
                 </table>
+                </div>
+                </main>
                
                 <button class="btn custom-bg shadow-none" style="background-color:#b0b435; margin-top:12px; border: none; cursor: pointer;" id="load-More-btn">Load More</button>
                 
@@ -340,6 +360,7 @@ if (!isset($_SESSION['user_email'])) {
       
         <div class="table-responsive">
         <div class="table-container">
+        <div class="table-data">
             <table class="table">
        
                 <tr>
@@ -371,7 +392,8 @@ if (!isset($_SESSION['user_email'])) {
                     $i++;
                 }
                 ?>
-            </table>    
+            </table>  
+            </div>  
             <button class="btn custom-bg shadow-none" style="background-color:#b0b435; margin-top:12px; border: none; cursor: pointer;" id="load-More-seekers-btn">Load More</button>
 
         </div>
@@ -383,6 +405,7 @@ if (!isset($_SESSION['user_email'])) {
          
             <p>
             <div class="table-responsive">
+            <div class="table-data">
             <table class="table">
                 <tr>
                     <th>ID</th>
@@ -411,6 +434,7 @@ if (!isset($_SESSION['user_email'])) {
             }
             ?>
             </table>
+        </div>
         </div>
            
 
