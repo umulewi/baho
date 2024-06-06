@@ -1,9 +1,10 @@
 <?php
 session_start();
-if (!isset($_SESSION['email'])) {
-    header("location:../index.php");
+if (!isset($_SESSION['user_email'])) {
+    header("location: ../index.php");
     exit();
 }
+
 include('../connection.php');
 $email = $_SESSION['email'];
 $stmt = $pdo->prepare("SELECT users_id FROM users WHERE email = ?");

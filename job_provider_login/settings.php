@@ -1,7 +1,7 @@
 <?php
 session_start();
-if (!isset($_SESSION['email'])) {
-    header("location:../index.php");
+if (!isset($_SESSION['user_email'])) {
+    header("location: ../ind.php");
     exit();
 }
 include('../connection.php');

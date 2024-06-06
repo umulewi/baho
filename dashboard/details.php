@@ -26,7 +26,7 @@ include 'dashboard.php';
     <title>Update Student</title>
     <style>
         .form-container {
-            max-width: 900px;
+            max-width: 750px;
             margin: 0 auto;
            
         }
@@ -39,7 +39,7 @@ include 'dashboard.php';
         .form-container label {
             display: block;
             font-weight: bold;
-            margin-bottom: 5px;
+            margin-bottom: px;
         }
 
         .form-container input[type="text"],

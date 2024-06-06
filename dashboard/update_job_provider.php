@@ -26,7 +26,7 @@ include 'dashboard.php';
     <title>Update Job Provider</title>
     <style>
         .form-container {
-            max-width: 900px;
+            max-width: 750px;
             margin: 0 auto;
            
         }

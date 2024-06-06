@@ -1,3 +1,11 @@
+<?php
+session_start();
+if (!isset($_SESSION['user_email'])) {
+    header("location: ../ind.php");
+    exit();
+}
+$user_email = $_SESSION['user_email']; 
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

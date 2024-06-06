@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['user_email'])) {
-    header("location:../index.php");
+    header("location:login.php");
     exit();
 }
 include('../connection.php');
@@ -99,27 +99,27 @@ include'dashboard.php';
         <form action="" method="post">
             <div class="form-row">
                 <div>
-                <label for="name">FIRSTNAME:</label>
+                <label for="name">Firstname:</label>
                 <input type="text"  name="firstname" required>
             </div>
             <div>
-                <label for="physical_code">LASTNAME:</label>
+                <label for="physical_code">lastname:</label>
                 <input type="text"  name="lastname" required>
             </div>
     </div>
     <div class="form-row">
             <div>
-                <label for="email">FATHER'S NAME:</label>
+                <label for="email">Father's name:</label>
                 <input type="text"  name="fathers_name" required>
             </div>
             <div>
-                <label for="phone">MOTHER'S NAME:</label>
+                <label for="phone">Mother's name:</label>
                 <input type="text"  name="mothers_name" required>
             </div>
         </div>
         <div class="form-row">
         <div>
-                <label for="gender">GENDER:</label>
+                <label for="gender">Gender:</label>
                 <select name="gender">
                     <option value="male">Male</option>
                     <option value="female">Female</option>
@@ -129,7 +129,7 @@ include'dashboard.php';
             </div>
 
             <div>
-            <label for="PROVINCE">PROVINCE:</label>
+            <label for="PROVINCE">Province:</label>
                 <select name="province">
                 <option value="KIGALI CITY">KIGALI CITY</option>
                     <option value="WESTERN PROVINCE">WESTERN PROVINCE</option>
@@ -144,50 +144,50 @@ include'dashboard.php';
 
             <div class="form-row">
             <div>
-                <label for="phone">DISTRICT:</label>
+                <label for="phone">District:</label>
                 <input type="text"  name="district" required>
             </div>
             <div>
-                <label for="phone">SECTOR:</label>
+                <label for="phone">Sectora:</label>
                 <input type="text"  name="sector" required>
             </div>
             </div>
             <div class="form-row">
             <div>
-                <label for="phone">CELL:</label>
+                <label for="phone">Cell:</label>
                 <input type="text"  name="cell" required>
             </div>
             <div>
-                <label for="phone">VILLAGE:</label>
+                <label for="phone">Village:</label>
                 <input type="text"  name="village" required>
             </div>
             </div>
            <div class="form-row">
            <div>
-            <label for="physical_code">EMAIL:</label>
+            <label for="physical_code">Email:</label>
             <input type="email" id="email" name="email" required>
         </div>
         
         <div>
-            <label for="phone">PHONE NUMBER:</label>
+            <label for="phone">Phone number:</label>
             <input type="text" id="phone" name="telephone" required>
         </div>
            </div>
             
            <div class="form-row">
            <div>
-            <label for="bio">BIO:</label>
+            <label for="bio">Bio<label>
             <textarea id="bio" name="bio" required></textarea>
         </div>
         <div>
-                <label for="date_of_birth">DATE OF BIRTH:</label>
+                <label for="date_of_birth">Date of birth:</label>
                 <input type="date" name="date_of_birth" id="date_of_birth" required>
         </div>
     </div>
     <div class="form-row">
 
         <div>
-            <label for="email">PASSWORD:</label>
+            <label for="email">Pasword:</label>
             <input type="password" id="password" name="password" required>
         </div>
 

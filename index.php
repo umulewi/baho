@@ -1,105 +1,216 @@
-  <?php
-  include 'connection.php';
+<!DOCTYPE html>
+<html lang="en">
 
-  if (isset($_POST['user_login'])) {
-    $email = $_POST['email']; // Change from username to email
-    $password = $_POST['password'];
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <title>Login Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url(sessions/img/main.jpg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
 
-    // Fetch user record from the database (with password check)
-    $statement = $pdo->prepare("SELECT users.*, role.role_name FROM users INNER JOIN role ON users.role_id = role.role_id WHERE email=:email AND password=:password");
-    $statement->bindParam(':email', $email); // Changed from username to email
-    $statement->bindParam(':password', $password); // Note: It's not recommended to store passwords in plain text. Hash them before storing and comparing.
-    $statement->execute();
+        .login-container {
+            display: flex;
+            flex-direction: row;
+            width: 90%;
+            max-width: 900px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+            height: auto;
+            background: white;
+            height: 85%;
+        }
 
-    $user = $statement->fetch(PDO::FETCH_ASSOC); 
+        .login-image {
+            flex: 1;
+            background: url(uploads/team11.jpg) no-repeat center center/cover;
+        }
 
-    if ($user) {
-      session_start();
-      $_SESSION['user_email'] = $email; 
+        .login-form {
+            flex: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-image: url(uploads/tree-lines.jpg);
+        }
 
-      $role_name = $user['role_name'];
-      switch ($role_name) {
-        case 'admin':
-          header("Location: dashboard/index.php");
-          exit();
-        case 'job_seeker':
-          header("Location: job_seeker_login/my_profile.php");
-        
-          exit();
-        case 'job_provider':
-          header("Location: job_provider_login/my_profile.php");
-          exit();
-        case 'agent':
-          header("Location: agent/index.php");
-          exit();
-        default:
-          // Default redirect if role is not recognized
-          header("Location: default_dashboard.php");
-          exit();
-      }
-    } else {
-      echo "<script>alert('Incorrect email or password');</script>";
-    }
-  }
-  ?>
+        .login-form h2 {
+            font-size: 24px;
+            margin-bottom: 30px;
+            color: #333;
+            border-bottom:  2px solid #EA60A7;
 
+        }
 
+        .options-container {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            flex-wrap: wrap;
+            margin-bottom: 150px;
+        }
 
+        .option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            margin: 20px;
+        }
 
-<!-- comment-->
+        .option:hover {
+            transform: scale(1.1);
+        }
 
-          <!-- <form method="post" action="">
-            <div class="mb-3">
-              <label class="form-label">Emil:</label>
-              <input type="text" name="email" class="form-control shadow-none" re4>
-            </div>
-            <div class="mb-4">
-              <label class="form-label">Password:</label>
-              <input type="password" name="password" class="form-control shadow-none" required>
-            </div>
-            <input type="submit" name="user_login" value="Login" style="background-color:teal" class="btn"> -->
-            
+        .circle {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background-color: #EA60A7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 10px;
+            transition: background-color 0.3s ease;
+        }
 
-            <h2>continue with google:</h2>
-            <?php
-            include'connection.php';
-            function getRoleId($pdo, $roleName) {
-              $stmt = $pdo->prepare("SELECT role_id FROM role WHERE role_name = :role_name");
-              $stmt->execute(array(':role_name' => $roleName));
-              $row = $stmt->fetch(PDO::FETCH_ASSOC);
-              return $row['role_id'];
+        .option:hover .circle {
+            background-color: #503141;
+        }
+
+        .circle img {
+            width: 115px;
+            height: 115px;
+        }
+
+        .option-title {
+            font-size: 16px;
+            color: #333;
+            text-align: center;
+            font-family: 'michroma', sans-serif;
+        }
+
+        @media (max-width: 768px) {
+            .login-container {
+                flex-direction: column;
+                width: 95%;
+                height: auto;
+                height: 85%;
             }
-            $roleId = getRoleId($pdo, 'job_seeker');
-            $link = "<a href='job_seeker_login.php?role_id=$roleId'>AS JOB SEEKER</a>";
-            echo $link;
-            ?>
-<br><br>
+
+            .login-image {
+                height: 200px;
+                background-size: cover;
+            }
+
+            .circle {
+                width: 140px;
+                height: 140px;
+            }
+
+            .circle img {
+                width: 115px;
+                height: 115px;
+            }
+
+            .option-title {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .login-form {
+                padding: 20px;
+            }
+
+            .login-form h2 {
+                font-size: 20px;
+                margin-bottom: 15px;
+            }
+
+         
+            .circle {
+                width: 140px;
+                height: 140px;
+            }
+
+            .circle img {
+                width: 115px;
+                height: 115px;
+            }
+
+            .option-title {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
 <?php
-function getRoleId2($pdo, $roleName) {
+include 'connection.php';
+
+function getRoleId($pdo, $roleName) {
     $stmt = $pdo->prepare("SELECT role_id FROM role WHERE role_name = :role_name");
     $stmt->execute(array(':role_name' => $roleName));
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row['role_id'];
 }
-$roleId2 = getRoleId2($pdo, 'job_provider');
-$link = "<a href='job_provider_login.php?role_id=$roleId2'>AS JOB provider</a>";
 
-echo $link;
+$workerRoleId = getRoleId($pdo, 'job_seeker'); // Assuming 'job_seeker' is the role name for Worker
+$employerRoleId = getRoleId($pdo, 'job_provider'); // Assuming 'employer' is the role name for Employer
 ?>
-<br>
-          
 
+    <div class="login-container" class="container-fluid">
+        <div class="login-image"></div>
+        <div class="login-form">
+            <h2 style="font-family: 'michroma';">Continue as</h2>
+            <div class="options-container">
+        <div class="option" onclick="window.location.href='job_seeker_login.php?role_id=<?php echo $workerRoleId; ?>'">
+            <div class="circle">
+                <img src="uploads/worker.png" alt="Worker Icon">
+            </div>
+            <div class="option-title">Worker</div>
+        </div>
+        <div class="option" onclick="window.location.href='job_provider_login.php?role_id=<?php echo $employerRoleId; ?>'">
+            <div class="circle">
+                <img src="uploads/employer.png" alt="Employer Icon">
+            </div>
+            <div class="option-title">Employer</div>
+        </div>
+    </div>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <p>
+                           
+                        </p>
+                    </div>
+                    <div class="col-md-4">
+                        <p>
+                            
+                        </p>
+                    </div>
+                </div>
+    
+            </div>
+        </div>
+    </div>
 
+    
+</body>
 
-
-
-            
-            
-
-            
-  
-  
-
-
-
-
+</html>
