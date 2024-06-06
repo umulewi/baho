@@ -56,10 +56,10 @@ include '../connection.php';
 $lastId = isset($_GET['lastId']) ? intval($_GET['lastId']) : 0;
 $stmt = $pdo->prepare("SELECT * FROM agent INNER JOIN users ON users.users_id = agent.users_id ORDER BY agent_id ");
 $stmt->execute();
-
+$i=1;
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     echo "<tr>";
-    echo "<td>" . $row['agent_id'] . "</td>";
+    echo "<td>" . $i . "</td>";
     echo "<td>" . $row['full_name'] . "</td>";
     echo "<td>" . $row['province'] . "</td>";
     echo "<td>" . $row['district'] . "</td>";
@@ -68,5 +68,6 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     echo "<a class='btn update' href='update_agent.php?agent_id=" . $row['agent_id'] . "'>Update</a>";
     echo "</td>";
     echo "</tr>";
+    $i++;
 }
 ?>

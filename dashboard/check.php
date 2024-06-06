@@ -1,96 +1,4 @@
-<?php
-session_start();
-if (!isset($_SESSION['user_email'])) {
-    header("location:login.php");
-    exit();
-}
-include('../connection.php');
-
-$agent_id = $_GET['agent_id'];
-$stmt = $pdo->prepare("SELECT users_id FROM agent WHERE agent_id = ?");
-$stmt->execute([$agent_id]); 
-$user_id = $stmt->fetchColumn(); 
-$stmt->closeCursor(); 
-echo "User ID: " . $user_id;
-$pdo = null;
-?>
-
-<?php
-include'dashboard.php';
-?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update Student</title>
-       <style>
-        
-       .form-container {
-        max-width: 750px;
-            margin: 0 auto;
-        }
-
-        /* Form fields */
-        .form-container div {
-            margin-bottom: 15px;
-        }
-
-        .form-container label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-
-        .form-container input[type="text"],
-        .form-container input[type="date"],
-        .form-container input[type="password"],
-        .form-container input[type="email"],xta
-        .form-container input[type="tel"],
-        .form-container input[type="number"],
-        select,
-        textarea,
-        select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
-
-        .form-container input[type="submit"] {
-            width: 100%;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            background-color: teal;
-            color: #fff;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        .form-container input[type="submit"]:hover {
-            background-color: darkslategray;
-        }
-
-        .form-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .form-row > div {
-            flex: 1;
-            min-width: 300px;
-        }
-
-
-        @media (max-width: 600px) {
-            .form-row > div {
-                min-width: 100%;
-            }
-        }
-
+<style>
         table {
             width: 100%;
             border-collapse: collapse;
@@ -127,98 +35,83 @@ include'dashboard.php';
             display: flex;
             flex-wrap: wrap; 
         }
+        .search-bar {
+            margin: 20px;
+        }
+        .form-input {
+            display: flex;
+            width: 100%;
+            max-width: 600px; /* Center and limit the width of the search box */
+            margin: 0 auto; /* Center the search box horizontally */
+        }
+        .form-input input[type="search"] {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px 0 0 4px;
+            box-sizing: border-box;
+            outline: none;
+        }
+        .form-input button {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-left: none;
+            background-color: teal;
+            color: white;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            outline: none;
+        }
+        .form-input button i {
+            font-size: 16px;
+        }
+        .form-input input[type="search"]:focus,
+        .form-input button:focus {
+            border-color: teal;
+        }
+        .form-input button:hover {
+            background-color: darkcyan;
+        }
+
     </style>
-    
+
+<?php
+include'../connection.php';
+
+
+// Check if the search query is present
+if(isset($_GET['search']) && !empty($_GET['search'])) {
+    $search = $_GET['search'];
+    // Modify the SQL query to filter by first name or last name
+    $stmt = $pdo->prepare("SELECT * FROM job_seeker 
+                           INNER JOIN users ON users.users_id = job_seeker.users_id 
+                           WHERE full_name LIKE :search 
+                           OR last_name LIKE :search");
+    $stmt->execute(['search' => "%$search%"]);
+} else {
+    // If no search query, fetch all records
+    $stmt = $pdo->query("SELECT * FROM job_seeker INNER JOIN users ON users.users_id = job_seeker.users_id");
+}
+$i = 1;
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Job Seeker Search</title>
 </head>
 <body>
-<?php
-$id = $_GET['agent_id'];
-include '../connection.php';
-$stmt = $pdo->prepare("SELECT * FROM users JOIN agent ON users.users_id = agent.users_id WHERE agent.agent_id = :agent_id");
-$stmt->bindParam(':agent_id', $id, PDO::PARAM_INT);
-$stmt->execute();
-$row = $stmt->fetch(PDO::FETCH_ASSOC);
-?>
-<?php echo $row['email'] ?>
-
-<h2 style="text-align:center"></h2><br>
-<div class="form-container">	
-		<main>
-            <div class="table-data">
-                <form action="" method="post">
-                    <div class="form-row">
-                        <div>
-                            <label for="name">Agent's first name:</label>
-                            <input type="text" name="first_name" value="<?php echo $row['first_name']; ?>" required readonly>
-                        </div>
-                        <div>
-                        <label for="name">Agent's last name:</label>
-                        <input type="text" name="last_name" value="<?php echo $row['last_name']; ?>" required readonly>
-                    </div>
-    </div>
-
-                    <div class="form-row">
-                        <div>
-                            <label for="gender">Gender:</label>
-                            <input type="text" id="gender" name="gender" value="<?php echo $row['gender']; ?>" required readonly>
-                        </div>
-                        <div>
-                            <label for="dob">Date of birth:</label>
-                            <input type="date" id="dob" name="date_of_birth" value="<?php echo htmlspecialchars($row['date_of_birth']); ?>" required readonly>
-                        </div>
-                        
-                    </div>
-                    
-                    <div class="form-row">
-                        <div>
-                            <label for="province">Province:</label>
-                            <input type="text" id="province" name="province" value="<?php echo $row['province']; ?>" required readonly >
-                        </div>
-                        <div>
-                            <label for="district">District:</label>
-                            <input type="text" id="district" name="district" value="<?php echo $row['district']; ?>" required readonly>
-                        </div>
-                    </div>
-
-
-                    <div class="form-row">
-                        <div>
-                            <label for="sector">sector:</label>
-                            <input type="text" id="sector" name="sector" value="<?php echo $row['sector']; ?>" required readonly>
-                        </div>
-                    <div>
-                        <label for="village">Village:</label>
-                        <input type="text" id="village" name="village" value="<?php echo $row['village']; ?>" required readonly>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div>
-                        <label for="cell">Cell:</label>
-                        <input type="text" id="cell" name="cell" value="<?php echo $row['cell']; ?>" required readonly>
-                    </div>
-                    <div>
-                        <label for="id">Id cards:</label>
-                        <input type="text" id="ID" name="ID" value="<?php echo $row['ID']; ?>" required readonly>
-                    </div>
-                </div>
-        
-    </form>
-    </div>
-    </main>
-    </div>
-</div>
-
-</body>
-</html>
-
-
-
-
 <main>
-<h5 style="color:teal;margin-top:2rem">List of all seekers</h5>
-<div class="table-data">
+    <div class="search-bar">
+        <form action="#" method="GET">
+            <div class="form-input">
+                <input type="search" name="search" placeholder="Search...">
+                <button type="submit" class="search-btn"><i class='bx bx-search'></i></button>
+            </div>
+        </form>
+    </div>
 
-    <table id="job-seeker-table">
+    <table class="">
         <tr>
             <th>ID</th>
             <th>NAMES</th>
@@ -228,9 +121,6 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
             <th>ACTION</th>
         </tr>
         <?php 
-        $stmt = $pdo->prepare("SELECT * FROM job_seeker INNER JOIN users ON users.users_id = job_seeker.users_id WHERE created_by = ? ORDER  BY created_at desc LIMIT 3");
-        $stmt->execute([$row['email']]);
-        $i = 1;
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         ?>
         <tr>
@@ -241,8 +131,8 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
             <td><?php echo $row['province']; ?></td>
             <td>
                 <div class="action-buttons">
-                <a class="btn custom-bg shadow-none" style="background-color:#b0b435" href="details.php?job_seeker_id=<?php echo $row['job_seeker_id']; ?>"><b>MORE</b></a>
-                <a class="btn custom-bg shadow-none" style="background-color:#b0b435" href="update_job_seeker.php?job_seeker_id=<?php echo $row['job_seeker_id']; ?>"><b>Update</b></a>
+                    <a class="btn custom-bg shadow-none" style="background-color:#b0b435" href="details.php?job_seeker_id=<?php echo $row['job_seeker_id']; ?>"><b>MORE</b></a>
+                    <a class="btn custom-bg shadow-none" style="background-color:#b0b435" href="update_job_seeker.php?job_seeker_id=<?php echo $row['job_seeker_id']; ?>"><b>Update</b></a>
                 </div>
             </td>
         </tr>
@@ -251,28 +141,6 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
         }
         ?>
     </table>
-
-</div>
-<button id="load-more-btn" onclick="loadMore()">Load More</button>
 </main>
-
-<script>
-    function loadMore() {
-        var lastRow = document.querySelector("#job-seeker-table tr:last-child td:first-child").innerText;
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", "load_more.php?lastRow=" + lastRow, true);
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                var newRows = xhr.responseText;
-                document.querySelector("#job-seeker-table").innerHTML += newRows;
-                if (newRows.trim() == "") {
-                    document.getElementById("load-more-btn").style.display = "none";
-                } else {
-                    document.getElementById("load-more-btn").style.display = "none"; // Hide the button after loading the remaining rows
-                }
-            }
-        };
-        xhr.send();
-    }
-</script>
-
+</body>
+</html>

@@ -59,6 +59,44 @@ include'dashboard.php';
             display: flex;
             flex-wrap: wrap; 
         }
+        .search-bar {
+            margin: 20px;
+        }
+        .form-input {
+            display: flex;
+            width: 100%;
+            max-width: 600px; /* Center and limit the width of the search box */
+            margin: 0 auto; /* Center the search box horizontally */
+        }
+        .form-input input[type="search"] {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px 0 0 4px;
+            box-sizing: border-box;
+            outline: none;
+        }
+        .form-input button {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-left: none;
+            background-color: teal;
+            color: white;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            outline: none;
+        }
+        .form-input button i {
+            font-size: 16px;
+        }
+        .form-input input[type="search"]:focus,
+        .form-input button:focus {
+            border-color: teal;
+        }
+        .form-input button:hover {
+            background-color: darkcyan;
+        }
+
     </style>
 </head>
 <body>
@@ -70,6 +108,18 @@ include '../connection.php';
 
 <div class="table-data">
 <h5 style="color:teal;margin-top:2rem">List of all seekeers</h5>
+
+<main>
+    <div class="search-bar">
+        <form action="#" method="GET">
+            <div class="form-input">
+                <input type="search" name="search" placeholder="Search...">
+                <button type="submit" class="search-btn"><i class='bx bx-search'></i></button>
+            </div>
+        </form>
+    </div>
+    </main>
+    
     <table class="">
         <tr>
             <th>ID</th>
