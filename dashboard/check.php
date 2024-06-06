@@ -78,7 +78,6 @@
 <?php
 include'../connection.php';
 
-
 // Check if the search query is present
 if(isset($_GET['search']) && !empty($_GET['search'])) {
     $search = $_GET['search'];

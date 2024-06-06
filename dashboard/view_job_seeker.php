@@ -104,12 +104,33 @@ include'dashboard.php';
 include '../connection.php';
 ?>
 
-<main>
+<?php
+include'../connection.php';
 
-<div class="table-data">
-<h5 style="color:teal;margin-top:2rem">List of all seekeers</h5>
+// Check if the search query is present
+if(isset($_GET['search']) && !empty($_GET['search'])) {
+    $search = $_GET['search'];
+    // Modify the SQL query to filter by first name or last name
+    $stmt = $pdo->prepare("SELECT * FROM job_seeker 
+                           INNER JOIN users ON users.users_id = job_seeker.users_id 
+                           WHERE full_name LIKE :search 
+                           OR last_name LIKE :search");
+    $stmt->execute(['search' => "%$search%"]);
+} else {
+    // If no search query, fetch all records
+    $stmt = $pdo->query("SELECT * FROM job_seeker INNER JOIN users ON users.users_id = job_seeker.users_id");
+}
+$i = 1;
+?>
 
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Job Seeker Search</title>
+</head>
+<body>
 <main>
+  
     <div class="search-bar">
         <form action="#" method="GET">
             <div class="form-input">
@@ -118,8 +139,7 @@ include '../connection.php';
             </div>
         </form>
     </div>
-    </main>
-    
+    <div class="table-data">
     <table class="">
         <tr>
             <th>ID</th>
@@ -130,20 +150,18 @@ include '../connection.php';
             <th>ACTION</th>
         </tr>
         <?php 
-        $i = 1;
-        $stmt = $pdo->query("SELECT * FROM job_seeker INNER JOIN users ON users.users_id = job_seeker.users_id");
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         ?>
         <tr>
-        <td><?php echo $i; ?></td>
+            <td><?php echo $i; ?></td>
             <td><?php echo $row['full_name']; ?></td>
             <td><?php echo $row['salary']; ?> RW</td>
             <td><?php echo $row['bio']; ?></td>
             <td><?php echo $row['province']; ?></td>
             <td>
                 <div class="action-buttons">
-                <a class="btn custom-bg shadow-none" style="background-color:#b0b435" href="details.php?job_seeker_id=<?php echo $row['job_seeker_id']; ?>"><b>MORE</b></a>
-                <a class="btn custom-bg shadow-none" style="background-color:#b0b435" href="update_job_seeker.php?job_seeker_id=<?php echo $row['job_seeker_id']; ?>"><b>Update</b></a>
+                    <a class="btn custom-bg shadow-none" style="background-color:#b0b435" href="details.php?job_seeker_id=<?php echo $row['job_seeker_id']; ?>"><b>MORE</b></a>
+                    <a class="btn custom-bg shadow-none" style="background-color:#b0b435" href="update_job_seeker.php?job_seeker_id=<?php echo $row['job_seeker_id']; ?>"><b>Update</b></a>
                 </div>
             </td>
         </tr>
@@ -152,7 +170,7 @@ include '../connection.php';
         }
         ?>
     </table>
-</div>
-    </main>
+    </div>
+</main>
 </body>
 </html>
