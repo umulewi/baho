@@ -27,15 +27,11 @@ include 'dashboard.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        /* Form container */
-       /* Form container */
        .form-container {
-            max-width: 800px;
+            max-width: 750px;
             margin: 0 auto;
-        
+          
         }
-
-        /* Form fields */
         .form-container div {
             margin-bottom: 15px;
         }
@@ -43,19 +39,22 @@ include 'dashboard.php';
         .form-container label {
             display: block;
             font-weight: bold;
-          
+            margin-bottom: 5px;
         }
 
         .form-container input[type="text"],
         .form-container input[type="date"],
         .form-container input[type="password"],
-        .form-container input[type="email"],
+        .form-container input[type="email"],xta
         .form-container input[type="tel"],
+        .form-container input[type="number"],
+        select,
+        textarea,
         select {
             width: 100%;
             padding: 10px;
             border: 1px solid #ccc;
-            border-radius: 15px;
+            border-radius: 5px;
             box-sizing: border-box;
         }
 

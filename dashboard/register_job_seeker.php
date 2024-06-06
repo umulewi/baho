@@ -15,15 +15,11 @@ include'dashboard.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        /* Form container */
-       /* Form container */
        .form-container {
-            max-width: 800px;
+            max-width: 750px;
             margin: 0 auto;
           
         }
-
-        /* Form fields */
         .form-container div {
             margin-bottom: 15px;
         }
@@ -95,69 +91,70 @@ include'dashboard.php';
         <form action="" method="post">
         <div class="form-row">
                 <div>
-                    <label for="name">FIRSTNAME:</label>
+                    <label for="name">Firstname:</label>
                     <input type="text"  name="firstname" required>
                 </div>
                 <div>
-                    <label for="physical_code">LASTNAME:</label>
+                    <label for="physical_code">Lastname:</label>
                     <input type="text"  name="lastname" required>
                 </div>
             </div>
             <div class="form-row">
                 <div>
-                    <label for="email">FATHER'S NAME:</label>
+                    <label for="email">Father's name:</label>
                     <input type="email"  name="fathers_name" required>
                 </div>
                 <div>
-                    <label for="phone">MOTHER'S NAME:</label>
+                    <label for="phone">Mother's name:</label>
                     <input type="text"  name="mothers_name" required>
                 </div>
             </div>
             <div class="form-row">
                 <div>
-                    <label for="physical_code">SALARY:</label>
+                    <label for="physical_code">Salary:</label>
                     <input type="number" id="salary" name="salary" required>
                 </div>
                 <div>
-                    <label for="province">PROVINCE:</label>
+                    <label for="province">Province</label>
                     <select name="province" required>
-                        <option value="">CHOOSE PROVINCE</option>
-                        <option value="KIGALI CITY">KIGALI CITY</option>
-                        <option value="WESTERN PROVINCE">WESTERN PROVINCE</option>
-                        <option value="ESTERN PROVINCE">ESTERN PROVINCE</option>
-                        <option value="NORTH PROVINCE">NORTH PROVINCE</option>
-                        <option value="SOUTH PROVINCE">NORTH PROVINCE</option>
+                        <option value="">Choose province</option>
+                        <option value="KIGALI CITY">Kigali city</option>
+                        <option value="Western province">Western province</option>
+                        <option value="Estern province">Estern province</option>
+                        <option value="North province">North province</option>
+                        <option value="South province">South Province</option>
                     </select>
                 </div>
             </div>
             <div class="form-row">
                 <div>
-                    <label for="phone">DISTRICT:</label>
+                    <label for="district">District:</label>
                     <input type="text"  name="district" required>
                 </div>
                 <div>
-                    <label for="phone">SECTOR:</label>
+                    <label for="phone">Sector:</label>
                     <input type="text"  name="sector" required>
                 </div>
             </div>
             <div class="form-row">
                 <div>
-                    <label for="phone">SECTOR:</label>
-                    <input type="text"  name="sector" required>
-                </div>
-                <div>
-                    <label for="phone">CELL:</label>
+                    <label for="phone">Cell:</label>
                     <input type="text"  name="cell" required>
                 </div>
+                <div>
+                    <label for="phone">Village:</label>
+                    <input type="text"  name="village" required>
+                </div>
+
             </div>
 
             <div class="form-row">
+            <div>
+                        <label for="physical_code">Email:</label>
+                        <input type="text" id="email" name="email" required>
+                    </div>
                 <div>
-                    <label for="phone">VILLAGE:</label>
-                    <input type="text"  name="village" required>
-                </div>
-                <div>
-                    <label for="gender">GENDER:</label>
+                    <label for="gender">Gender:</label>
                     <select name="gender">
                         <option value="male">Male</option>
                         <option value="female">Female</option>
@@ -168,33 +165,32 @@ include'dashboard.php';
                 
                 
             <div class="form-row">
+                    
                     <div>
-                        <label for="physical_code">EMAIL:</label>
-                        <input type="text" id="email" name="email" required>
-                    </div>
-                    <div>
-                        <label for="phone">PHONE NUMBER:</label>
+                        <label for="phone">Phone Number:</label>
                         <input type="text" id="phone" name="telephone" required>
                     </div>
-                </div>
-                <div class="form-row">
-                <div>
-            <label for="email">PASSWORD:</label>
+                    <div>
+            <label for="email">Password:</label>
             <input type="password" id="password" name="password" required>
         </div>
+                </div>
+                <div class="form-row">
+                
              <div>
-            <label for="date_of_birth">DATE OF BIRTH:</label>
+            <label for="date_of_birth">Date of birth:</label>
             <input type="date" name="date_of_birth" id="date_of_birth" required>
+            </div>
+            <div>
+                <label for="id">ID</label>
+                <input type="number" id="id" name="id" maxlength="16" pattern="[0-9]{16}" title="Please enter a 16-digit ID number." required>
             </div>
                 </div>
 
                 <div class="form-row">
-                <div>
-                <label for="id">ID</label>
-                <input type="number" id="id" name="id" maxlength="16" pattern="[0-9]{16}" title="Please enter a 16-digit ID number." required>
-            </div>
+                
             <div>
-                <label for="bio">BIO:</label>
+                <label for="bio">Bio:</label>
                 <textarea id="bio" name="bio" required ></textarea>
             </div>
                 </div>

@@ -30,14 +30,11 @@ include 'dashboard.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        /* Form container */
-        .form-container {
-            max-width: 800px;
+       .form-container {
+            max-width: 750px;
             margin: 0 auto;
-         
+          
         }
-
-        /* Form fields */
         .form-container div {
             margin-bottom: 15px;
         }
@@ -51,8 +48,11 @@ include 'dashboard.php';
         .form-container input[type="text"],
         .form-container input[type="date"],
         .form-container input[type="password"],
-        .form-container input[type="email"],
+        .form-container input[type="email"],xta
         .form-container input[type="tel"],
+        .form-container input[type="number"],
+        select,
+        textarea,
         select {
             width: 100%;
             padding: 10px;
@@ -62,7 +62,7 @@ include 'dashboard.php';
         }
 
         .form-container input[type="submit"] {
-            width: 100%;
+            width: 30%;
             padding: 10px;
             border: none;
             border-radius: 5px;
@@ -107,70 +107,72 @@ include 'dashboard.php';
         <div class="form-row">
             
             <div>
-                <label for="firstname">FIRSTNAME:</label>
+                <label for="firstname">Firstname:</label>
                 <input type="text" name="firstname" required>
             </div>
             <div>
-                <label for="lastname">LASTNAME:</label>
+                <label for="lastname">Lastname:</label>
                 <input type="text" name="lastname" required>
             </div>
         </div>
         <div class="form-row">
             <div>
-                <label for="gender">GENDER:</label>
+            
+                <label for="gender">Gender:</label>
                 <select name="gender" required>
+                    <option value="#">select gender</option>
                     <option value="male">Male</option>
                     <option value="female">Female</option>
                 </select>
             </div>
             <div>
-                <label for="date_of_birth">DATE OF BIRTH:</label>
+                <label for="date_of_birth">Date of birth:</label>
                 <input type="date" name="date_of_birth" required>
             </div>
         </div>
         <div class="form-row">
             <div>
-                <label for="province">PROVINCE:</label>
+                <label for="province">Province:</label>
                 <input type="text" name="province" required>
             </div>
             <div>
-                <label for="district">DISTRICT:</label>
+                <label for="district">District:</label>
                 <input type="text" name="district" required>
             </div>
         </div>
         <div class="form-row">
             <div>
-                <label for="sector">SECTOR:</label>
+                <label for="sector">Sector:</label>
                 <input type="text" name="sector" required>
             </div>
             <div>
-                <label for="cell">CELL:</label>
+                <label for="cell">Cell:</label>
                 <input type="text" name="cell" required>
             </div>
         </div>
         <div class="form-row">
             <div>
-                <label for="village">VILLAGE:</label>
+                <label for="village">Village:</label>
                 <input type="text" name="village" required>
             </div>
             <div>
-                <label for="email">EMAIL:</label>
+                <label for="email">Email:</label>
                 <input type="email" name="email" required>
             </div>
         </div>
         <div class="form-row">
             <div>
-                <label for="telephone">PHONE NUMBER:</label>
-                <input type="tel" name="telephone" required>
+                <label for="telephone">Phone number:</label>
+                <input type="number" name="telephone" required>
             </div>
             <div>
-                <label for="password">PASSWORD:</label>
+                <label for="password">Password:</label>
                 <input type="password" name="password" required>
             </div>
         </div>
         <div>
             <label for="id">ID:</label>
-            <input type="text" name="id" required>
+            <input type="number" id="id" name="id" maxlength="16" pattern="[0-9]{16}" title="Please enter a 16-digit ID number." required>
         </div>
         <div>
             <input type="submit" name="register" value="Register">
@@ -239,3 +241,13 @@ if (isset($_POST["register"])) {
     }
 }
 ?>
+<script>
+const idInput = document.getElementById("id");
+idInput.addEventListener("input", function() {
+  const value = idInput.value;
+  if (value.length > 16) {
+    idInput.value = value.slice(0, 16); 
+  }
+  
+});
+</script>

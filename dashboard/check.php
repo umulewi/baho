@@ -1,4 +1,28 @@
-<style>
+<?php
+session_start();
+if (!isset($_SESSION['user_email'])) {
+    header("location:login.php");
+    exit();
+}
+include('../connection.php');
+$user_email = $_SESSION['user_email'];
+$stmt = $pdo->prepare("SELECT users_id FROM users WHERE email = ?");
+$stmt->execute([$user_email]); 
+$user_id = $stmt->fetchColumn(); 
+$stmt->closeCursor(); 
+$pdo = null;
+?>
+
+<?php
+include'dashboard.php';
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
         table {
             width: 100%;
             border-collapse: collapse;
@@ -74,34 +98,14 @@
         }
 
     </style>
-
-<?php
-include'../connection.php';
-
-// Check if the search query is present
-if(isset($_GET['search']) && !empty($_GET['search'])) {
-    $search = $_GET['search'];
-    // Modify the SQL query to filter by first name or last name
-    $stmt = $pdo->prepare("SELECT * FROM job_seeker 
-                           INNER JOIN users ON users.users_id = job_seeker.users_id 
-                           WHERE full_name LIKE :search 
-                           OR last_name LIKE :search");
-    $stmt->execute(['search' => "%$search%"]);
-} else {
-    // If no search query, fetch all records
-    $stmt = $pdo->query("SELECT * FROM job_seeker INNER JOIN users ON users.users_id = job_seeker.users_id");
-}
-$i = 1;
-?>
-
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Job Seeker Search</title>
 </head>
 <body>
+<?php
+include '../connection.php';
+?>
+
 <main>
-    <div class="search-bar">
+<div class="search-bar">
         <form action="#" method="GET">
             <div class="form-input">
                 <input type="search" name="search" placeholder="Search...">
@@ -109,37 +113,44 @@ $i = 1;
             </div>
         </form>
     </div>
-
-    <table class="">
+<div class="table-data">
+<h5 style="color:teal;margin-top:2rem">ALL AGENTS</h5>
+    <table>
         <tr>
             <th>ID</th>
-            <th>NAMES</th>
-            <th>SALARY</th>
-            <th>BIO</th>
-            <th>AGE</th>
+            <th>Names</th>
+            <th>Province</th>
+            <th>district</th>
+           
             <th>ACTION</th>
         </tr>
         <?php 
+        $i=1;
+        $stmt = $pdo->query("SELECT * FROM agent inner join users on users.users_id=agent.users_id");
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         ?>
         <tr>
             <td><?php echo $i; ?></td>
-            <td><?php echo $row['full_name']; ?></td>
-            <td><?php echo $row['salary']; ?> RW</td>
-            <td><?php echo $row['bio']; ?></td>
-            <td><?php echo $row['province']; ?></td>
+            <td><?php echo $row['full_name'];?></td>
+            <td><?php echo $row['province'];?></td>
+            <td><?php echo $row['district'];?></td>
+            
             <td>
-                <div class="action-buttons">
-                    <a class="btn custom-bg shadow-none" style="background-color:#b0b435" href="details.php?job_seeker_id=<?php echo $row['job_seeker_id']; ?>"><b>MORE</b></a>
-                    <a class="btn custom-bg shadow-none" style="background-color:#b0b435" href="update_job_seeker.php?job_seeker_id=<?php echo $row['job_seeker_id']; ?>"><b>Update</b></a>
-                </div>
+            <div class="action-buttons">
+            <a class="btn custom-bg shadow-none" style="background-color:#b0b435" href="more_agent.php?agent_id=<?php echo $row['agent_id'];?>"><b>More</b></a>
+            <a class="btn custom-bg shadow-none" style="background-color:#b0b435" href="update_agent.php?agent_id=<?php echo $row['agent_id'];?>"><b>Update</b></a>
+        </div>
+           
+           
             </td>
         </tr>
         <?php
-            $i++;
-        }
+$i++;
+    }
+
         ?>
     </table>
+</div>
 </main>
 </body>
 </html>
