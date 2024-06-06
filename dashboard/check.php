@@ -23,6 +23,11 @@ include'dashboard.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
         table {
             width: 100%;
             border-collapse: collapse;
@@ -65,8 +70,8 @@ include'dashboard.php';
         .form-input {
             display: flex;
             width: 100%;
-            max-width: 600px; /* Center and limit the width of the search box */
-            margin: 0 auto; /* Center the search box horizontally */
+            max-width: 600px; 
+            margin: 0 auto; 
         }
         .form-input input[type="search"] {
             flex: 1;
@@ -96,7 +101,7 @@ include'dashboard.php';
         .form-input button:hover {
             background-color: darkcyan;
         }
-
+        
     </style>
 </head>
 <body>
@@ -105,7 +110,8 @@ include '../connection.php';
 ?>
 
 <main>
-<div class="search-bar">
+
+    <div class="search-bar">
         <form action="#" method="GET">
             <div class="form-input">
                 <input type="search" name="search" placeholder="Search...">
@@ -113,44 +119,53 @@ include '../connection.php';
             </div>
         </form>
     </div>
-<div class="table-data">
-<h5 style="color:teal;margin-top:2rem">ALL AGENTS</h5>
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>Names</th>
-            <th>Province</th>
-            <th>district</th>
-           
-            <th>ACTION</th>
-        </tr>
-        <?php 
-        $i=1;
-        $stmt = $pdo->query("SELECT * FROM agent inner join users on users.users_id=agent.users_id");
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        ?>
-        <tr>
-            <td><?php echo $i; ?></td>
-            <td><?php echo $row['full_name'];?></td>
-            <td><?php echo $row['province'];?></td>
-            <td><?php echo $row['district'];?></td>
-            
-            <td>
+    </main>
+    <div class="table-container">
+        <div class="table-data">
+    <?php
+    include '../connection.php';
+    ?>
+      <div class="table-data">
+    <h5 style="color:teal;margin-top:2rem">ALL JOB SEEKER</h5>
+    <table class="">
+    <tr>
+        <th>ID</th>
+        <th>NAMES</th>
+        <th>PROVINCE</th>
+        <th>DISTRICT</th>
+        <th>ACTION</th>
+    </tr>
+    <?php 
+    $i = 1;
+    $search = isset($_GET['search']) ? $_GET['search'] : '';
+    $stmt = $pdo->prepare("
+        SELECT * FROM job_seeker 
+        JOIN users ON job_seeker.users_id = users.users_id 
+        WHERE job_seeker.created_by = ? 
+        AND (first_name LIKE ? OR last_name LIKE ?)
+    ");
+    $stmt->execute([$user_email, "%$search%", "%$search%"]);
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    ?>
+    <tr>
+        <td><?php echo $i; ?></td>
+        <td><?php echo $row['first_name'];?> <?php echo $row['last_name'];?></td>
+        <td><?php echo $row['province'];?></td>
+        <td><?php echo $row['district'];?></td>
+        <td>
             <div class="action-buttons">
-            <a class="btn custom-bg shadow-none" style="background-color:#b0b435" href="more_agent.php?agent_id=<?php echo $row['agent_id'];?>"><b>More</b></a>
-            <a class="btn custom-bg shadow-none" style="background-color:#b0b435" href="update_agent.php?agent_id=<?php echo $row['agent_id'];?>"><b>Update</b></a>
-        </div>
-           
-           
-            </td>
-        </tr>
-        <?php
-$i++;
+                <a class="btn custom-bg shadow-none" style="background-color:#b0b435" href="more.php?job_seeker_id=<?php echo $row['job_seeker_id'];?>"><b>More</b></a>
+                <a class="btn custom-bg shadow-none" style="background-color:#b0b435" href="update_job_seeker.php?job_seeker_id=<?php echo $row['job_seeker_id'];?>"><b>Update</b></a>
+            </div>
+        </td>
+    </tr>
+    <?php
+    $i++;
     }
-
-        ?>
+    ?>
     </table>
 </div>
 </main>
+
 </body>
 </html>

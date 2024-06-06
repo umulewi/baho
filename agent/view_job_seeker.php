@@ -70,8 +70,8 @@ include'dashboard.php';
         .form-input {
             display: flex;
             width: 100%;
-            max-width: 600px; /* Center and limit the width of the search box */
-            margin: 0 auto; /* Center the search box horizontally */
+            max-width: 600px; 
+            margin: 0 auto; 
         }
         .form-input input[type="search"] {
             flex: 1;
@@ -105,12 +105,36 @@ include'dashboard.php';
     </style>
 </head>
 <body>
+
+      <div class="table-data">
+    
 <?php
-include '../connection.php';
+include'../connection.php';
+
+// Check if the search query is present
+if(isset($_GET['search']) && !empty($_GET['search'])) {
+    $search = $_GET['search'];
+    // Modify the SQL query to filter by first name or last name
+    $stmt = $pdo->prepare("SELECT * FROM job_seeker 
+                           INNER JOIN users ON users.users_id = job_seeker.users_id 
+                           WHERE full_name LIKE :search 
+                           OR last_name LIKE :search");
+    $stmt->execute(['search' => "%$search%"]);
+} else {
+    // If no search query, fetch all records
+    $stmt = $pdo->query("SELECT * FROM job_seeker INNER JOIN users ON users.users_id = job_seeker.users_id");
+}
+$i = 1;
 ?>
 
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Job Seeker Search</title>
+</head>
+<body>
 <main>
-
+  
     <div class="search-bar">
         <form action="#" method="GET">
             <div class="form-input">
@@ -119,13 +143,8 @@ include '../connection.php';
             </div>
         </form>
     </div>
-    </main>
-    <div class="table-container">
-        <div class="table-data">
-    <?php
-    include '../connection.php';
-    ?>
-    <h5 style="color:teal;margin-top:2rem">ALL JOB SEEKER</h5>
+    <div class="table-data">
+    <h5 style="color:teal;margin-top:2rem;color:teal">ALL JOB SEEKER</h5>
     <table class="">
     <tr>
         <th>ID</th>
@@ -163,7 +182,11 @@ include '../connection.php';
     }
     ?>
     </table>
-</div>
+    </div>
+</main>
+</body>
+</html>
+
 </main>
 
 </body>

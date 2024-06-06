@@ -99,39 +99,48 @@ include 'dashboard.php';
     <div class="form-container">
         <main>
        <div class="table-data">
-       <h2 style="text-align:center;margin-top:2rem">Register Job Provider</h2><br>
+        
+ 
+       <h2 style="text-align:center;margin-top:2rem;color:teal">Register Job provider</h2><br>
         <form action="" method="post">
         <div class="form-row">
             <div>
-                <label for="name">FIRSTNAME:</label>
+                <label for="name">Firstname:</label>
                 <input type="text"  name="firstname" required>
             </div>
             <div>
-                <label for="physical_code">LASTNAME:</label>
+                <label for="physical_code">Lastname:</label>
                 <input type="text"  name="lastname" required>
             </div>
         </div>
         <div class="form-row">
         <div>
-                <label for="gender">GENDER:</label>
+                <label for="gender">Gender:</label>
                 <select name="gender">
                     <option value="male">Male</option>
                     <option value="female">Female</option>
                 </select>
             </div>
             <div>
-                <label for="phone">DATE OF BIRTH</label>
+                <label for="phone">Date of birth</label>
                 <input type="date"  name="date_of_birth" required>
             </div>
         </div>
             
         <div class="form-row">
         <div>
-                <label for="phone">PROVINCE:</label>
-                <input type="text"  name="province" required>
-            </div>
+                    <label for="province">Province</label>
+                    <select name="province" required>
+                        <option value="">Choose province</option>
+                        <option value="KIGALI CITY">Kigali city</option>
+                        <option value="Western province">Western province</option>
+                        <option value="Estern province">Estern province</option>
+                        <option value="North province">North province</option>
+                        <option value="South province">South Province</option>
+                    </select>
+                </div>
             <div>
-                <label for="phone">DISTRICT:</label>
+                <label for="phone">District:</label>
                 <input type="text"  name="district" required>
             </div>
 
@@ -139,33 +148,33 @@ include 'dashboard.php';
             
         <div class="form-row">
         <div>
-                <label for="phone">SECTOR:</label>
+                <label for="phone">Sector:</label>
                 <input type="text"  name="sector" required>
             </div>
             <div>
-                <label for="phone">CELL:</label>
+                <label for="phone">Cell:</label>
                 <input type="text"  name="cell" required>
             </div>
         </div>
         <div class="form-row">
             <div>
-                <label for="phone">VILLAGE:</label>
+                <label for="phone">Village:</label>
                 <input type="text"  name="village" required>
             </div>
             <div>
-            <label for="physical_code">EMAIL:</label>
+            <label for="physical_code">Email:</label>
             <input type="text" id="email" name="email" required>
         </div>
             </div>
 
             <div class="form-row">
             <div>
-            <label for="phone">PHONE:</label>
-            <input type="text" id="phone" name="telephone" required>
+            <label for="phone">Phone number:</label>
+            <input type="number" id="phone" name="telephone" required>
         </div>
 
         <div>
-            <label for="email">PASSWORD:</label>
+            <label for="email">Password:</label>
             <input type="password" id="password" name="password" required>
         </div>
 
@@ -176,7 +185,7 @@ include 'dashboard.php';
         </div>
             <div>
                 <label for="phone">ID</label>
-                <input type="text"  name="id" required>
+                <input type="number" id="id" name="id" maxlength="16" pattern="[0-9]{16}" title="Please enter a 16-digit ID number." required>
             </div>
             
             <div>
@@ -244,3 +253,13 @@ if (isset($_POST["register"])) {
     }
 }
 ?>
+<script>
+const idInput = document.getElementById("id");
+idInput.addEventListener("input", function() {
+  const value = idInput.value;
+  if (value.length > 16) {
+    idInput.value = value.slice(0, 16); 
+  }
+  
+});
+</script>

@@ -92,10 +92,12 @@ include'dashboard.php';
 </head>
 <body>
  
-    <h2 style="text-align:center;margin-top:2rem">Register Job Seeker</h2><br>
+    
     <div class="form-container">
         <main>
+            
        <div class="table-data">
+       <h2 style="text-align:center;margin-top:2rem;color:teal">Register Job Seeker</h2><br>
         <form action="" method="post">
             <div class="form-row">
                 <div>
