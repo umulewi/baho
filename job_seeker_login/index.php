@@ -83,7 +83,7 @@ if ($stmt->rowCount() > 0) {
 <ul class="box-info">
                 
 				<li>
-					<i class='bx bxs-calendar-check' ></i>
+					<i class='bx bxs-group' ></i>
                     <?php
                     include'../connection.php';
                     $stmt = $pdo->prepare("SELECT users_id FROM users WHERE email = ?");
@@ -117,6 +117,7 @@ if ($stmt->rowCount() > 0) {
 				</li>
 				
 			</ul>
+</main>
 
 
 <!DOCTYPE html>

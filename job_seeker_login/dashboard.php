@@ -94,8 +94,8 @@
             
             <form action="#">
                 <div class="form-input">
-                    <input type="search" placeholder="Search...">
-                    <button type="submit" class="search-btn"><i class='bx bx-search' ></i></button>
+                    <!-- <input type="search" placeholder="Search..."> -->
+                    <button type="submit" class="search-btn" style="display: none;"><i class='bx'></i></button>
                 </div>
             </form>
             <input type="checkbox" id="switch-mode" hidden>

@@ -15,7 +15,7 @@ $user_email = $_SESSION['user_email'];
     <style>
         /* Form container */
         .form-container {
-            max-width: 900px;
+            max-width: 750px;
             margin: 0 auto;
             
         }
@@ -80,7 +80,7 @@ $user_email = $_SESSION['user_email'];
 </head>
 <body>
 <?php
-session_start();
+
 if (!isset($_SESSION['user_email'])) {
     header("location: ../index.php");
     exit();
