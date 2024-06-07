@@ -198,7 +198,7 @@ include'dashboard.php';
                 
             <div>
                 <label for="bio">Bio:</label>
-                <textarea id="bio" name="bio" required ></textarea>
+                <textarea style="height:133px;" id="bio" name="bio" required ></textarea>
             </div>
                 </div>
             <div>

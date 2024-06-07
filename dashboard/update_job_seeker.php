@@ -196,24 +196,21 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
             <label for="cell">SALARY:</label>
                 <select name="salary">
                 <option value="35000-99000" <?php echo($row['salary']=='35000-99000') ?  'selected': ''; ?>>35000RWF-99000RWF</option>
-                <option value="159000-199000">159000RWF-199000RWF</option>
-                <option value="200000-299000">200000RWF-299000RWF</option>
+                <option value="159000-199000" <?php echo($row['salary']=='159000-199000') ?  'selected': ''; ?>>159000RWF-199000RWF</option>
+                <option value="200000-299000" <?php echo($row['salary']=='200000-299000') ?  'selected': ''; ?>>200000RWF-299000RWF</option>
             </select>
             </div>
-        <div>
-            <label for="cell">SALARY:</label>
-            <input type="number" id="cell" name="salary" value="<?php echo htmlspecialchars($row['salary']);?>" required>
+            <div>
+            <label for="ID">ID CARDS:</label>
+            <input type="number"  value="<?php echo htmlspecialchars($row['ID']);?>" id="id" name="id" maxlength="16" pattern="[0-9]{16}"  title="Please enter a 16-digit ID number." >
         </div>
-        <div>
-            <label for="bio" class="">BIO:</label>
-            <textarea id="bio" name="bio" required><?php echo ($row['bio']); ?></textarea>
-        </div>
+        
+        
         </div>
         
         <div>
-            <label for="ID">ID CARDS:</label>
-            <input type="number"  value="<?php echo htmlspecialchars($row['ID']);?>" id="id" name="id" maxlength="16" pattern="[0-9]{16}"  title="Please enter a 16-digit ID number." >
-            
+            <label for="bio" class="">BIO:</label>
+            <textarea style="height:133px;" id="bio" name="bio" required><?php echo ($row['bio']); ?></textarea>
         </div>
         <div>
             <input type="submit" name="update" value="Update" style="background-color: teal;">
