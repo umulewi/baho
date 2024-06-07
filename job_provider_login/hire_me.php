@@ -124,58 +124,62 @@ $salaryWithCurrency = $row['salary'] . ' RWF';
         </div>
         <div class="form-row">
             <div>
-            <label for="first_name">FIRST NAME:</label>
+            <label for="first_name">First name:</label>
             <input type="text" name="first_name" value="<?php echo ($row['first_name']); ?>" required readonly>
         </div>
         <div>
-            <label for="last_name">LAST NAME:</label>
+            <label for="last_name">Last name:</label>
             <input type="text" name="last_name" value="<?php echo ($row['last_name']); ?>" required readonly>
         </div>
     </div>
     <div class="form-row">
         <div>
-            <label for="date_of_birth">DATE OF BIRTH:</label>
+            <label for="date_of_birth">Date of birth:</label>
             <input type="date" name="date_of_birth" value="<?php echo ($row['date_of_birth']); ?>" required readonly>
         </div>
         
         <div>
-            <label for="province">PROVINCE:</label>
+            <label for="province">Province:</label>
             <input type="text" id="province" name="province" value="<?php echo ($row['province']); ?>" required readonly>
         </div>
 
     </div>
     <div class="form-row">
         <div>
-            <label for="district">DISTRICT:</label>
+            <label for="district">District:</label>
             <input type="text" id="district" name="district" value="<?php echo ($row['district']); ?>" required readonly>
         </div>
         <div>
-            <label for="sector">SECTOR:</label>
+            <label for="sector">Sector:</label>
             <input type="text" id="sector" name="sector" value="<?php echo ($row['sector']); ?>" required readonly>
         </div>
     </div>
         
     <div class="form-row">
         <div>
-            <label for="cell">CELL:</label>
+            <label for="cell">Cell:</label>
             <input type="text" id="cell" name="cell" value="<?php echo ($row['cell']); ?>" required readonly>
         </div>
         <div>
-            <label for="gender">GENDER:</label>
+            <label for="gender">Gender:</label>
             <input type="text" id="gender" name="gender" value="<?php echo ($row['gender']); ?>" required readonly>
         </div>
     </div>
     <div class="form-row">
         <div>
-            <label for="salary">SALARY:</label>
+            <label for="salary">Salary:</label>
             <div class="currency-input">
                 <input type="text" id="salary" name="salary" value="<?php echo ($salaryWithCurrency); ?>" required readonly>
             </div>
         </div>
         <div>
-    <label for="bio">BIO:</label>
-    <textarea id="bio" name="bio" required readonly><?php echo ($row['bio']); ?></textarea>
-</div>
+            <label for="bio">Bio:</label>
+            <input type="text" id="id" name="id" value="<?php echo ($id); ?>" required readonly>
+        </div>
+    </div>
+    <div>
+        <label for="bio">Bio:</label>
+        <textarea style="height:133px;" id="bio" name="bio" required readonly><?php echo ($row['bio']); ?></textarea>
     </div>
 
         <button style="display: inline-block; padding: 10px 20px; margin: 10px 0; font-size: 16px; cursor: pointer; text-align: center; text-decoration: none; outline: none; color: #fff; background-color: teal; border: none; border-radius: 5px;">hire me</button>

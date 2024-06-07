@@ -18,7 +18,7 @@ include'dashboard.php';
     <title></title>
     <style>
         .form-container {
-            max-width: 900px;
+            max-width: 750px;
             margin: 0 auto;
            
         }
@@ -99,45 +99,55 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
         <form action="" method="post">
             <input type="hidden" name="job_provider_id" value="<?php echo $row['job_provider_id']; ?>">
             <div class="form-row">
-                <div><label for="name">FIRST NAME:</label>
+                <div><label for="name">First name:</label>
             <input type="text" name="first_name" value="<?php echo $row['first_name']; ?>" required>
         </div>
         <div>
-            <label for="name">LAST NAME:</label>
+            <label for="name">Last name:</label>
             <input type="text" name="last_name" value="<?php echo $row['last_name']; ?>" required>
         </div>
     </div>
     <div class="form-row"> 
         <div>
-            <label for="name">DATE OF BIRTH:</label>
+            <label for="name">Date of birth:</label>
             <input type="date" name="date_of_birth" value="<?php echo $row['date_of_birth']; ?>" required>
         </div>
-        
         <div>
-            <label for="province">PROVINCE:</label>
-            <input type="text" id="province" name="province" value="<?php echo $row['province']; ?>" required>
+            <label for="province">Province</label>
+            <select name="province" required>
+                <option value="KIGALI CITY" <?php echo ($row['province']=='kigali city')? 'selected' : ''; ?>>Kigali city</option>
+                <option value="Western province" <?php echo ($row['province']=='western province')? 'selected' : ''; ?>>Western province</option>
+                <option value="Estern province" <?php echo ($row['province']=='Estern province')? 'selected' : ''; ?>>Estern province</option>
+                <option value="North province" <?php echo ($row['province']=='North province')? 'selected' : ''; ?>>North province</option>
+                <option value="South province" <?php echo ($row['province']=='South province')? 'selected' : ''; ?>>South Province</option>
+            </select>
         </div>
+        
+        <!-- <div>
+            <label for="province">province:</label>
+            <input type="text" id="province" name="province" value="<?php echo $row['province']; ?>" required>
+        </div> -->
     </div>
     <div class="form-row">
         <div>
-            <label for="district">DISTRICT:</label>
+            <label for="district">District:</label>
             <input type="text" id="district" name="district" value="<?php echo $row['district']; ?>" required>
         </div>
         <div>
-            <label for="sector">SECTOR:</label>
+            <label for="sector">Sector:</label>
             <input type="text" id="sector" name="sector" value="<?php echo $row['sector']; ?>" required>
         </div>
     </div>
     <div class="form-row">
         <div>
-            <label for="village">VILLAGE:</label>
+            <label for="village">Village:</label>
             <input type="text" id="village" name="village" value="<?php echo $row['village']; ?>" required>
    
         </div>
         
         <div>
         
-            <label for="village">GENDER:</label>
+            <label for="village">Gender:</label>
         <select name="gender">
                     <option value="male">Male</option>
                     <option value="female">Female</option>
@@ -146,23 +156,23 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
     </div>
     <div class="form-row">
         <div>
-            <label for="cell">CELL:</label>
+            <label for="cell">Cell:</label>
             <input type="text" id="cell" name="cell" value="<?php echo $row['cell']; ?>" required>
         </div>
         <div>
-    <label for="id">IDENTIFICATION CARD</label>
+    <label for="id">ID card</label>
     <input type="number" id="ID" name="ID" value="<?php echo $row['ID']; ?>" required  maxlength="16" oninput="if(this.value.length > 16) this.value = this.value.slice(0, 16);">
 </div>
 
     </div>
     <div class="form-row">
         <div>
-            <label for="id">TELEPHONE:</label>
+            <label for="id">Telephone:</label>
             <input type="text" id="ID" name="telephone" value="<?php echo $row['telephone']; ?>" required>
         </div>
         <div>
-            <label for="id">PASSWORD:</label>
-            <input type="text" id="ID" name="password" value="<?php echo $row['password']; ?>" required>
+            <label for="id">Password:</label>
+            <input type="password" id="ID" name="password" value="<?php echo $row['password']; ?>" required>
         </div>
     </div>
         <div>
