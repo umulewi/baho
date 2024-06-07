@@ -97,6 +97,7 @@ include'dashboard.php';
     
 </head>
 <body>
+<main>
 
 <?php
 $job_seeker_id = $_GET['job_seeker_id'];
@@ -187,7 +188,7 @@ $salaryWithCurrency = $row['salary'] . ' RWF';
 </div>
     </main>
     </div>
-
+    </main>
 </body>
 </html>
 

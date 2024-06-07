@@ -18,7 +18,7 @@ include 'dashboard.php';
     <style>
         /* Form container */
         .form-container {
-            max-width: 900px;
+            max-width: 750px;
             margin: 0 auto;
             
         }

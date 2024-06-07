@@ -5,7 +5,9 @@ if (!isset($_SESSION['user_email'])) {
     exit();
 }
 ?>
-
+            <?php
+include 'dashboard.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -85,7 +87,7 @@ if (!isset($_SESSION['user_email'])) {
         .dual-slider {
             position: relative;
             width: 100%;
-            height: 100px; /* Increased height to accommodate outputs */
+            height: 50px; /* Increased height to accommodate outputs */
         }
         .dual-slider input[type="range"] {
             position: absolute;
@@ -147,12 +149,18 @@ if (!isset($_SESSION['user_email'])) {
 </head>
 <body>
 
-<?php
-include 'dashboard.php';
-?>
+
+
+    
+       
+               
+
 
 <div class="form-container">
+
     <form action="" method="GET">
+    
+    
         <label for="salary_range">Salary Range (RWF):</label>
         <div class="dual-slider">
             <div class="track"></div>
@@ -163,9 +171,14 @@ include 'dashboard.php';
             <div class="output" id="max_salary_output">300000</div>
         </div>
         <input type="submit" value="Filter">
+    </div>
+  
     </form>
+   
 </div>
 
+<main>
+<div class="table-data">
 <div class="card-container"> 
     <?php 
     include '../connection.php';
@@ -201,7 +214,13 @@ include 'dashboard.php';
     ?>
 </div>
 
-<script>
+
+            
+            </div>
+        </main>
+   
+
+    <script>
     const minSalaryInput = document.getElementById("min_salary");
     const maxSalaryInput = document.getElementById("max_salary");
     const minSalaryOutput = document.getElementById("min_salary_output");
@@ -235,6 +254,3 @@ include 'dashboard.php';
     // Initial update
     updateRange();
 </script>
-
-</body>
-</html>

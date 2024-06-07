@@ -27,14 +27,16 @@ include'dashboard.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Update Student</title>
     <style>
-      
-
+        .form-container {
+            max-width: 750px;
+            margin: 0 auto;
+           
+        }
 
         /* Form fields */
         .form-container div {
-            margin-bottom: 15px;
+            margin-bottom: 5px;
         }
-
         .form-container label {
             display: block;
             font-weight: bold;

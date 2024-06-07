@@ -20,7 +20,7 @@ if (isset($_POST['login'])) {
         $role_name = $user['role_name'];
         switch ($role_name) {
             case 'job_seeker':
-                header("Location: job_seeker_login/my_profile.php");
+                header("Location: job_seeker_login/index.php");
                 exit();
             default:
                 header("Location: default_dashboard.php");
