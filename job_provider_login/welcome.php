@@ -190,12 +190,7 @@ if (isset($_GET['code'])) {
                     <span class="text">All Job Seeker</span>
                 </a>
             </li>
-            <li class="active">
-                <a href="your_benefits.php">
-                    <i class='bx bxs-dashboard' ></i>   
-                    <span class="text">Our benefits</span>
-                </a>
-            </li>
+            
         </ul>
         <ul class="side-menu">
             <li>
@@ -233,6 +228,60 @@ if (isset($_GET['code'])) {
              
             </div>
 		</main>	
+
+        <main>
+			
+         
+
+			<ul class="box-info">
+                <li class="job-seeker-count">
+                    <i class='bx bxs-group'></i>
+                    <?php
+                    include'../connection.php';
+                    $sql = "SELECT COUNT(job_provider_id) AS total FROM job_provider";
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->execute();
+                    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                    ?>
+                    <span class="text">
+                        <h3><?php echo $result['total']?></h3>
+                        <p> Providers</p>
+                    </span>
+                </li>
+				<li>
+					<i class='bx bxs-calendar-check' ></i>
+                    <?php
+                    include'../connection.php';
+                    $sql = "SELECT COUNT(job_seeker_id) AS total FROM job_seeker";
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->execute();
+                    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                    ?>
+					<span class="text">
+						<h3><?php echo $result['total']?></h3>
+						<p>Seekers</p>
+					</span>
+				</li>
+				<li>
+					<i class='bx bxs-group' ></i>
+                    <?php
+                    include'../connection.php';
+                    $sql = "SELECT COUNT(hired_id) AS total FROM hired_seekers";
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->execute();
+                    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                    ?>
+					<span class="text">
+						<h3><?php echo $result['total']?></h3>
+						<p>Employeees</p>
+					</span>
+				</li>
+				
+			</ul>
+
+
+			
+		</main>
     <!-- CONTENT -->
     
     <script src="../dashboard/script.js"></script>

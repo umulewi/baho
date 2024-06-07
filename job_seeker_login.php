@@ -268,9 +268,9 @@ button:hover{
                             <button  name ="user_login"class="btn-signup">Sign up</button>
 
                             <?php
-                            require_once 'job_provider_login/config.php';
+                            require_once 'job_seeker_login/config.php';
                             if (isset($_SESSION['user_token'])) {
-                                header("Location: job_provider_login/welcome.php");
+                                header("Location: job_seeker_login/index.php");
                             } else {
                                 echo "<a href='" . $client->createAuthUrl() . "' style='
     display: block;

@@ -82,12 +82,7 @@
                     <span class="text">All Job Seeker</span>
                 </a>
             </li>
-            <li class="active">
-                <a href="your_benefits.php">
-                    <i class='bx bxs-dashboard' ></i>   
-                    <span class="text">Our benefits</span>
-                </a>
-            </li>
+            
         </ul>
         <ul class="side-menu">
             <li>

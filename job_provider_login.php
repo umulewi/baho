@@ -23,7 +23,7 @@ error_reporting(0);
       $role_name = $user['role_name'];
       switch ($role_name) {
         case 'job_provider':
-          header("Location: job_provider_login/my_profile.php");
+          header("Location: job_provider_login/index.php");
           exit();
       }
     } else {
@@ -265,7 +265,7 @@ button:hover{
                             <?php
                             require_once 'job_provider_login/config.php';
                             if (isset($_SESSION['user_token'])) {
-                                header("Location: job_provider_login/welcome.php");
+                                header("Location: job_provider_login/index.php");
                             } else {
                                 echo "<a href='" . $client->createAuthUrl() . "' style='
     display: block;
@@ -301,6 +301,34 @@ button:hover{
                             <input type="email" name="email" placeholder="Email" required>
                             <input type="password" name="password" placeholder="Password" required>
                             <button name="login" class="btn-signup">Login</button>
+                            <?php
+                            require_once 'job_provider_login/config.php';
+                            if (isset($_SESSION['user_token'])) {
+                                header("Location: job_provider_login/index.php");
+                            } else {
+                                echo "<a href='" . $client->createAuthUrl() . "' style='
+    display: block;
+    width: 30%;
+    height: 40px;
+    margin: 10px auto;
+    justify-content: center;
+    color: #fff;
+    background: #EA60A7;
+    font-size: 1em;
+    font-weight: bold;
+    margin-top: 20px;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    transition: .2s ease-in;
+    text-decoration:none;
+    cursor: pointer;
+    text-align: center;
+    line-height: 40px;
+'>Google Login</a>";
+
+                            }
+                            ?>
                         </form>
                                             
                     </div>

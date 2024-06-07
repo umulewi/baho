@@ -143,6 +143,7 @@ if ($stmt->rowCount() > 0) {
 </head>
 <body>
 <div class="">
+    
     <h2>
         Job Application Progress
     </h2>

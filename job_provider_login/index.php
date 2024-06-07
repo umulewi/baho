@@ -120,7 +120,7 @@ include'../connection.php';
             <li class="active">
                 <a href="all_employees.php">
                     <i class='bx bxs-dashboard' ></i>   
-                    <span class="text">All Employees</span>
+                    <span class="text">All Job Seeker</span>
                 </a>
             </li>
             
@@ -186,7 +186,7 @@ include'../connection.php';
                     </span>
                 </li>
 				<li>
-					<i class='bx bxs-calendar-check' ></i>
+					<i class='bx bxs-group' ></i>
                     <?php
                     include'../connection.php';
                     $sql = "SELECT COUNT(job_seeker_id) AS total FROM job_seeker";
@@ -210,7 +210,7 @@ include'../connection.php';
                     ?>
 					<span class="text">
 						<h3><?php echo $result['total']?></h3>
-						<p>Employeees</p>
+						<p>Employees</p>
 					</span>
 				</li>
 				

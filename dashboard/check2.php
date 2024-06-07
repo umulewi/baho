@@ -1,110 +1,240 @@
 <?php
 session_start();
 if (!isset($_SESSION['user_email'])) {
-    header("location:login.php");
+    header("location: ../index.php");
     exit();
 }
-include('../connection.php');
-
-$agent_id = $_GET['agent_id'];
-$stmt = $pdo->prepare("SELECT users_id FROM agent WHERE agent_id = ?");
-$stmt->execute([$agent_id]); 
-$user_id = $stmt->fetchColumn(); 
-$stmt->closeCursor(); 
-echo "User ID: " . $user_id;
-$pdo = null;
 ?>
 
-<?php
-include'dashboard.php';
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Update Student</title>
-       <style>
-        /* your CSS styles here */
+    <style>
+        /* Form container */
+        .form-container { 
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        /* Form fields */
+        .form-container div {
+            margin-bottom: 15px;
+        }
+        .form-container label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .form-container input[type="text"],
+        .form-container input[type="password"],
+        form select,
+        .form-container input[type="email"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box; 
+        }
+
+        .form-container input[type="submit"] {
+            width: 20%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: teal;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .form-container input[type="submit"]:hover {
+            background-color: teal;
+        }
+
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin: 0 -10px; /* Add negative margin to counteract spacing from cards */
+        }
+
+        .card {
+            flex: 0 0 calc(100% - 20px); /* Adjust width for one card per row */
+            max-width: calc(100% - 20px); /* Adjust width for one card per row */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 10px; 
+        }
+
+        @media screen and (min-width: 600px) {
+            .card {
+                flex-basis: calc(33.33% - 20px); /* Adjust width for three cards per row on larger screens */
+                max-width: calc(33.33% - 20px); /* Adjust width for three cards per row on larger screens */
+            }
+        }
+
+        /* Custom dual slider */
+        .dual-slider {
+            position: relative;
+            width: 100%;
+            height: 100px; /* Increased height to accommodate outputs */
+        }
+        .dual-slider input[type="range"] {
+            position: absolute;
+            width: 100%;
+            -webkit-appearance: none;
+            appearance: none;
+            background: none;
+            pointer-events: none;
+            top: 40px; /* Position the sliders below the outputs */
+        }
+        .dual-slider input[type="range"]::-webkit-slider-thumb {
+            pointer-events: all;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #4CAF50;
+            cursor: pointer;
+            -webkit-appearance: none;
+            position: relative;
+            z-index: 1;
+        }
+        .dual-slider input[type="range"]::-moz-range-thumb {
+            pointer-events: all;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #4CAF50;
+            cursor: pointer;
+            z-index: 1;
+        }
+        .dual-slider .track {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: #ccc;
+            transform: translateY(10px); /* Adjusted to position the track correctly */
+            border-radius: 5px;
+            z-index: 0;
+        }
+        .dual-slider .range {
+            position: absolute;
+            top: 50%;
+            height: 10px;
+            background: #4CAF50;
+            transform: translateY(10px); /* Adjusted to position the range correctly */
+            border-radius: 5px;
+            z-index: 0;
+        }
+        .dual-slider .output {
+            position: absolute;
+            top: 0;
+            width: 50px;
+            text-align: center;
+            font-size: 14px;
+        }
     </style>
 </head>
 <body>
+
 <?php
-$id = $_GET['agent_id'];
-include '../connection.php';
-$stmt = $pdo->prepare("SELECT * FROM users JOIN agent ON users.users_id = agent.users_id WHERE agent.agent_id = :agent_id");
-$stmt->bindParam(':agent_id', $id, PDO::PARAM_INT);
-$stmt->execute();
-$row = $stmt->fetch(PDO::FETCH_ASSOC);
+include 'dashboard.php';
 ?>
-<?php echo $row['email'] ?>
 
-
-
-
-
-<main>
-<h5 style="color:teal;margin-top:2rem">List of all seekers</h5>
-<div class="table-data">
-
-    <table id="job-seeker-table">
-        <tr>
-            <th>ID</th>
-            <th>NAMES</th>
-            <th>SALARY</th>
-            <th>BIO</th>
-            <th>AGE</th>
-            <th>ACTION</th>
-        </tr>
-        <?php 
-        $stmt = $pdo->prepare("SELECT * FROM job_seeker INNER JOIN users ON users.users_id = job_seeker.users_id WHERE created_by = ? ORDER  BY created_at desc LIMIT 3");
-        $stmt->execute([$row['email']]);
-        $i = 1;
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        ?>
-        <tr>
-            <td><?php echo $i; ?></td>
-            <td><?php echo $row['full_name']; ?></td>
-            <td><?php echo $row['salary']; ?> RW</td>
-            <td><?php echo $row['bio']; ?></td>
-            <td><?php echo $row['province']; ?></td>
-            <td>
-                <div class="action-buttons">
-                <a class="btn custom-bg shadow-none" style="background-color:#b0b435" href="details.php?job_seeker_id=<?php echo $row['job_seeker_id']; ?>"><b>MORE</b></a>
-                <a class="btn custom-bg shadow-none" style="background-color:#b0b435" href="update_job_seeker.php?job_seeker_id=<?php echo $row['job_seeker_id']; ?>"><b>Update</b></a>
-                </div>
-            </td>
-        </tr>
-        <?php
-            $i++;
-        }
-        ?>
-    </table>
-
+<div class="form-container">
+    <form action="" method="GET">
+        <label for="salary_range">Salary Range (RWF):</label>
+        <div class="dual-slider">
+            <div class="track"></div>
+            <div class="range" id="range"></div>
+            <input type="range" id="min_salary" name="min_salary" min="0" max="300000" step="1000" value="<?php echo isset($_GET['min_salary']) ? $_GET['min_salary'] : 0 ?>">
+            <input type="range" id="max_salary" name="max_salary" min="0" max="300000" step="1000" value="<?php echo isset($_GET['max_salary']) ? $_GET['max_salary'] : 300000 ?>">
+            <div class="output" id="min_salary_output">0</div>
+            <div class="output" id="max_salary_output">300000</div>
+        </div>
+        <input type="submit" value="Filter">
+    </form>
 </div>
-<button id="load-more-btn" onclick="loadMore()">Load More</button>
-</main>
 
-<script>
-    function loadMore() {
-    var lastRow = document.querySelector("#job-seeker-table tr:last-child td:first-child").innerText;
-    var email = "<?php echo $row['email']; ?>";
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", "load_more.php?lastRow=" + lastRow + "&email=" + email, true);
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            var newRows = xhr.responseText;
-            document.querySelector("#job-seeker-table").innerHTML += newRows;
-            if (newRows.trim() == "") {
-                document.getElementById("load-more-btn").style.display = "none";
+<div class="card-container"> 
+    <?php 
+    include '../connection.php';
+    $min_salary = isset($_GET['min_salary']) ? $_GET['min_salary'] : 0;
+    $max_salary = isset($_GET['max_salary']) ? $_GET['max_salary'] : 300000;
+
+    $stmt = $pdo->prepare("SELECT * FROM job_seeker INNER JOIN users ON users.users_id = job_seeker.users_id");
+    $stmt->execute();
+
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        if (!empty($row['salary']) && strpos($row['salary'], '-') !== false) {
+            $salary_range = explode('-', $row['salary']);
+            $min = (int)$salary_range[0];
+            $max = (int)$salary_range[1];
+
+            if ($min_salary <= $max && $max_salary >= $min) {
+    ?>
+    <div class="card">
+        <img src="sample.png" alt="Avatar" style="width:100%">
+        <div class="container">
+            <h4><b><?php echo $row['full_name']; ?></b></h4><br>
+            <p><?php echo $row['bio']; ?></p><br>
+            <a href='hire_me.php?job_seeker_id=<?php echo $row['job_seeker_id']; ?>' 
+               style="display: inline-block; padding: 10px 20px; margin: 10px 0; font-size: 16px; cursor: pointer; text-align: center; text-decoration: none; outline: none; color: #fff; background-color: #4CAF50; border: none; border-radius: 5px; box-shadow: 0 9px #999;">
+               HIRE ME
+            </a>
+        </div>
+    </div>
+    <?php
             }
         }
-    };
-    xhr.send();
-}
+    }
+    ?>
+</div>
 
+<script>
+    const minSalaryInput = document.getElementById("min_salary");
+    const maxSalaryInput = document.getElementById("max_salary");
+    const minSalaryOutput = document.getElementById("min_salary_output");
+    const maxSalaryOutput = document.getElementById("max_salary_output");
+    const range = document.getElementById("range");
 
+    function updateRange() {
+        const min = parseInt(minSalaryInput.value);
+        const max = parseInt(maxSalaryInput.value);
 
+        if (min > max) {
+            [minSalaryInput.value, maxSalaryInput.value] = [maxSalaryInput.value, minSalaryInput.value];
+        }
+
+        minSalaryOutput.textContent = minSalaryInput.value;
+        maxSalaryOutput.textContent = maxSalaryInput.value;
+
+        const minPercent = (minSalaryInput.value / minSalaryInput.max) * 100;
+        const maxPercent = (maxSalaryInput.value / maxSalaryInput.max) * 100;
+
+        range.style.left = minPercent + "%";
+        range.style.width = (maxPercent - minPercent) + "%";
+
+        minSalaryOutput.style.left = `calc(${minPercent}% - 25px)`;
+        maxSalaryOutput.style.left = `calc(${maxPercent}% - 25px)`;
+    }
+
+    minSalaryInput.addEventListener("input", updateRange);
+    maxSalaryInput.addEventListener("input", updateRange);
+
+    // Initial update
+    updateRange();
 </script>
+
 </body>
 </html>

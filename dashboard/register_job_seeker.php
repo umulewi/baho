@@ -111,9 +111,15 @@ include'dashboard.php';
                 </div>
             </div>
             <div class="form-row">
-                <div>
-                    <label for="physical_code">Salary:</label>
-                    <input type="number" id="salary" name="salary" required>
+            <div>
+                    <label for="salary">Salary</label>
+                    <select name="salary" required>
+                    <option value="">choose salary</option>
+                        <option value="35000-99000">35000RWF-99000RWF</option>
+                        <option value="159000-199000">159000RWF-199000RWF</option>
+                        <option value="200000-299000">200000RWF-299000RWF</option>
+                        
+                    </select>
                 </div>
                 <div>
                     <label for="province">Province</label>

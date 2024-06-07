@@ -84,6 +84,7 @@
                 <ul class="dropdown-menu">
                     <li><a href="view_job_seeker.php">View Seekers</a></li>
                    <li><a href="register_job_seeker.php?role_id=<?php echo $row['role_id'];?>">Register Seeker</a></li>
+                   <li><a href="hired_seekers.php">Hired Seekers</a></li>
                     
                 </ul>
             </li>

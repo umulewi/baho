@@ -143,9 +143,16 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
             <label for="email">Email:</label>
             <input type="text" id="email" name="email" value="<?php echo htmlspecialchars($row['email']); ?>" required>
         </div>
+        
         <div>
-            <label for="province">Province:</label>
-            <input type="text" id="province" name="province" value="<?php echo htmlspecialchars($row['province']); ?>" required >
+            <label for="province">Province</label>
+            <select name="province" required>
+                <option value="KIGALI CITY" <?php echo ($row['province']=='kigali city')? 'selected' : ''; ?>>Kigali city</option>
+                <option value="Western province" <?php echo ($row['province']=='western province')? 'selected' : ''; ?>>Western province</option>
+                <option value="Estern province" <?php echo ($row['province']=='Estern province')? 'selected' : ''; ?>>Estern province</option>
+                <option value="North province" <?php echo ($row['province']=='North province')? 'selected' : ''; ?>>North province</option>
+                <option value="South province" <?php echo ($row['province']=='South province')? 'selected' : ''; ?>>South Province</option>
+            </select>
         </div>
         </div>
         <div class="form-row">
@@ -184,6 +191,15 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
         </div>
         </div>
         <div class="form-row">
+            
+            <div>
+            <label for="cell">SALARY:</label>
+                <select name="salary">
+                <option value="35000-99000" <?php echo($row['salary']=='35000-99000') ?  'selected': ''; ?>>35000RWF-99000RWF</option>
+                <option value="159000-199000">159000RWF-199000RWF</option>
+                <option value="200000-299000">200000RWF-299000RWF</option>
+            </select>
+            </div>
         <div>
             <label for="cell">SALARY:</label>
             <input type="number" id="cell" name="salary" value="<?php echo htmlspecialchars($row['salary']);?>" required>
