@@ -133,9 +133,15 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
         </div>
     </div>
     <div class="form-row">
-        <div>
-            <label for="province">Province:</label>
-            <input type="text" id="province" name="province" value="<?php echo $row['province']; ?>" required>
+    <div>
+            <label for="province">Province</label>
+            <select name="province" required>
+                <option value="KIGALI CITY" <?php echo ($row['province']=='kigali city')? 'selected' : ''; ?>>Kigali city</option>
+                <option value="Western province" <?php echo ($row['province']=='western province')? 'selected' : ''; ?>>Western province</option>
+                <option value="Estern province" <?php echo ($row['province']=='Estern province')? 'selected' : ''; ?>>Estern province</option>
+                <option value="North province" <?php echo ($row['province']=='North province')? 'selected' : ''; ?>>North province</option>
+                <option value="South province" <?php echo ($row['province']=='South province')? 'selected' : ''; ?>>South Province</option>
+            </select>
         </div>
         <div>
             <label for="district">District:</label>
@@ -233,7 +239,7 @@ if (isset($_POST['update'])) {
         $stmt2->execute();
 
         if ($stmt->rowCount() > 0 || $stmt2->rowCount() > 0) {
-            echo "Well updated";
+            echo "<script>alert('well updated.');</script>";
         } else {
             echo "<script>alert('No records updated.');</script>";
         }

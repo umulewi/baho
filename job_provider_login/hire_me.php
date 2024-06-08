@@ -104,7 +104,6 @@ $job_seeker_id = $_GET['job_seeker_id'];
 
 error_reporting(0);
 
-
 include '../connection.php';
 $stmt = $pdo->prepare("SELECT * FROM job_seeker JOIN users ON job_seeker.users_id = users.users_id WHERE job_seeker_id=:job_seeker_id");
 $stmt->bindParam(':job_seeker_id', $job_seeker_id); 
@@ -116,91 +115,85 @@ $salaryWithCurrency = $row['salary'] . ' RWF';
 ?>
 
 <div class="form-container">
-        <main>
-       <div class="table-data">
-    <form action="" method="post">
+    <main>
+        <div class="table-data">
+            <form action="" method="post">
+                <div style="display: flex; justify-content: center; width: 100%;">
+                    <img src="sample.png" alt="Avatar" style="width: 30%;">
+                </div>
+                <div class="form-row">
+                    <div>
+                        <label for="first_name">First name:</label>
+                        <input type="text" name="first_name" value="<?php echo ($row['first_name']); ?>" required readonly>
+                    </div>
+                    <div>
+                        <label for="last_name">Last name:</label>
+                        <input type="text" name="last_name" value="<?php echo ($row['last_name']); ?>" required readonly>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div>
+                        <label for="date_of_birth">Date of birth:</label>
+                        <input type="date" name="date_of_birth" value="<?php echo ($row['date_of_birth']); ?>" required readonly>
+                    </div>
+                    <div>
+                        <label for="province">Province:</label>
+                        <input type="text" id="province" name="province" value="<?php echo ($row['province']); ?>" required readonly>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div>
+                        <label for="district">District:</label>
+                        <input type="text" id="district" name="district" value="<?php echo ($row['district']); ?>" required readonly>
+                    </div>
+                    <div>
+                        <label for="sector">Sector:</label>
+                        <input type="text" id="sector" name="sector" value="<?php echo ($row['sector']); ?>" required readonly>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div>
+                        <label for="cell">Cell:</label>
+                        <input type="text" id="cell" name="cell" value="<?php echo ($row['cell']); ?>" required readonly>
+                    </div>
+                    <div>
+                        <label for="gender">Gender:</label>
+                        <input type="text" id="gender" name="gender" value="<?php echo ($row['gender']); ?>" required readonly>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div>
+                        <label for="salary">Salary:</label>
+                        <div class="currency-input">
+                            <input type="text" id="salary" name="salary" value="<?php echo ($salaryWithCurrency); ?>" required readonly>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="bio">Bio:</label>
+                        <input type="text" id="id" name="id" value="<?php echo ($id); ?>" required readonly>
+                    </div>
+                </div>
+                <div>
+                    <label for="bio">Bio:</label>
+                    <textarea style="height:133px;" id="bio" name="bio" required readonly><?php echo ($row['bio']); ?></textarea>
+                </div>
 
-        <div style="display: flex; justify-content: center; width: 100%;">
-            <img src="sample.png" alt="Avatar" style="width: 30%;">
+                <button style="display: inline-block; padding: 10px 20px; margin: 10px 0; font-size: 16px; cursor: pointer; text-align: center; text-decoration: none; outline: none; color: #fff; background-color: teal; border: none; border-radius: 5px;">hire me</button>
+            </form>
         </div>
-        <div class="form-row">
-            <div>
-            <label for="first_name">First name:</label>
-            <input type="text" name="first_name" value="<?php echo ($row['first_name']); ?>" required readonly>
-        </div>
-        <div>
-            <label for="last_name">Last name:</label>
-            <input type="text" name="last_name" value="<?php echo ($row['last_name']); ?>" required readonly>
-        </div>
-    </div>
-    <div class="form-row">
-        <div>
-            <label for="date_of_birth">Date of birth:</label>
-            <input type="date" name="date_of_birth" value="<?php echo ($row['date_of_birth']); ?>" required readonly>
-        </div>
-        
-        <div>
-            <label for="province">Province:</label>
-            <input type="text" id="province" name="province" value="<?php echo ($row['province']); ?>" required readonly>
-        </div>
-
-    </div>
-    <div class="form-row">
-        <div>
-            <label for="district">District:</label>
-            <input type="text" id="district" name="district" value="<?php echo ($row['district']); ?>" required readonly>
-        </div>
-        <div>
-            <label for="sector">Sector:</label>
-            <input type="text" id="sector" name="sector" value="<?php echo ($row['sector']); ?>" required readonly>
-        </div>
-    </div>
-        
-    <div class="form-row">
-        <div>
-            <label for="cell">Cell:</label>
-            <input type="text" id="cell" name="cell" value="<?php echo ($row['cell']); ?>" required readonly>
-        </div>
-        <div>
-            <label for="gender">Gender:</label>
-            <input type="text" id="gender" name="gender" value="<?php echo ($row['gender']); ?>" required readonly>
-        </div>
-    </div>
-    <div class="form-row">
-        <div>
-            <label for="salary">Salary:</label>
-            <div class="currency-input">
-                <input type="text" id="salary" name="salary" value="<?php echo ($salaryWithCurrency); ?>" required readonly>
-            </div>
-        </div>
-        <div>
-            <label for="bio">Bio:</label>
-            <input type="text" id="id" name="id" value="<?php echo ($id); ?>" required readonly>
-        </div>
-    </div>
-    <div>
-        <label for="bio">Bio:</label>
-        <textarea style="height:133px;" id="bio" name="bio" required readonly><?php echo ($row['bio']); ?></textarea>
-    </div>
-
-        <button style="display: inline-block; padding: 10px 20px; margin: 10px 0; font-size: 16px; cursor: pointer; text-align: center; text-decoration: none; outline: none; color: #fff; background-color: teal; border: none; border-radius: 5px;">hire me</button>
-    </form>
+    </main>
 </div>
-    </main>
-    </div>
-    </main>
-</body>
-</html>
-
 
 <?php
 include '../connection.php';
-$stmt = $pdo->prepare("SELECT job_provider_id FROM job_provider INNER JOIN users ON users.users_id = job_provider.users_id WHERE users.email = :user_email");
+$stmt = $pdo->prepare("SELECT job_provider_id, first_name, last_name FROM job_provider INNER JOIN users ON users.users_id = job_provider.users_id WHERE users.email = :user_email");
 $stmt->bindParam(':user_email', $user_email); 
 $stmt->execute();
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
 if ($row) {
     $job_provider_id = $row['job_provider_id'];
+    $first_name = $row['first_name'];
+    $last_name = $row['last_name'];
 } else {
     echo "No job provider found for this email.";
     exit;
@@ -208,32 +201,37 @@ if ($row) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $job_seeker_id = filter_var($_GET['job_seeker_id'], FILTER_SANITIZE_NUMBER_INT);
     $stmt = $pdo->prepare("SELECT * FROM hired_seekers WHERE job_seeker_id = :job_seeker_id AND job_provider_id = :job_provider_id");
+    $seeker_first_name = $_POST['first_name'];
+    $seeker_last_name = $_POST['last_name'];
     $stmt->execute([
         ':job_seeker_id' => $job_seeker_id,
         ':job_provider_id' => $job_provider_id
     ]);
     $existing_entry = $stmt->fetch(PDO::FETCH_ASSOC);
     if ($existing_entry) {
-      
         echo "<script>alert('This job seeker has already been hired by you..');</script>";
-        
     } else {
-        $sql = "INSERT INTO hired_seekers (job_seeker_id, job_provider_id) 
-                VALUES (:job_seeker_id, :job_provider_id)";
+        $sql = "INSERT INTO hired_seekers (job_seeker_id, job_provider_id, provider_first_name, provider_last_name, seeker_first_name, seeker_last_name) 
+                VALUES (:job_seeker_id, :job_provider_id, :provider_first_name, :provider_last_name, :seeker_first_name, :seeker_last_name)";
         $stmt = $pdo->prepare($sql);
         try {
             $stmt->execute([
                 ':job_seeker_id' => $job_seeker_id,
                 ':job_provider_id' => $job_provider_id,
+                ':provider_first_name' => $first_name,
+                ':provider_last_name' => $last_name,
+                ':seeker_first_name' => $seeker_first_name,
+                ':seeker_last_name' => $seeker_last_name,
             ]);
             echo "<script>alert('Thank you for hiring our seeker, we shall communicate with you soon.');</script>";
-           
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage() . "<br>";
         }
     }
 }
 ?>
+
+
 
 
 

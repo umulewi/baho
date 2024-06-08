@@ -16,18 +16,16 @@ include 'dashboard.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Update Student</title>
     <style>
-        /* Form container */
         .form-container {
             max-width: 750px;
             margin: 0 auto;
-            
+           
         }
 
         /* Form fields */
         .form-container div {
-            margin-bottom: 15px;
+            margin-bottom: 5px;
         }
-
         .form-container label {
             display: block;
             font-weight: bold;
@@ -40,6 +38,7 @@ include 'dashboard.php';
         .form-container input[type="email"],
         .form-container input[type="tel"],
         .form-container input[type="number"],
+        textarea,
 
         select {
             width: 100%;
@@ -50,7 +49,7 @@ include 'dashboard.php';
         }
 
         .form-container input[type="submit"] {
-            width: 30%;
+            width: 20%;
             padding: 10px;
             border: none;
             border-radius: 5px;
@@ -81,6 +80,9 @@ include 'dashboard.php';
                 min-width: 100%;
             }
         }
+        
+
+        
     </style>
 </head>
 <body>
