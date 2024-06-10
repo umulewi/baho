@@ -68,12 +68,7 @@
                 </a>
             </li>
             
-            <li class="active">
-                <a href="#">
-                    <i class='bx bxs-dashboard' ></i>   
-                    <span class="text">All Jobs</span>
-                </a>
-            </li>
+            
         </ul>
         <ul class="side-menu">
             
