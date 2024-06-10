@@ -193,6 +193,7 @@ if (isset($_POST['update'])) {
     $last_name = htmlspecialchars($_POST['last_name']);
     $full_name = $first_name . ' ' . $last_name; 
     $gender = $_POST['gender'];
+    $ID=$_POST['id'];
 
     $province = htmlspecialchars($_POST['province']);
     $district = htmlspecialchars($_POST['district']);

@@ -129,7 +129,7 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
         </div>
         <div>
             <label for="dob">Date of birth:</label>
-            <input type="date" id="dob" name="date_of_birth" value="<?php echo htmlspecialchars($row['date_of_birth']); ?>" required>
+            <input type="date"  name="date_of_birth" id="date_of_birth" value="<?php echo htmlspecialchars($row['date_of_birth']); ?>" required>
         </div>
     </div>
     <div class="form-row">
@@ -166,7 +166,7 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
         </div>
         <div>
             <label for="id">Id Cards:</label>
-            <input type="text" id="ID" name="ID" value="<?php echo $row['ID']; ?>" required>
+            <input type="number"  value="<?php echo htmlspecialchars($row['ID']);?>" id="id" name="id" maxlength="16" pattern="[0-9]{16}"  title="Please enter a 16-digit ID number." >
         </div>
     </div>
         <div>
@@ -180,7 +180,6 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
 </body>
 </html>
-
 
 <?php
 include '../connection.php';
@@ -248,3 +247,21 @@ if (isset($_POST['update'])) {
     }
 }
 ?>
+<script>
+    var today = new Date();
+    var maxDate = new Date();
+    maxDate.setFullYear(today.getFullYear() - 18);
+    var maxDateFormatted = maxDate.toISOString().split('T')[0];
+    document.getElementById("date_of_birth").setAttribute("max", maxDateFormatted);
+</script>
+
+<script>
+const idInput = document.getElementById("id");
+idInput.addEventListener("input", function() {
+  const value = idInput.value;
+  if (value.length > 16) {
+    idInput.value = value.slice(0, 16); 
+  }
+  
+});
+</script>
