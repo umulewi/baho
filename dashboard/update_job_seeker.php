@@ -179,11 +179,11 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
         </div>
         <div class="form-row">
         <div>
-            <label for="dob">DATE OF BIRTH:</label>
+            <label for="dob">Date of birth:</label>
             <input type="date"  name="date_of_birth" id="date_of_birth" value="<?php echo htmlspecialchars($row['date_of_birth']); ?>" required>
         </div>
         <div>
-            <label for="gender">GENDER:</label>
+            <label for="gender">Gender:</label>
             <select name="gender">
                 <option value="male" <?php echo ($row['gender'] == 'male') ? 'selected' : ''; ?>>Male</option>
                 <option value="female" <?php echo ($row['gender'] == 'female') ? 'selected' : ''; ?>>Female</option>
@@ -193,7 +193,7 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
         <div class="form-row">
             
             <div>
-            <label for="cell">SALARY:</label>
+            <label for="cell">Salary:</label>
                 <select name="salary">
                 <option value="35000-99000" <?php echo($row['salary']=='35000-99000') ?  'selected': ''; ?>>35000RWF-99000RWF</option>
                 <option value="159000-199000" <?php echo($row['salary']=='159000-199000') ?  'selected': ''; ?>>159000RWF-199000RWF</option>
@@ -201,7 +201,7 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
             </select>
             </div>
             <div>
-            <label for="ID">ID CARDS:</label>
+            <label for="ID">ID Cards:</label>
             <input type="number"  value="<?php echo htmlspecialchars($row['ID']);?>" id="id" name="id" maxlength="16" pattern="[0-9]{16}"  title="Please enter a 16-digit ID number." >
         </div>
         
@@ -209,7 +209,7 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
         </div>
         
         <div>
-            <label for="bio" class="">BIO:</label>
+            <label for="bio" class="">Bio:</label>
             <textarea style="height:133px;" id="bio" name="bio" required><?php echo ($row['bio']); ?></textarea>
         </div>
         <div>
@@ -317,7 +317,7 @@ if (isset($_POST['update'])) {
 </script>
 
 <script>
-const idInput = document.getElementById("id");
+const idInput = document.getElementById("id");s
 idInput.addEventListener("input", function() {
   const value = idInput.value;
   if (value.length > 16) {
