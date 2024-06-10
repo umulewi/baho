@@ -1,17 +1,20 @@
 <?php
 session_start();
 if (!isset($_SESSION['user_email'])) {
-    header("location: ../index.php");
+    header("Location: ../index.php");
     exit();
 }
-$user_email = $_SESSION['user_email']; 
+$user_email = $_SESSION['user_email'];
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+require '../PHPMailer/src/Exception.php';
+require '../PHPMailer/src/PHPMailer.php';
+require '../PHPMailer/src/SMTP.php';
 ?>
 
-
-
 <?php
-include'dashboard.php';
+include 'dashboard.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,29 +26,22 @@ include'dashboard.php';
         .form-container {
             max-width: 800px;
             margin: 0 auto;
-          
         }
-
-        /* Form fields */
         .form-container div {
             margin-bottom: 15px;
         }
-
         .form-container label {
             display: block;
             font-weight: bold;
             margin-bottom: 5px;
         }
-
         .form-container input[type="text"],
         .form-container input[type="date"],
         .form-container input[type="password"],
         .form-container input[type="email"],
         .form-container input[type="tel"],
         .form-container input[type="number"],
-   
         textarea,
-
         select {
             width: 100%;
             padding: 10px;
@@ -53,7 +49,7 @@ include'dashboard.php';
             border-radius: 5px;
             box-sizing: border-box;
         }
-        button{
+        button {
             width: 40%;
             padding: 10px;
             border: 1px solid #ccc;
@@ -70,31 +66,24 @@ include'dashboard.php';
             font-size: 16px;
             cursor: pointer;
         }
-
         .form-container input[type="submit"]:hover {
             background-color: darkslategray;
         }
-
         .form-row {
             display: flex;
             flex-wrap: wrap;
             gap: 15px;
         }
-
         .form-row > div {
             flex: 1;
             min-width: 300px;
         }
-
-        /* Responsive adjustments */
         @media (max-width: 600px) {
             .form-row > div {
                 min-width: 100%;
             }
         }
     </style>
-    
-    
 </head>
 <body>
 <main>
@@ -102,16 +91,15 @@ include'dashboard.php';
 <?php
 $job_seeker_id = $_GET['job_seeker_id'];
 
-error_reporting(0);
-
 include '../connection.php';
-$stmt = $pdo->prepare("SELECT * FROM job_seeker JOIN users ON job_seeker.users_id = users.users_id WHERE job_seeker_id=:job_seeker_id");
-$stmt->bindParam(':job_seeker_id', $job_seeker_id); 
+$stmt = $pdo->prepare("SELECT * FROM job_seeker JOIN users ON job_seeker.users_id = users.users_id WHERE job_seeker_id = :job_seeker_id");
+$stmt->bindParam(':job_seeker_id', $job_seeker_id);
 $stmt->execute();
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-// Concatenate " USD" to the salary value
 $salaryWithCurrency = $row['salary'] . ' RWF';
+$email = $row['email'];
+
 ?>
 
 <div class="form-container">
@@ -169,27 +157,26 @@ $salaryWithCurrency = $row['salary'] . ' RWF';
                         </div>
                     </div>
                     <div>
-                        <label for="bio">Bio:</label>
-                        <input type="text" id="id" name="id" value="<?php echo ($id); ?>" required readonly>
+                        <label for="bio">ID:</label>
+                        <input type="text" id="id" name="id" value="<?php echo ($row['ID']); ?>" required readonly>
                     </div>
                 </div>
                 <div>
                     <label for="bio">Bio:</label>
-                    <textarea style="height:133px;" id="bio" name="bio" required readonly><?php echo ($row['bio']); ?></textarea>
+                    <textarea style="height: 133px;" id="bio" name="bio" required readonly><?php echo ($row['bio']); ?></textarea>
                 </div>
-
-                <button style="display: inline-block; padding: 10px 20px; margin: 10px 0; font-size: 16px; cursor: pointer; text-align: center; text-decoration: none; outline: none; color: #fff; background-color: teal; border: none; border-radius: 5px;">hire me</button>
+                <button type="submit" style="display: inline-block; padding: 10px 20px; margin: 10px 0; font-size: 16px; cursor: pointer; text-align: center; text-decoration: none; outline: none; color: #fff; background-color: teal; border: none; border-radius: 5px;">Hire Me</button>
             </form>
         </div>
     </main>
 </div>
 
 <?php
-include '../connection.php';
 $stmt = $pdo->prepare("SELECT job_provider_id, first_name, last_name FROM job_provider INNER JOIN users ON users.users_id = job_provider.users_id WHERE users.email = :user_email");
-$stmt->bindParam(':user_email', $user_email); 
+$stmt->bindParam(':user_email', $user_email);
 $stmt->execute();
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
 if ($row) {
     $job_provider_id = $row['job_provider_id'];
     $first_name = $row['first_name'];
@@ -198,6 +185,7 @@ if ($row) {
     echo "No job provider found for this email.";
     exit;
 }
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $job_seeker_id = filter_var($_GET['job_seeker_id'], FILTER_SANITIZE_NUMBER_INT);
     $stmt = $pdo->prepare("SELECT * FROM hired_seekers WHERE job_seeker_id = :job_seeker_id AND job_provider_id = :job_provider_id");
@@ -208,8 +196,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ':job_provider_id' => $job_provider_id
     ]);
     $existing_entry = $stmt->fetch(PDO::FETCH_ASSOC);
+
     if ($existing_entry) {
-        echo "<script>alert('This job seeker has already been hired by you..');</script>";
+        echo "<script>alert('This job seeker has already been hired by you.');</script>";
     } else {
         $sql = "INSERT INTO hired_seekers (job_seeker_id, job_provider_id, provider_first_name, provider_last_name, seeker_first_name, seeker_last_name) 
                 VALUES (:job_seeker_id, :job_provider_id, :provider_first_name, :provider_last_name, :seeker_first_name, :seeker_last_name)";
@@ -224,16 +213,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ':seeker_last_name' => $seeker_last_name,
             ]);
             echo "<script>alert('Thank you for hiring our seeker, we shall communicate with you soon.');</script>";
+
+            // Email notification
+            $mail = new PHPMailer(true);
+            try {
+                $mail->isSMTP();
+                $mail->Host = 'smtp.gmail.com';
+                $mail->SMTPAuth = true;
+                $mail->Username = 'ntegerejimanalewis@gmail.com';
+                $mail->Password = 'zwhcmifrjmnlnziz';
+                $mail->SMTPSecure = 'tls';
+                $mail->Port = 587;
+                $mail->setFrom('your_email@gmail.com');
+                $mail->addAddress($email);
+                $mail->isHTML(false);
+                $mail->Subject = 'Confirmation';
+                $mail->Body = 'You have been hired.';
+                $mail->send();
+                echo "Email sent successfully!";
+            } catch (Exception $e) {
+                echo "Email sending failed. Error: {$mail->ErrorInfo}";
+            }
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage() . "<br>";
         }
     }
 }
 ?>
-
-
-
-
-
-
-
+</main>
+</body>
+</html>

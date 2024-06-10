@@ -103,7 +103,7 @@ include 'dashboard.php';
             width: 20px;
             height: 20px;
             border-radius: 50%;
-            background: #4CAF50;
+            background: teal;
             cursor: pointer;
             -webkit-appearance: none;
             position: relative;
@@ -114,7 +114,7 @@ include 'dashboard.php';
             width: 20px;
             height: 20px;
             border-radius: 50%;
-            background: #4CAF50;
+            background: teal;
             cursor: pointer;
             z-index: 1;
         }
@@ -133,7 +133,7 @@ include 'dashboard.php';
             position: absolute;
             top: 50%;
             height: 10px;
-            background: #4CAF50;
+            background: teal;
             transform: translateY(10px); /* Adjusted to position the range correctly */
             border-radius: 5px;
             z-index: 0;
@@ -202,7 +202,7 @@ include 'dashboard.php';
             <h4><b><?php echo $row['full_name']; ?></b></h4><br>
             <p><?php echo $row['bio']; ?></p><br>
             <a href='hire_me.php?job_seeker_id=<?php echo $row['job_seeker_id']; ?>' 
-               style="display: inline-block; padding: 10px 20px; margin: 10px 0; font-size: 16px; cursor: pointer; text-align: center; text-decoration: none; outline: none; color: #fff; background-color: #4CAF50; border: none; border-radius: 5px; box-shadow: 0 9px #999;">
+               style="display: inline-block; padding: 10px 20px; margin: 10px 0; font-size: 16px; cursor: pointer; text-align: center; text-decoration: none; outline: none; color: #fff; background-color: teal; border: none; border-radius: 5px;">
                HIRE ME
             </a>
         </div>
