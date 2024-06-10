@@ -223,6 +223,7 @@ if (isset($_POST['update'])) {
   $village = $_POST['village'];
   $gender=$_POST['gender'];
   $cell = $_POST['cell'];
+  $salary=$_POST['salary'];
   $id = $_POST['id'];
   $bio = $_POST['bio'];
   $date_of_birth=$_POST['date_of_birth'];
@@ -241,6 +242,7 @@ if (isset($_POST['update'])) {
                 village = :village,
                 telephone=:telephone,
                 id = :id,
+                salary=:salary,
                 date_of_birth=:date_of_birth,
                 mothers_name=:mothers_name,
                 fathers_name=:fathers_name
@@ -264,6 +266,7 @@ $stmt->bindParam(':cell', $cell);
 $stmt->bindParam(':village', $village);
 $stmt->bindParam(':id', $id);
 $stmt->bindParam(':bio', $bio);
+$stmt->bindParam(':salary', $salary);
 $stmt->bindParam(':date_of_birth', $date_of_birth);
 $stmt->bindParam(':mothers_name', $mothers_name);
 $stmt->bindParam(':fathers_name', $fathers_name);

@@ -99,20 +99,84 @@ if ($stmt->rowCount() > 0) {
             padding: 7px 0;
             box-sizing: border-box;
         }
+
+        
+        
+
+        .row {
+            display: flex;
+            align-items: center;
+        }
+
+        
+
+        .other-div1, .other-div2 {
+            flex: 1;
+            margin-right: 10px;
+        }
+
+        .progress-bar {
+            
+        }
+
+        /* Media query for small screens */
+        @media (max-width: 768px) {
+            .row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .progress, .other-div1, .other-div2 {
+                margin-right: 0;
+                
+            }
+        }
+</style>
+
     </style>
 </head>
 <body>
-<div class="form-container">
-    <h2>
-        Job Application Progress
-    </h2>
-    <div class="progress">
-        <div class="progress-bar">
-            <?php echo $progress ? $progress . "%" : "Progress not available"; ?>
+
+<main>
+   
+
+    
+
+    </div>
+    </main>
+
+
+    <main>
+    <div>
+       
+    <div class="row">
+
+        
+        <div class="other-div1">
+        
+            <!-- Content for the first new div goes here -->
+            <div class="progress">
+                
+                <div class="progress-bar">
+               
+                    <?php 
+                    echo $progress ? $progress . "%" : "Progress not available";
+                     ?>
+                </div>
+            </div>
+        </div>
+        
+        <div class="other-div2">
+            <div class="table-data">
+                <h2>Job Application Progress</h2>
+                <p>
+                    The job application progress bar on this webpage visually tracks a user's progress through their job application journey. Initially set at 0%, progress increases as users complete key milestones: verifying basic information (33%), filling out profile fields (each contributing about 2.75%), and maintaining an active profile for over 15 days (adding 12%). Achieving employment sets the progress to 100%. This dynamic calculation ensures users can see their advancement clearly.
+                </p>
+            </div>
         </div>
     </div>
 </div>
-
 </body>
+
 </html>
 
