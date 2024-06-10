@@ -364,7 +364,7 @@ if (isset($_GET['code'])) {
                     <input type="password" name="password" placeholder="Password" required="">
                     <button type="submit" name="user_signup">Sign Up</button>
                     <button class="google-login-btn" name="google-login-btn">
-                        <img src="imggoogle-icon.png" alt="Google Icon" class="google-icon">
+                        <img src="img/google.png" alt="Google Icon" class="google-icon">
                         <?php
                             require_once 'job_provider_login/config.php';
                             if (isset($_SESSION['user_token'])) {
@@ -386,7 +386,7 @@ if (isset($_GET['code'])) {
                     <button type="submit" name="login">Login</button>
                     
                     <button class="google-login-btn" name="google-login-btn">
-                        <img src="google-icon.png" alt="Google Icon" class="google-icon">
+                        <img src="img/google.png" alt="Google Icon" class="google-icon">
                         <?php
                             require_once 'job_provider_login/config.php';
                             if (isset($_SESSION['user_token'])) {

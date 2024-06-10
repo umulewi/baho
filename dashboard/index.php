@@ -15,7 +15,7 @@ if (!isset($_SESSION['user_email'])) {
     <!-- My CSS -->
     <link rel="stylesheet" href="style.css">
 
-    <title>AdminHub</title>
+    <title>KOZIRWA</title>
     <style>
         /* Additional CSS for dropdown icon */
         .dropdown-icon {
@@ -162,9 +162,9 @@ if (!isset($_SESSION['user_email'])) {
 <body>
     <!-- SIDEBAR -->
     <section id="sidebar">
-        <a href="#" class="brand">
-            <i class='bx bxs-smile'></i>
-            <span class="text">AdminHub</span>
+        <a href="index.php" class="brand">
+        <img src="../img/logo.png" alt="" style="width:12rem;margin-top:2rem;margin-left:2rem">
+            <span class="text"></span>
         </a>
         <ul class="side-menu top">
             <li class="active">
@@ -242,9 +242,12 @@ if (!isset($_SESSION['user_email'])) {
         <i class='bx bx-menu'></i>
         <form action="#">
             <div class="form-input">
-                <input type="search" placeholder="Search...">
-                <button type="submit" class="search-btn">
-                    <i class='bx bx-search'></i></button>
+              
+          
+                <button type="submit" class="search-btn" style="display: none;"><i class='bx'></i></button>
+
+
+
             </div>
         </form>
         <input type="checkbox" id="switch-mode" hidden>

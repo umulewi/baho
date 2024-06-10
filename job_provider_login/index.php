@@ -100,9 +100,9 @@ include'../connection.php';
 </head>
 <body>
 <section id="sidebar">
-        <a href="index.php" class="brand">
-            <i class='bx bxs-smile'></i>
-            <span class="text">AdminHub</span>
+<a href="index.php" class="brand">
+        <img src="../img/logo.png" alt="" style="width:12rem;margin-top:2rem;margin-left:2rem">
+            <span class="text"></span>
         </a>
         <ul class="side-menu top">
             <li class="active">
