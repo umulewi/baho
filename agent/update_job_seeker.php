@@ -26,16 +26,15 @@ include 'dashboard.php';
     <title>Update Student</title>
     <style>
         .form-container {
-            max-width: 900px;
+            max-width: 750px;
             margin: 0 auto;
-            
+           
         }
 
         /* Form fields */
         .form-container div {
-            margin-bottom: 15px;
+            margin-bottom: 5px;
         }
-
         .form-container label {
             display: block;
             font-weight: bold;
@@ -59,7 +58,7 @@ include 'dashboard.php';
         }
 
         .form-container input[type="submit"] {
-            width:30%;
+            width: 20%;
             padding: 10px;
             border: none;
             border-radius: 5px;
@@ -90,6 +89,9 @@ include 'dashboard.php';
                 min-width: 100%;
             }
         }
+        
+
+        
     </style>
 </head>
 <body>
@@ -114,7 +116,7 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
     <form action="" method="post">
         <div class="form-row">
         <div>
-            <label for="name">JOB SEEKER NAME:</label>
+            <label for="name">First name:</label>
             <input type="text" name="first_name" value="<?php echo htmlspecialchars($row['first_name']); ?>" required>
         </div>
         <div>

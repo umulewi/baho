@@ -23,16 +23,15 @@ include'dashboard.php';
     <title>Document</title>
     <style>
         .form-container {
-            max-width: 800px;
+            max-width: 750px;
             margin: 0 auto;
-          
+           
         }
 
         /* Form fields */
         .form-container div {
-            margin-bottom: 15px;
+            margin-bottom: 5px;
         }
-
         .form-container label {
             display: block;
             font-weight: bold;
@@ -56,7 +55,7 @@ include'dashboard.php';
         }
 
         .form-container input[type="submit"] {
-            width: 100%;
+            width: 20%;
             padding: 10px;
             border: none;
             border-radius: 5px;
@@ -87,6 +86,9 @@ include'dashboard.php';
                 min-width: 100%;
             }
         }
+        
+
+        
     </style>
     
 </head>

@@ -33,9 +33,8 @@ include 'dashboard.php';
 
         /* Form fields */
         .form-container div {
-            margin-bottom: 15px;
+            margin-bottom: 5px;
         }
-
         .form-container label {
             display: block;
             font-weight: bold;
