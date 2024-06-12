@@ -283,7 +283,8 @@ $stmt_user->bindParam(':users_id', $row['users_id']);
     // Execute the statement
     if ($stmt->execute() && $stmt_user->execute()) {
     //   echo "<script>window.location.href = 'view_job-seeker.php';</script>";
-    echo"well updated";
+  
+    echo "<script>alert('well updated');</script>";
       exit();
     } else {
       echo "<script>alert('Error updating record');</script>";
