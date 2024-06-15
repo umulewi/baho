@@ -161,21 +161,13 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
                 <label for="cell">Cell:</label>
                 <input type="text" id="cell" name="cell" value="<?php echo $row['cell']; ?>" required readonly>
             </div>
-            <div>
-                <label for="id">ID card No</label>
-                <input type="text" id="ID" name="ID" value="<?php echo $row['ID']; ?>" required readonly>
-            </div>
-        </div>
-        <div class="form-row">
+            
             <div>
                 <label for="id">Telephone:</label>
                 <input type="text" id="ID" name="telephone" value="<?php echo $row['telephone']; ?>" required readonly>
             </div>
-            <div>
-                <label for="id">Password:</label>
-                <input type="text" id="ID" name="password" value="<?php echo $row['password']; ?>" required readonly>
-            </div>
         </div>
+        
         <div class="form-row">
             <div>
                 <label for="id">Salary:</label>
@@ -186,7 +178,34 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
                 <input type="text" id="bio" name="bio" value="<?php echo $row['bio']; ?>" required readonly>
             </div>
         </div>
-       
+        <div class="form-row">
+        
+        </div>
+        <?php
+                error_reporting(0);  
+                include '../connection.php';
+                $user_email = $_SESSION['user_email']; 
+                try {
+                    $stmt = $pdo->query("SELECT * FROM job_seeker JOIN users ON job_seeker.users_id = users.users_id WHERE users.email = '$user_email'");
+                    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    foreach ($rows as $row) {
+                         $imagePath = str_replace('uploads/', 'uploads/', $row['ID']);
+                         $imageMimeType = mime_content_type($imagePath);
+                         ?>
+                         <label for="gender">ID CARD:</label>
+                         <div>
+                            <a href="#" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+                                <h2 class="m-0 text-primary">
+                                    <img src="<?php echo $imagePath; ?>" style="height: 200px; width: 300px;" class="img-fluid" <?php echo 'data-mime="' . $imageMimeType . '"'; ?>>
+                                </h2>
+                            </a>
+                        </div>
+                        <?php 
+                        }
+                    } catch (PDOException $e) {
+                        echo "Error: " . $e->getMessage();
+                    }
+                    ?>
     </form>
 </div>
 </main>

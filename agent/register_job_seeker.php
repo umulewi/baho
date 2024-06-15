@@ -44,6 +44,7 @@ include'dashboard.php';
         .form-container input[type="email"],
         .form-container input[type="tel"],
         .form-container input[type="number"],
+        .form-container input[type="file"],
         textarea,
 
         select {
@@ -99,110 +100,100 @@ include'dashboard.php';
             
        <div class="table-data">
        <h2 style="text-align:center;margin-top:2rem;color:teal">Register Job Seeker</h2><br>
-        <form action="" method="post">
-            <div class="form-row">
-                <div>
+       <form action="" method="post" enctype="multipart/form-data">
+        <div class="form-row">
+            <div>
                 <label for="name">Firstname:</label>
-                <input type="text"  name="firstname" required>
+                <input type="text" name="firstname" required>
             </div>
             <div>
-                <label for="physical_code">lastname:</label>
-                <input type="text"  name="lastname" required>
-            </div>
-    </div>
-    <div class="form-row">
-            <div>
-                <label for="email">Father's name:</label>
-                <input type="text"  name="fathers_name" required>
-            </div>
-            <div>
-                <label for="phone">Mother's name:</label>
-                <input type="text"  name="mothers_name" required>
+                <label for="physical_code">Lastname:</label>
+                <input type="text" name="lastname" required>
             </div>
         </div>
         <div class="form-row">
-        <div>
+            <div>
+                <label for="email">Father's Name:</label>
+                <input type="text" name="fathers_name" required>
+            </div>
+            <div>
+                <label for="phone">Mother's Name:</label>
+                <input type="text" name="mothers_name" required>
+            </div>
+        </div>
+        <div class="form-row">
+            <div>
                 <label for="gender">Gender:</label>
                 <select name="gender">
                     <option value="male">Male</option>
                     <option value="female">Female</option>
                 </select>
-
-                
             </div>
-
             <div>
-            <label for="PROVINCE">Province:</label>
+                <label for="PROVINCE">Province:</label>
                 <select name="province">
-                <option value="KIGALI CITY">KIGALI CITY</option>
+                    <option value="KIGALI CITY">KIGALI CITY</option>
                     <option value="WESTERN PROVINCE">WESTERN PROVINCE</option>
                     <option value="ESTERN PROVINCE">ESTERN PROVINCE</option>
                     <option value="NORTH PROVINCE">NORTH PROVINCE</option>
                     <option value="SOUTH PROVINCE">NORTH PROVINCE</option>
                 </select>
-
-            
             </div>
         </div>
-
-            <div class="form-row">
+        <div class="form-row">
             <div>
                 <label for="phone">District:</label>
-                <input type="text"  name="district" required>
+                <input type="text" name="district" required>
             </div>
             <div>
-                <label for="phone">Sectora:</label>
-                <input type="text"  name="sector" required>
+                <label for="phone">Sector:</label>
+                <input type="text" name="sector" required>
             </div>
-            </div>
-            <div class="form-row">
+        </div>
+        <div class="form-row">
             <div>
                 <label for="phone">Cell:</label>
-                <input type="text"  name="cell" required>
+                <input type="text" name="cell" required>
             </div>
             <div>
                 <label for="phone">Village:</label>
-                <input type="text"  name="village" required>
+                <input type="text" name="village" required>
             </div>
+        </div>
+        <div class="form-row">
+            <div>
+                <label for="physical_code">Email:</label>
+                <input type="email" id="email" name="email" required>
             </div>
-           <div class="form-row">
-           <div>
-            <label for="physical_code">Email:</label>
-            <input type="email" id="email" name="email" required>
+            <div>
+                <label for="phone">Phone Number:</label>
+                <input type="text" id="phone" name="telephone" required>
+            </div>
         </div>
-        
-        <div>
-            <label for="phone">Phone number:</label>
-            <input type="text" id="phone" name="telephone" required>
-        </div>
-           </div>
-            
-           <div class="form-row">
-           <div>
-            <label for="bio">Bio<label>
-            <textarea id="bio" name="bio" required></textarea>
-        </div>
-        <div>
-                <label for="date_of_birth">Date of birth:</label>
+        <div class="form-row">
+            <div>
+                <label for="bio">Bio:</label>
+                <textarea id="bio" name="bio" required></textarea>
+            </div>
+            <div>
+                <label for="date_of_birth">Date of Birth:</label>
                 <input type="date" name="date_of_birth" id="date_of_birth" required>
+            </div>
         </div>
-    </div>
-    <div class="form-row">
-
+        <div class="form-row">
+            <div>
+                <label for="email">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div>
+                <label for="phone">ID:</label>
+                <input type="file" name="id" accept="image/*" required>
+            </div>
+        </div>
         <div>
-            <label for="email">Pasword:</label>
-            <input type="password" id="password" name="password" required>
+            <input type="submit" name="register" value="Register" style="width:104px;">
         </div>
-
-            <div>
-                <label for="phone">ID</label>
-                <input type="number"  name="id" required>
-            </div>
-            
-            <div>
-                <input type="submit" name="register" value="Register" style="width:104px;">
-            </div>
-        </form>
+    </form>
     </div>
     </main>
     </div>
@@ -222,19 +213,36 @@ if (isset($_POST["register"])) {
     $district = $_POST['district'];
     $full_name = $firstname . ' ' . $lastname; 
     $sector = $_POST['sector'];
-    $gender=$_POST['gender'];
+    $gender = $_POST['gender'];
     $cell = $_POST['cell'];
     $village = $_POST['village'];
     $date_of_birth = $_POST['date_of_birth'];
-    $id=$_POST['id'];
     $email = $_POST['email'];
     $password = $_POST['password'];
     $bio = $_POST['bio'];
     $telephone = $_POST['telephone'];
     $role_id = $_GET['role_id'];
-    $created_by=$user_email;
+    $created_by = $user_email;
 
-    //Insert into users table
+    // Handle the file upload
+    if (isset($_FILES['id']) && $_FILES['id']['error'] == 0) {
+        $id = $_FILES['id'];
+        $upload_dir = 'uploads/'; // Define your upload directory
+        $file_name = basename($id['name']);
+        $target_file = $upload_dir . $file_name;
+
+        if (move_uploaded_file($id['tmp_name'], $target_file)) {
+            // File is uploaded successfully
+        } else {
+            echo "Error uploading the file.";
+            exit;
+        }
+    } else {
+        echo "File upload error.";
+        exit;
+    }
+
+    // Insert into users table
     $stmt_user = $pdo->prepare("INSERT INTO users (role_id, email, first_name, last_name, full_name, gender, password)
     VALUES (:role_id, :email, :first_name, :last_name, :full_name, :gender, :password)");
     $stmt_user->bindParam(':email', $email);
@@ -247,8 +255,9 @@ if (isset($_POST["register"])) {
     $stmt_user->execute();
     $users_id = $pdo->lastInsertId();
 
-
-    $stmt_job_provider = $pdo->prepare("INSERT INTO job_seeker (users_id, role_id,  province,fathers_name,mothers_name, district, sector, cell, village, date_of_birth,id,bio,created_by) VALUES (:users_id, :role_id, :province,:fathers_name,:mothers_name, :district, :sector, :cell, :village,:date_of_birth, :id,:bio,:created_by)");
+    // Insert into job_seeker table
+    $stmt_job_provider = $pdo->prepare("INSERT INTO job_seeker (users_id, role_id, province, fathers_name, mothers_name, district, sector, cell, village, date_of_birth, id, bio, created_by)
+    VALUES (:users_id, :role_id, :province, :fathers_name, :mothers_name, :district, :sector, :cell, :village, :date_of_birth, :id, :bio, :created_by)");
     $stmt_job_provider->bindParam(':users_id', $users_id);
     $stmt_job_provider->bindParam(':role_id', $role_id);
     $stmt_job_provider->bindParam(':province', $province);
@@ -260,8 +269,9 @@ if (isset($_POST["register"])) {
     $stmt_job_provider->bindParam(':village', $village);
     $stmt_job_provider->bindParam(':bio', $bio);
     $stmt_job_provider->bindParam(':date_of_birth', $date_of_birth);
-    $stmt_job_provider->bindParam(':id', $id);
+    $stmt_job_provider->bindParam(':id', $target_file);
     $stmt_job_provider->bindParam(':created_by', $created_by);
+
     try {
         if ($stmt_job_provider->execute()) {
             echo "<script>alert('New job seeker has been added');</script>";
@@ -273,6 +283,7 @@ if (isset($_POST["register"])) {
     }
 }
 ?>
+
 
 <script>
     var today = new Date();

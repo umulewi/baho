@@ -94,11 +94,13 @@ include 'dashboard.php';
 </head>
 <body>
 
+
 <?php
 
 $email = $_SESSION['user_email'];
 $id = $_GET['job_seeker_id'];
 include '../connection.php';
+
 $stmt = $pdo->prepare("SELECT *
 FROM users
 JOIN job_seeker ON users.users_id = job_seeker.users_id
@@ -108,84 +110,123 @@ $stmt->execute();
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
 ?> 
 
-<h2 style="text-align:center"></h2><br>
+
+<h2 style="text-align:center">Job Seeker Details</h2><br>
 <div class="form-container">
-        <main>
-       <div class="table-data">
-    <form action="" method="post">
+    <main>
+        <div class="table-data">
+            <form action="" method="post">
+                <div class="form-row">
+                    <div>
+                        <label for="name">SEEKER'S FIRSTNAME:</label>
+                        <input type="text" name="first_name" value="<?php echo htmlspecialchars($row['first_name']); ?>" required readonly>
+                    </div>
+                    <div>
+                        <label for="name">SEEKER'S LAST NAME:</label>
+                        <input type="text" name="last_name" value="<?php echo htmlspecialchars($row['last_name']); ?>" required readonly>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div>
+                        <label for="name">FATHER'S NAME:</label>
+                        <input type="text" name="fathers_name" value="<?php echo htmlspecialchars($row['fathers_name']); ?>" required readonly>
+                    </div>
+                    <div>
+                        <label for="name">MOTHER'S NAME:</label>
+                        <input type="text" name="mothers_name" value="<?php echo htmlspecialchars($row['mothers_name']); ?>" required readonly>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div>
+                        <label for="email">EMAIL:</label>
+                        <input type="text" id="email" name="email" value="<?php echo htmlspecialchars($row['email']); ?>" required readonly>
+                    </div>
+                    <div>
+                        <label for="province">PROVINCE:</label>
+                        <input type="text" id="province" name="province" value="<?php echo htmlspecialchars($row['province']); ?>" required readonly>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div>
+                        <label for="district">DISTRICT:</label>
+                        <input type="text" id="district" name="district" value="<?php echo htmlspecialchars($row['district']); ?>" required readonly>
+                    </div>
+                    <div>
+                        <label for="sector">SECTOR:</label>
+                        <input type="text" id="sector" name="sector" value="<?php echo htmlspecialchars($row['sector']); ?>" required readonly>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div>
+                        <label for="village">VILLAGE:</label>
+                        <input type="text" id="village" name="village" value="<?php echo htmlspecialchars($row['village']); ?>" required readonly>
+                    </div>
+                    <div>
+                        <label for="cell">CELL:</label>
+                        <input type="text" id="cell" name="cell" value="<?php echo htmlspecialchars($row['cell']); ?>" required readonly>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div>
+                        <label for="dob">DATE OF BIRTH:</label>
+                        <input type="date" id="dob" name="date_of_birth" value="<?php echo htmlspecialchars($row['date_of_birth']); ?>" required readonly>
+                    </div>
+                    <div>
+                        <label for="gender">GENDER:</label>
+                        <input type="text" id="gender" name="gender" value="<?php echo htmlspecialchars($row['gender']); ?>" required readonly>
+                    </div>
+                </div>
+                
+                <?php
+                error_reporting(0);  
+                include '../connection.php';
+                try {
+                    $stmt = $pdo->query("SELECT ID FROM job_seeker where job_seeker_id='$job_seeker_id'");
+                    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    foreach ($rows as $row) {
+                         $imagePath = str_replace('uploads/', 'uploads/', $row['ID']);
+                         $imageMimeType = mime_content_type($imagePath);
+                         ?>
+                         <label for="gender">ID CARD:</label>
+                         <div>
+                            <a href="index.php" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+                                <h2 class="m-0 text-primary">
+                                    <img src="<?php echo $imagePath; ?>" style="height: 200px; width: 300px;" class="img-fluid" <?php echo 'data-mime="' . $imageMimeType . '"'; ?>>
+                                </h2>
+                            </a>
+                        </div>
+                        <?php 
+                        }
+                    } catch (PDOException $e) {
+                        echo "Error: " . $e->getMessage();
+                    }
+                    ?>
+                    </form>
+                </div>
+            </main>
+        </div>
 
-    <div class="form-row">
-        <div>
-            <label for="name">SEEKER'S FIRSTNAME:</label>
-            <input type="text" name="first_name" value="<?php echo htmlspecialchars($row['first_name']); ?>" required readonly>
-        </div>
-        <div>
-            <label for="name">SEEKER'S LAST NAME:</label>
-            <input type="text" name="last_name" value="<?php echo htmlspecialchars($row['last_name']); ?>" required readonly>
-        </div>
-    </div>
-    <div class="form-row">
-        <div>
-            <label for="name">FATHERS'S NAME:</label>
-            <input type="text" name="first_name" value="<?php echo htmlspecialchars($row['fathers_name']); ?>" required readonly>
-        </div>
-        <div>
-            <label for="name">MOTHER'S NAME:</label>
-            <input type="text" name="last_name" value="<?php echo htmlspecialchars($row['mothers_name']); ?>" required readonly>
-        </div>
-    </div>
-    <div class="form-row">
-        <div>
-            <label for="email">EMAIL:</label>
-            <input type="text" id="email" name="email" value="<?php echo htmlspecialchars($row['email']); ?>" required readonly>
-        </div>
-        <div>
-            <label for="province">PROVINCE:</label>
-            <input type="text" id="province" name="province" value="<?php echo htmlspecialchars($row['province']); ?>" required readonly>
-        </div>
-    </div>
-    <div class="form-row">
-        <div>
-            <label for="district">DISTRICT:</label>
-            <input type="text" id="district" name="district" value="<?php echo htmlspecialchars($row['district']); ?>" required readonly>
-        </div>
-        <div>
-            <label for="sector">SECTOR:</label>
-            <input type="text" id="sector" name="sector" value="<?php echo htmlspecialchars($row['sector']); ?>" required readonly>
-        </div>
-    </div>
-    <div class="form-row">
-    <div>
-            <label for="village">VILLAGE:</label>
-            <input type="text" id="village" name="village" value="<?php echo htmlspecialchars($row['village']); ?>" required readonly>
-        </div>
-        <div>
-            <label for="cell">CELL:</label>
-            <input type="text" id="cell" name="cell" value="<?php echo htmlspecialchars($row['cell']); ?>" required readonly>
-        </div>
-    </div>
-        
-        <div class="form-row">
-        <div>
-            <label for="dob">DATE OF BIRTH:</label>
-            <input type="date" id="dob" name="date_of_birth" value="<?php echo htmlspecialchars($row['date_of_birth']); ?>" required readonly>
-        </div>
-        <div>
-            <label for="dob">GENDER:</label>
-            <input type="text" id="gender" name="gender" value="<?php echo htmlspecialchars($row['gender']); ?>" required readonly>
-        </div>
-        </div>
-        
-        
-        <div>
-            <label for="ID">ID CARDS:</label>
-            <input type="text" id="ID" name="ID" value="<?php echo htmlspecialchars($row['ID']); ?>" required readonly>
-        </div>
 
-    </form>
-</div>
-    </main>
-    </div>
+
+
+
+
+
+
+
+
 
 </body>
 </html>
+
+		
+			
+
+
+
+
+
+
+
+
+
