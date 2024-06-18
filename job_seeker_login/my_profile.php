@@ -222,7 +222,7 @@ if (isset($_POST['update'])) {
 
     if (isset($_FILES['id']) && $_FILES['id']['error'] == 0) {
         $id = $_FILES['id'];
-        $upload_dir = 'uploads/';
+        $upload_dir = '../uploads/';
         $file_name = basename($id['name']);
         $target_file = $upload_dir . $file_name;
 

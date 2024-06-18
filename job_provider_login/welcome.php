@@ -79,7 +79,7 @@ if (isset($_GET['code'])) {
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <!-- My CSS -->
     <link rel="stylesheet" href="../dashboard/style.css">
-    <title>Attandance Management System</title>
+    <title>Kozi rwanda</title>
     <style>
         /* Additional CSS for dropdown icon */
         .dropdown-icon {
@@ -174,7 +174,8 @@ if (isset($_GET['code'])) {
             </li>
             <li class="active">
                 <a href="#" class="dropdown-toggle" data-nav="top">
-                    <i class='bx bxs-shopping-bag-alt' ></i>
+                    
+                    <i class="bx bxs-shopping-bag-alt"></i>
                     <span class="text">My Profile</span>
                     <i class='bx bx-chevron-down dropdown-icon'></i>
                 </a>
@@ -186,7 +187,7 @@ if (isset($_GET['code'])) {
             </li>
             <li class="active">
                 <a href="all_employees.php">
-                    <i class='bx bxs-dashboard' ></i>   
+                    <i class='bx bxs-group' ></i>   
                     <span class="text">All Job Seeker</span>
                 </a>
             </li>

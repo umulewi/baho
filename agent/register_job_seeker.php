@@ -171,10 +171,17 @@ include'dashboard.php';
             </div>
         </div>
         <div class="form-row">
-            <div>
-                <label for="bio">Bio:</label>
-                <textarea id="bio" name="bio" required></textarea>
-            </div>
+        <div>
+                    <label for="salary">Salary</label>
+                    <select name="salary" required>
+                    <option value="">choose salary</option>
+                        <option value="35000-99000">35000RWF-99000RWF</option>
+                        <option value="159000-199000">159000RWF-199000RWF</option>
+                        <option value="200000-299000">200000RWF-299000RWF</option>
+                        
+                    </select>
+                </div>
+            
             <div>
                 <label for="date_of_birth">Date of Birth:</label>
                 <input type="date" name="date_of_birth" id="date_of_birth" required>
@@ -188,6 +195,10 @@ include'dashboard.php';
             <div>
                 <label for="phone">ID:</label>
                 <input type="file" name="id" accept="image/*" required>
+            </div>
+            <div>
+                <label for="bio">Bio:</label>
+                <textarea id="bio" name="bio" required></textarea>
             </div>
         </div>
         <div>
@@ -220,6 +231,7 @@ if (isset($_POST["register"])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
     $bio = $_POST['bio'];
+    $salary = $_POST['salary'];
     $telephone = $_POST['telephone'];
     $role_id = $_GET['role_id'];
     $created_by = $user_email;
@@ -256,8 +268,8 @@ if (isset($_POST["register"])) {
     $users_id = $pdo->lastInsertId();
 
     // Insert into job_seeker table
-    $stmt_job_provider = $pdo->prepare("INSERT INTO job_seeker (users_id, role_id, province, fathers_name, mothers_name, district, sector, cell, village, date_of_birth, id, bio, created_by)
-    VALUES (:users_id, :role_id, :province, :fathers_name, :mothers_name, :district, :sector, :cell, :village, :date_of_birth, :id, :bio, :created_by)");
+    $stmt_job_provider = $pdo->prepare("INSERT INTO job_seeker (users_id, role_id, province, fathers_name, mothers_name, district, sector, cell, village, date_of_birth, id, bio,salary, created_by)
+    VALUES (:users_id, :role_id, :province, :fathers_name, :mothers_name, :district, :sector, :cell, :village, :date_of_birth, :id, :bio,:salary, :created_by)");
     $stmt_job_provider->bindParam(':users_id', $users_id);
     $stmt_job_provider->bindParam(':role_id', $role_id);
     $stmt_job_provider->bindParam(':province', $province);
@@ -268,6 +280,7 @@ if (isset($_POST["register"])) {
     $stmt_job_provider->bindParam(':cell', $cell);
     $stmt_job_provider->bindParam(':village', $village);
     $stmt_job_provider->bindParam(':bio', $bio);
+    $stmt_job_provider->bindParam(':salary', $salary);
     $stmt_job_provider->bindParam(':date_of_birth', $date_of_birth);
     $stmt_job_provider->bindParam(':id', $target_file);
     $stmt_job_provider->bindParam(':created_by', $created_by);

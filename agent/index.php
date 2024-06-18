@@ -111,7 +111,7 @@ $pdo = null;
             
             <li>
                 <a href="#" class="dropdown-toggle" data-nav="top">
-                    <i class='bx bxs-doughnut-chart' ></i>
+                    <i class='bx bxs-group' ></i>
                     <span class="text">Job Seekers</span>
                     <i class='bx bx-chevron-down dropdown-icon'></i>
                 </a>

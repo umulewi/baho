@@ -8,7 +8,7 @@
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <!-- My CSS -->
     <link rel="stylesheet" href="../dashboard/style.css">
-    <title>baho house  Maids</title>
+    <title>kozi rwanda</title>
     <style>
         /* Additional CSS for dropdown icon */
         .dropdown-icon {
@@ -78,7 +78,7 @@
             </li>
             <li class="active">
                 <a href="all_employees.php">
-                    <i class='bx bxs-dashboard' ></i>   
+                    <i class='bx bxs-group' ></i>   
                     <span class="text">All Job Seeker</span>
                 </a>
             </li>

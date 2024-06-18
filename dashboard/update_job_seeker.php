@@ -200,9 +200,9 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
             </select>
             </div>
             <div>
-            <label for="ID">ID Cards:</label>
-            <input type="number"  value="<?php echo htmlspecialchars($row['ID']);?>" id="id" name="id" maxlength="16" pattern="[0-9]{16}"  title="Please enter a 16-digit ID number." >
-        </div>
+                    <label for="id">ID Card:</label>
+                    <input type="file" name="id" accept="image/*">
+                </div>
         
         
         </div>
@@ -246,6 +246,24 @@ if (isset($_POST['update'])) {
     $cell = htmlspecialchars($_POST['cell']);
     $bio = htmlspecialchars($_POST['bio']);
     $date_of_birth = htmlspecialchars($_POST['date_of_birth']);
+
+    if (isset($_FILES['id']) && $_FILES['id']['error'] == 0) {
+        $id = $_FILES['id'];
+        $upload_dir = '../uploads/';
+        $file_name = basename($id['name']);
+        $target_file = $upload_dir . $file_name;
+
+        if (!move_uploaded_file($id['tmp_name'], $target_file)) {
+            echo "Error uploading the file.";
+            exit;
+        }
+    } else {
+        $target_file = null;
+    }
+
+    
+    
+
     
 
 
@@ -261,9 +279,15 @@ if (isset($_POST['update'])) {
                     sector = :sector,
                     cell = :cell,
                     village = :village,
-                    date_of_birth = :date_of_birth,
-                    ID = :ID
-                WHERE job_seeker_id = :job_seeker_id";
+                    date_of_birth = :date_of_birth";
+                    if ($target_file) {
+                        $sql .= ", id = :id";
+                     }
+
+
+                     $sql .= " WHERE job_seeker_id = :job_seeker_id";
+                     
+                    
 
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':fathers_name', $fathers_name);
@@ -275,9 +299,13 @@ if (isset($_POST['update'])) {
         $stmt->bindParam(':cell', $cell);
         $stmt->bindParam(':village', $village);
         $stmt->bindParam(':date_of_birth', $date_of_birth);
-        $stmt->bindParam(':ID', $ID);
+        
         $stmt->bindParam(':bio', $bio);
         $stmt->bindParam(':job_seeker_id', $job_seeker_id);
+        if ($target_file) {
+            $stmt->bindParam(':id', $target_file);
+        }
+
         $stmt->execute();
 
         // Update users table

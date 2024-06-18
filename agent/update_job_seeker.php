@@ -166,10 +166,14 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
                     </div>
                 </div>
                 <div class="form-row">
-                    <div>
-                        <label for="cell">SALARY:</label>
-                        <input type="number" id="salary" name="salary" value="<?php echo htmlspecialchars($row['salary']); ?>" required>
-                    </div>
+                <div>
+            <label for="cell">Salary:</label>
+                <select name="salary">
+                <option value="35000-99000" <?php echo($row['salary']=='35000-99000') ?  'selected': ''; ?>>35000RWF-99000RWF</option>
+                <option value="159000-199000" <?php echo($row['salary']=='159000-199000') ?  'selected': ''; ?>>159000RWF-199000RWF</option>
+                <option value="200000-299000" <?php echo($row['salary']=='200000-299000') ?  'selected': ''; ?>>200000RWF-299000RWF</option>
+            </select>
+            </div>
                     <div>
                         <label for="bio">BIO:</label>
                         <textarea id="bio" name="bio" required><?php echo htmlspecialchars($row['bio']); ?></textarea>

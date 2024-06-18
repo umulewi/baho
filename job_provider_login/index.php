@@ -18,7 +18,7 @@ include'../connection.php';
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <!-- My CSS -->
     <link rel="stylesheet" href="../dashboard/style.css">
-    <title>Attandance Management System</title>
+    <title>kozi rwanda</title>
     <style>
         /* Additional CSS for dropdown icon */
         .dropdown-icon {
@@ -113,7 +113,7 @@ include'../connection.php';
             </li>
             <li class="active">
                 <a href="my_profile.php">
-                    <i class='bx bxs-dashboard' ></i>   
+                    <i class='bx bxs-shopping-bag-alt' ></i>   
                     <span class="text">My Profile</span>
                 </a>
             </li>

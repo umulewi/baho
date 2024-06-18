@@ -13,7 +13,7 @@ include'dashboard.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+
     <style>
        .form-container {
             max-width: 750px;
@@ -36,6 +36,7 @@ include'dashboard.php';
         .form-container input[type="email"],xta
         .form-container input[type="tel"],
         .form-container input[type="number"],
+        .form-container input[type="file"],
         select,
         textarea,
         select {
@@ -89,7 +90,7 @@ include'dashboard.php';
             <div class="table-data">
             
             <h2 style="text-align:center;margin-top:2rem;color:teal">Register job Seeker</h2><br>
-        <form action="" method="post">
+        <form action="" method="post" enctype="multipart/form-data">
         <div class="form-row">
                 <div>
                     <label for="name">Firstname:</label>
@@ -190,7 +191,7 @@ include'dashboard.php';
             </div>
             <div>
                 <label for="id">ID</label>
-                <input type="number" id="id" name="id" maxlength="16" pattern="[0-9]{16}" title="Please enter a 16-digit ID number." required>
+                <input type="file" id="id" name="id" maxlength="16" pattern="[0-9]{16}" title="Please enter a 16-digit ID number." required>
             </div>
                 </div>
 
@@ -227,7 +228,7 @@ if (isset($_POST["register"])) {
     $cell = $_POST['cell'];
     $village = $_POST['village'];
     $date_of_birth = $_POST['date_of_birth'];
-    $id = $_POST['id'];
+
     $created_by = $_SESSION['user_email'];
     $email = $_POST['email'];
     $password = $_POST['password'];
@@ -237,6 +238,24 @@ if (isset($_POST["register"])) {
     $salary = $_POST['salary'];
     $role_id = $_GET['role_id'];
     $created_by=$_SESSION['user_email'];
+    
+
+    if (isset($_FILES['id']) && $_FILES['id']['error'] == 0) {
+        $id = $_FILES['id'];
+        $upload_dir = '../uploads/'; // Define your upload directory
+        $file_name = basename($id['name']);
+        $target_file = $upload_dir . $file_name;
+
+        if (move_uploaded_file($id['tmp_name'], $target_file)) {
+            // File is uploaded successfully
+        } else {
+            echo "Error uploading the file.";
+            exit;
+        }
+    } else {
+        echo "File upload error.";
+        exit;
+    }
 
     $stmt_user = $pdo->prepare("INSERT INTO users (role_id, email, first_name, last_name, full_name, gender, password)
     VALUES (:role_id, :email, :first_name, :last_name, :full_name, :gender, :password)");
@@ -264,7 +283,10 @@ if (isset($_POST["register"])) {
     $stmt_job_seeker->bindParam(':village', $village);
     $stmt_job_seeker->bindParam(':date_of_birth', $date_of_birth);
     $stmt_job_seeker->bindParam(':bio', $bio);
-    $stmt_job_seeker->bindParam(':id', $id);
+    if ($target_file) {
+        $stmt_job_seeker->bindParam(':id', $target_file);
+
+    }
 
     $stmt_job_seeker->bindParam(':created_by', $created_by);
 
