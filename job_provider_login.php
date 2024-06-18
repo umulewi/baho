@@ -81,7 +81,7 @@ if (isset($_POST['login'])) {
 
     if ($user) {
         if ($user['verifiedEmail'] == 1) {
-            $_SESSION['user_email'] = $email;
+            $_SESSION['provider_email'] = $email;
             $role_name = $user['role_name'];
             switch ($role_name) {
                 case 'job_provider':
