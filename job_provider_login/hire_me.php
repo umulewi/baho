@@ -1,10 +1,10 @@
 <?php
 session_start();
-if (!isset($_SESSION['user_email'])) {
+if (!isset($_SESSION['provider_email'])) {
     header("Location: ../index.php");
     exit();
 }
-$user_email = $_SESSION['user_email'];
+$user_email = $_SESSION['provider_email'];
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -157,14 +157,11 @@ $email = $row['email'];
                         </div>
                     </div>
                     <div>
-                        <label for="bio">ID:</label>
-                        <input type="text" id="id" name="id" value="<?php echo ($row['ID']); ?>" required readonly>
-                    </div>
-                </div>
-                <div>
                     <label for="bio">Bio:</label>
-                    <textarea style="height: 133px;" id="bio" name="bio" required readonly><?php echo ($row['bio']); ?></textarea>
+                    <textarea style="height: x;" id="bio" name="bio" required readonly><?php echo ($row['bio']); ?></textarea>
                 </div>
+                </div>
+                
                 <button type="submit" style="display: inline-block; padding: 10px 20px; margin: 10px 0; font-size: 16px; cursor: pointer; text-align: center; text-decoration: none; outline: none; color: #fff; background-color: teal; border: none; border-radius: 5px;">Hire Me</button>
             </form>
         </div>
@@ -230,7 +227,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $mail->Subject = 'Confirmation';
                 $mail->Body = 'You have been hired.';
                 $mail->send();
-                echo "Email sent successfully!";
+                // echo "Email sent successfully!";
             } catch (Exception $e) {
                 echo "Email sending failed. Error: {$mail->ErrorInfo}";
             }

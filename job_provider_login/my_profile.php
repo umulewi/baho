@@ -5,7 +5,7 @@ if (!isset($_SESSION['provider_email'])) {
     exit();
 }
 $user_email = $_SESSION['provider_email']; 
-
+echo $user_email;
 ?>
 <?php
 include'dashboard.php';

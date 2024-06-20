@@ -165,9 +165,14 @@ include'../connection.php';
 
             <!-- display all content in-->
 
-
             <main>
-			
+                <div class="table-data">
+                    <h1 style="margin: 20px auto;border: 0;height: 1px;width: 50%;background:">
+                        Welcome to Job Provider Dashboard</h1><br>
+                        <hr style="margin: 10px auto;border: 0;height: 1px;width: 50%;background: #EA60A7; ">
+                    </div>
+                </main>
+ <main>
          
 
 			<ul class="box-info">
@@ -186,7 +191,7 @@ include'../connection.php';
                     </span>
                 </li>
 				<li>
-					<i class='bx bxs-group' ></i>
+					<i class='bx bxs-calendar-check' ></i>
                     <?php
                     include'../connection.php';
                     $sql = "SELECT COUNT(job_seeker_id) AS total FROM job_seeker";
@@ -210,15 +215,15 @@ include'../connection.php';
                     ?>
 					<span class="text">
 						<h3><?php echo $result['total']?></h3>
-						<p>Employees</p>
+						<p>Employed</p>
 					</span>
 				</li>
 				
-			</ul>
+			</ul><br>
 
 
 			
-		</main>
+		</main><main>
 
 		
     <!-- CONTENT -->

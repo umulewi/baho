@@ -23,7 +23,7 @@ if (isset($_GET['code'])) {
         $userinfo = mysqli_fetch_assoc($result);
         $token = $userinfo['token'];
     } else {
-        $sql_role = "SELECT role_id FROM role WHERE role_name = 'job_seeker'";
+        $sql_role = "SELECT role_id FROM role WHERE role_name = 'job_provider'";
         $result_role = mysqli_query($conn, $sql_role);
         if (mysqli_num_rows($result_role) > 0) {
             $role_info = mysqli_fetch_assoc($result_role);
@@ -39,7 +39,7 @@ if (isset($_GET['code'])) {
         if ($result) {
             $lastInsertedID = mysqli_insert_id($conn); // Get the last inserted ID
             // Now insert the role_id and lastInsertedID into the job_provide table
-            $sql_job_provide = "INSERT INTO job_seeker (users_id, role_id) VALUES ('{$lastInsertedID}', '{$role_id}')";
+            $sql_job_provide = "INSERT INTO job_provider (users_id, role_id) VALUES ('{$lastInsertedID}', '{$role_id}')";
             $result_job_provide = mysqli_query($conn, $sql_job_provide);
             if (!$result_job_provide) {
                 echo "Error inserting into job_provide table: " . mysqli_error($conn);
@@ -134,16 +134,11 @@ if (isset($_GET['code'])) {
                     <span class="text">My Profile</span>
                 </a>
             </li>
-            <li class="active">
-                <a href="my_application.php">
-                    <i class='bx bxs-dashboard'></i>   
-                    <span class="text">My Application</span>
-                </a>
-            </li>
+            
             <li class="active">
                 <a href="#">
                     <i class='bx bxs-dashboard'></i>   
-                    <span class="text">All Jobs</span>
+                    <span class="text">All Job seekers</span>
                 </a>
             </li>
         </ul>
@@ -154,7 +149,7 @@ if (isset($_GET['code'])) {
                 <a href="logout.php" class="logout">
                     <i class='bx bxs-log-out-circle'></i>
                     <span class="text">Logout</span>
-                </a>
+                </a>z
             </li>
         </ul>
     </section>  
@@ -166,8 +161,8 @@ if (isset($_GET['code'])) {
             
             <form action="#">
                 <div class="form-input">
-                    <input type="search" placeholder="Search...">
-                    <button type="submit" class="search-btn"><i class='bx bx-search'></i></button>
+                    <!-- <input type="search" placeholder="Search..."> -->
+                    <button type="submit" class="search-btn" style="display: none;"><i class='bx'></i></button>
                 </div>
             </form>
             <input type="checkbox" id="switch-mode" hidden>
@@ -178,122 +173,67 @@ if (isset($_GET['code'])) {
 
         <!-- display all content in-->
         <main>
-            <div>
-                <?php
-                $provider_email = $_SESSION['provider_email'];
-                include '../connection.php';
-                try {
-                    $query = $pdo->prepare("SELECT users_id FROM users WHERE email = :email");
-                    $query->execute(['email' => $provider_email]);
-                    $user = $query->fetch(PDO::FETCH_ASSOC);
-                    if ($user) {
-                        $users_id = $user['users_id'];
-                    } else {
-                        echo "User not found.";
-                        exit();
-                    }
-                } catch (PDOException $e) {
-                    echo "Database error: " . $e->getMessage();
-                    exit();
-                }
+     
+        <div class="table-data">
 
-                $progress = 0;
-                $sql = "SELECT 1 FROM users WHERE users_id = :users_id";
-                $stmt = $pdo->prepare($sql);
-                $stmt->bindParam(':users_id', $users_id, PDO::PARAM_INT);
-                $stmt->execute();
-                if ($stmt->rowCount() > 0) {
-                    $progress += 33;
-                }
+			  <h1 style="text-align:center;font-family:'Michroma', sans-serif;">Welcome to Job Provider Dashboard</h1>
+			 
+              <hr style="margin: 20px auto;border: 0;height: 1px;width: 50%;background: #EA60A7; ">
+    </div>
+    </main>
+              <main>
+         
 
-                $sql = "SELECT mothers_name, fathers_name, telephone, province, district, sector, cell, village, salary, bio, date_of_birth, ID, created_at FROM job_seeker WHERE users_id = :users_id";
-                $stmt = $pdo->prepare($sql);
-                $stmt->bindParam(':users_id', $users_id, PDO::PARAM_INT);
-                $stmt->execute();
-                if ($stmt->rowCount() > 0) {
-                    $result = $stmt->fetch(PDO::FETCH_ASSOC);
-                    $filledFields = 0;
-                    $totalFields = 12;
-
-                    if (!empty($result['mothers_name'])) { $filledFields++; }
-                    if (!empty($result['fathers_name'])) { $filledFields++; }
-                    if (!empty($result['telephone'])) { $filledFields++; }
-                    if (!empty($result['province'])) { $filledFields++; }
-                    if (!empty($result['district'])) { $filledFields++; }
-                    if (!empty($result['sector'])) { $filledFields++; }
-                    if (!empty($result['cell'])) { $filledFields++; }
-                    if (!empty($result['village'])) { $filledFields++; }
-                    if (!empty($result['salary'])) { $filledFields++; }
-                    if (!empty($result['bio'])) { $filledFields++; }
-                    if (!empty($result['date_of_birth'])) { $filledFields++; }
-                    if (!empty($result['ID'])) { $filledFields++; }
-
-                    $progress += (33 / $totalFields) * $filledFields;
-                    $created_at = new DateTime($result['created_at']);
-                    $now = new DateTime();
-                    $interval = $now->diff($created_at);
-                    if ($interval->days > 15) {
-                        $progress += 12;
-                    }
-                }
-                $sql = "SELECT job_seeker_id FROM job_seeker WHERE users_id = :users_id";
-                $stmt = $pdo->prepare($sql);
-                $stmt->bindParam(':users_id', $users_id, PDO::PARAM_INT);
-                $stmt->execute();
-                if ($stmt->rowCount() > 0) {
-                    $result = $stmt->fetch(PDO::FETCH_ASSOC);
-                    $job_seeker_id = $result['job_seeker_id'];
-                    $sql = "SELECT 1 FROM hired_seekers WHERE job_seeker_id = :job_seeker_id";
+			<ul class="box-info">
+                <li class="job-seeker-count">
+                    <i class='bx bxs-group'></i>
+                    <?php
+                    include'../connection.php';
+                    $sql = "SELECT COUNT(job_provider_id) AS total FROM job_provider";
                     $stmt = $pdo->prepare($sql);
-                    $stmt->bindParam(':job_seeker_id', $job_seeker_id, PDO::PARAM_INT);
                     $stmt->execute();
-                    if ($stmt->rowCount() > 0) {
-                        $progress = 100; 
-                    }
-                }
-                ?>
+                    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                    ?>
+                    <span class="text">
+                        <h3><?php echo $result['total']?></h3>
+                        <p> Providers</p>
+                    </span>
+                </li>
+				<li>
+					<i class='bx bxs-calendar-check' ></i>
+                    <?php
+                    include'../connection.php';
+                    $sql = "SELECT COUNT(job_seeker_id) AS total FROM job_seeker";
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->execute();
+                    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                    ?>
+					<span class="text">
+						<h3><?php echo $result['total']?></h3>
+						<p>Seekers</p>
+					</span>
+				</li>
+				<li>
+					<i class='bx bxs-group' ></i>
+                    <?php
+                    include'../connection.php';
+                    $sql = "SELECT COUNT(hired_id) AS total FROM hired_seekers";
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->execute();
+                    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                    ?>
+					<span class="text">
+						<h3><?php echo $result['total']?></h3>
+						<p>Employed</p>
+					</span>
+				</li>
+				
+			</ul><br>
 
-                <!DOCTYPE html>
-                <html>
-                <head>
-                    <title>Application Progress</title>
-                    <style>
-                        .progress {
-                            width: 400px;
-                            border: 1px solid #ccc;
-                            border-radius: 5px;
-                            overflow: hidden;
-                        }
-                        .progress-bar {
-                            width: <?php echo $progress; ?>%;
-                            background-color: #4CAF50;
-                            color: white;
-                            text-align: center;
-                            padding: 7px 0;
-                            box-sizing: border-box;
-                        }
-                    </style>
-                </head>
-                <body>
-                <div class="form-container">
-                    <h2>Job Application Progress</h2>
-                    <div class="progress">
-                        <div class="progress-bar">
-                            <?php echo $progress ? $progress . "%" : "Progress not available"; ?>
-                        </div>
-                    </div>
-                </div>
-                </body>
-                </html>
-            </div>
 
-            <!-- alert -->
-            <script>
-                window.onload = function() {
-                    alert("Remember you have to complete your profile: go to profile and choose Edit profile.");
-                };
-            </script>
-        </main>
+			
+		</main><main>
+    </main>
     </section>
 
     <script src="../dashboard/script.js"></script>
