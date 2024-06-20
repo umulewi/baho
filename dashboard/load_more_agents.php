@@ -60,7 +60,7 @@ $i=1;
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     echo "<tr>";
     echo "<td>" . $i . "</td>";
-    echo "<td>" . $row['full_name'] . "</td>";
+    $html .= '<td>' . $row['last_name'] ." " .  $row['last_name'] . ' </td>';
     echo "<td>" . $row['province'] . "</td>";
     echo "<td>" . $row['district'] . "</td>";
     echo "<td>";

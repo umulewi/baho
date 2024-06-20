@@ -60,8 +60,10 @@ $i=1;
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     $html .= '<tr>';
     $html .= '<td>' . $i . '</td>';
-   
-    $html .= '<td>' . $row['full_name'] . '</td>';
+
+    
+    $html .= '<td>' . $row['last_name'] ." " .  $row['last_name'] . ' </td>';
+
     $html .= '<td>' . $row['salary'] . ' RW</td>';
     $html .= '<td>' . $row['bio'] . '</td>';
     $html .= '<td>' . $row['province'] . '</td>';

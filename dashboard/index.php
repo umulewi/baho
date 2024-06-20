@@ -384,7 +384,7 @@ if (!isset($_SESSION['user_email'])) {
                 
                 <tr>
                             <td><?php echo $i; ?></td>
-                            <td><?php echo $row['full_name']; ?></td>
+                            <td><?php echo $row['first_name']; ?> <?php echo $row['first_name']; ?></td>
                             <td><?php echo $row['salary']; ?> RW</td>
                             <td><?php echo $row['bio']; ?></td>
                             <td><?php echo $row['province']; ?></td>

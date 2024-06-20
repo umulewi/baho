@@ -1,10 +1,10 @@
 <?php
 session_start();
-if (!isset($_SESSION['user_email'])) {
+if (!isset($_SESSION['provider_email'])) {
     header("location: ../index.php");
     exit();
 }
-$user_email = $_SESSION['user_email']; 
+$user_email = $_SESSION['provider_email']; 
 
 ?>
 <?php

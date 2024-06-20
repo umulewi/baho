@@ -25,7 +25,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 <tr data-id="<?php echo $row['job_provider_id']; ?>">
 
 <td><?php echo $i; ?></td>
-    <td><?php echo $row['full_name']; ?></td>
+    <td><?php echo $row['first_name']; ?> <?php echo $row['last_name']; ?></td>
     <td><?php echo $row['province']; ?></td>
     <td><?php echo $row['district']; ?></td>
     <td style="width: -56rem">
