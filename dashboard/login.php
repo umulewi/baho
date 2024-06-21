@@ -14,7 +14,7 @@ if (isset($_POST['login'])) {
 
   if ($user) {
     session_start();
-    $_SESSION['user_email'] = $email; 
+    $_SESSION['admin_email'] = $email; 
 
     $role_name = $user['role_name'];
     switch ($role_name) {

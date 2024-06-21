@@ -47,6 +47,10 @@ include 'dashboard.php';
         .form-container input[type="email"],
         .form-container input[type="tel"],
         .form-container input[type="number"],
+        .form-container input[type="file"],
+
+        
+
         textarea,
 
         select {
@@ -199,18 +203,26 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
                 <option value="200000-299000" <?php echo($row['salary']=='200000-299000') ?  'selected': ''; ?>>200000RWF-299000RWF</option>
             </select>
             </div>
+
+            <div>
+                <label for="dob">telephone:</label>
+                <input type="number"  name="telephone" id="telephone" value="<?php echo htmlspecialchars($row['telephone']); ?>" required>
+            </div>
+            <div class="form-row">
             <div>
                     <label for="id">ID Card:</label>
                     <input type="file" name="id" accept="image/*">
                 </div>
+             <div>   
+                <label for="bio" class="">Bio:</label>
+                <textarea style="height:43px;" id="bio" name="bio" required><?php echo ($row['bio']); ?></textarea>
+            </div>
+        </div>
         
         
         </div>
         
-        <div>
-            <label for="bio" class="">Bio:</label>
-            <textarea style="height:133px;" id="bio" name="bio" required><?php echo ($row['bio']); ?></textarea>
-        </div>
+        
         <div>
             <input type="submit" name="update" value="Update" style="background-color: teal;">
         </div>    
@@ -233,6 +245,7 @@ include '../connection.php';
 if (isset($_POST['update'])) {
     $job_seeker_id = $_GET['job_seeker_id'];
     $first_name = htmlspecialchars($_POST['first_name']);
+    $telephone = htmlspecialchars($_POST['telephone']);
     $last_name = htmlspecialchars($_POST['last_name']);
     $full_name = $first_name . ' ' . $last_name;
     $gender = $_POST['gender'];
@@ -273,6 +286,7 @@ if (isset($_POST['update'])) {
                 SET fathers_name = :fathers_name,
                     mothers_name = :mothers_name,
                     province = :province,
+                    telephone=:telephone,
                     district = :district,
                     salary = :salary,
                     bio = :bio,
@@ -292,6 +306,7 @@ if (isset($_POST['update'])) {
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':fathers_name', $fathers_name);
         $stmt->bindParam(':mothers_name', $mothers_name);
+        $stmt->bindParam(':telephone', $telephone);
         $stmt->bindParam(':province', $province);
         $stmt->bindParam(':district', $district);
         $stmt->bindParam(':sector', $sector);
@@ -325,7 +340,13 @@ if (isset($_POST['update'])) {
         $stmt2->execute();
 
         if ($stmt->rowCount() > 0 || $stmt2->rowCount() > 0) {
-            echo "<script>alert('Updated');</script>";
+           
+
+            echo "<script>
+            alert('well updated');
+            window.location.href = window.location.href; 
+            </script>";
+
           } else {
             echo "<script>alert('Update atleast one record');</script>";
           }

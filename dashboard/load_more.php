@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['user_email'])) {
+if (!isset($_SESSION['admin_email'])) {
   exit("Session Expired");
 }
 
@@ -10,7 +10,7 @@ include '../connection.php';
 $lastRow = $_GET['lastRow'];
 
 $stmt = $pdo->prepare("SELECT * FROM job_seeker INNER JOIN users ON users.users_id = job_seeker.users_id WHERE created_by = ? AND job_seeker.job_seeker_id > ? ORDER BY created_at desc");
-$stmt->execute([$_SESSION['user_email'], $lastRow]);
+$stmt->execute([$_SESSION['admin_email'], $lastRow]);
 
 $newRows = "";
 $i = (int)$lastRow + 1; // Assuming numbering starts from 1

@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (!isset($_SESSION['user_email'])) {
+if (!isset($_SESSION['admin_email'])) {
     header("location:login.php");
     exit();
 }
@@ -229,7 +229,7 @@ if (isset($_POST["register"])) {
     $village = $_POST['village'];
     $date_of_birth = $_POST['date_of_birth'];
 
-    $created_by = $_SESSION['user_email'];
+    $created_by = $_SESSION['admin_email'];
     $email = $_POST['email'];
     $password = $_POST['password'];
     $telephone = $_POST['telephone'];
@@ -237,7 +237,7 @@ if (isset($_POST["register"])) {
     $bio = $_POST['bio'];
     $salary = $_POST['salary'];
     $role_id = $_GET['role_id'];
-    $created_by=$_SESSION['user_email'];
+    $created_by=$_SESSION['admin_email'];
     
 
     if (isset($_FILES['id']) && $_FILES['id']['error'] == 0) {

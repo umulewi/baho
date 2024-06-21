@@ -1,13 +1,13 @@
 <?php
 session_start();
-if (!isset($_SESSION['user_email'])) {
+if (!isset($_SESSION['admin_email'])) {
     header("location:login.php");
     exit();
 }
 include('../connection.php');
 
 // Retrieve the email from the session
-$email = $_SESSION['user_email'];
+$email = $_SESSION['admin_email'];
 $stmt = $pdo->prepare("SELECT users_id FROM users WHERE email = ?");
 $stmt->execute([$email]); 
 $user_id = $stmt->fetchColumn(); 
