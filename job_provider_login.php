@@ -44,29 +44,42 @@ if (isset($_POST['user_signup'])) {
     $password = $_POST['password'];
     $verification_code = md5(uniqid(rand(), true));
 
-    // Insert user details into the database
-    $stmt = $pdo->prepare("INSERT INTO users (role_id, email, first_name, last_name, password, verification_code, verifiedEmail) VALUES (:role_id, :email, :first_name, :last_name, :password, :verification_code, 0)");
+    // Check if email already exists
+    $stmt = $pdo->prepare("SELECT * FROM users WHERE email = :email");
     $stmt->bindParam(':email', $email);
-    $stmt->bindParam(':first_name', $first_name);
-    $stmt->bindParam(':last_name', $last_name);
-    $stmt->bindParam(':password', $password);
-    $stmt->bindParam(':role_id', $role_id);
-    $stmt->bindParam(':verification_code', $verification_code);
     $stmt->execute();
-    $users_id = $pdo->lastInsertId();
+    $existing_user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    // Insert into job_provider table
-  
+    if ($existing_user) {
+        echo "<script>alert('This email already has an account. Please log in or use a different email.');</script>";
+        
+        
+    } else {
+        // Insert user details into the database
+        $stmt = $pdo->prepare("INSERT INTO users (role_id, email, first_name, last_name, password, verification_code, verifiedEmail) VALUES (:role_id, :email, :first_name, :last_name, :password, :verification_code, 0)");
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':first_name', $first_name);
+        $stmt->bindParam(':last_name', $last_name);
+        $stmt->bindParam(':password', $password);
+        $stmt->bindParam(':role_id', $role_id);
+        $stmt->bindParam(':verification_code', $verification_code);
+        $stmt->execute();
+        $users_id = $pdo->lastInsertId();
+
+        // Insert into job_provider table
         $stmt = $pdo->prepare("INSERT INTO job_provider (users_id, role_id) VALUES (:users_id, :role_id)");
         $stmt->bindParam(':users_id', $users_id);
         $stmt->bindParam(':role_id', $role_id);
         $stmt->execute();
-  
 
-    // Send verification email
-    sendVerificationEmail($email, $verification_code);
-    echo "<script>alert('account created!Please verify your email');</script>";
-
+        // Send verification email
+        sendVerificationEmail($email, $verification_code);
+       
+        echo "<script>
+        alert('Account created! Please verify your email.');
+        window.location.href = window.location.href; 
+        </script>";
+    }
 }
 
 if (isset($_POST['login'])) {
@@ -88,14 +101,19 @@ if (isset($_POST['login'])) {
                     header("Location: job_provider_login/index.php");
                     exit();
                 default:
-                    header("Location: default_dashboard.php");
+                echo "<script>
+                alert('You have registered as a Worker, but you are accessing the wrong side');
+                window.location.href = window.location.href; </script>";
                     exit();
             }
         } else {
             echo "<script>alert('Please verify your email before logging in.');</script>";
         }
     } else {
-        echo "<script>alert('Incorrect email or password');</script>";
+        echo "<script>
+        alert('Incorrect email or password');
+        window.location.href = window.location.href; 
+        </script>";
     }
 }
 
@@ -111,10 +129,10 @@ if (isset($_GET['code'])) {
         $stmt = $pdo->prepare("UPDATE users SET verifiedEmail = 1 WHERE verification_code = :verification_code");
         $stmt->bindParam(':verification_code', $verification_code);
         $stmt->execute();
-        echo "<script>alert('Email verified succcessfuly!You can now log in');</script>";
+        echo "<script>alert('Email verified successfully! You can now log in.');</script>";
       
     } else {
-        echo "<script>alert('Invalid cerification code');</script>";
+        echo "<script>alert('Invalid verification code');</script>";
         
     }
 }
@@ -122,7 +140,6 @@ if (isset($_GET['code'])) {
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -350,6 +367,7 @@ if (isset($_GET['code'])) {
     </style>
 </head>
 
+
 <body>
     <div class="login-container">
         <div class="login-image"></div>
@@ -371,10 +389,8 @@ if (isset($_GET['code'])) {
                                 header("Location: job_provider_login/index.php");
                             } else {
                                 echo "<a href='" . $client->createAuthUrl() . "' class='btn-text'>Sign Up with Google</a>";
-
                             }
-                            ?>
-                        
+                        ?>
                     </button>
                 </form>
             </div>
@@ -384,7 +400,6 @@ if (isset($_GET['code'])) {
                     <input type="email" name="email" placeholder="Email" required="">
                     <input type="password" name="password" placeholder="Password" required="">
                     <button type="submit" name="login">Login</button>
-                    
                     <button class="google-login-btn" name="google-login-btn">
                         <img src="img/google.png" alt="Google Icon" class="google-icon">
                         <?php
@@ -393,10 +408,8 @@ if (isset($_GET['code'])) {
                                 header("Location: job_provider_login/index.php");
                             } else {
                                 echo "<a href='" . $client->createAuthUrl() . "' class='btn-text'>Login with Google</a>";
-
                             }
-                            ?>
-                        
+                        ?>
                     </button>
                 </form>
             </div>
