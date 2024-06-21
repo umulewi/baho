@@ -123,6 +123,20 @@
 
                 </ul>
             </li>
+
+            <li>
+                <a href="#" class="dropdown-toggle" data-nav="top">
+                    <i class='bx bxs-message-dots' ></i>
+                    <span class="text">jobs</span>
+                    <i class='bx bx-chevron-down dropdown-icon'></i>
+                </a>
+                
+                <!-- Dropdown Menu -->
+                <ul class="dropdown-menu">
+                    <li><a href="view_jobs.php">View Jobs</a></li>
+                    <li><a href="register_job.php">Register New Jobs</a></li>
+                </ul>
+            </li>
             
             
         </ul>
