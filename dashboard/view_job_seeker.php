@@ -118,7 +118,7 @@ if(isset($_GET['search']) && !empty($_GET['search'])) {
     $stmt->execute(['search' => "%$search%"]);
 } else {
     // If no search query, fetch all records
-    $stmt = $pdo->query("SELECT * FROM job_seeker INNER JOIN users ON users.users_id = job_seeker.users_id");
+    $stmt = $pdo->query("SELECT * FROM job_seeker INNER JOIN users ON users.users_id = job_seeker.users_id order by users.users_id desc");
 }
 $i = 1;
 ?>

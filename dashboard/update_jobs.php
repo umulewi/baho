@@ -99,7 +99,7 @@ if (isset($_POST['update'])) {
     
     if (isset($_FILES['logo']) && $_FILES['logo']['error'] == 0) {
         $file = $_FILES['logo'];
-        $upload_dir = '../uploads/';
+        $upload_dir = './logo/';
         $file_name = basename($file['name']);
         $target_file = $upload_dir . $file_name;
 

@@ -346,30 +346,35 @@ try {
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         ?>
         <div class="position">
-            <img src="sanson.jpg" alt="Company Logo" class="company-logo">
-            <div class="position-details">
-                <!-- <h3>Operations Manager</h3> -->
-                 <h3><?php echo $row['job_title'] ?></h3>
+        <?php
+        $folderPath = '../dashboard';
+        $logoFilename = $row['logo'];
+        $uniqueLogoPath = $folderPath . $logoFilename . '?' . $row['job_id']; // or . '?' . time() for a timestamp
+        echo '<td><img class="company-logo" src="' . htmlspecialchars($uniqueLogoPath) . '" alt="Job Logo" style="width: 50px; height: 50px;"></td>';
+        ?>
+        
+        
+
+        <div class="position-details">
+            <h3><?php echo $row['job_title'] ?></h3>
                 <p>
-                    <?php echo  $row['description']?></p>
-                    <!-- <button class="apply-button">Apply Now</button>
-                    <input type="submit" name="pply" value="Apply" class="apply-button"> -->
-                    <form action="" method="post">
-                        <input type="hidden" name="job_id" value="<?php echo $row['job_id']; ?>">
-                        <input type="submit" name="apply" value="Apply"  class="apply-button">
-                    </form>
-                
+                    <?php echo  $row['job_description']?> | Published on <?php echo  $row['published_date']?> | Deadline <?php echo  $row['deadline_date']?>
+                </p>
+                <form action="" method="post">
+                    <input type="hidden" name="job_id" value="<?php echo $row['job_id']; ?>">
+                    <input type="submit" name="apply" value="Apply"  class="apply-button">
+                </form>
             </div>
         </div>
-        
         <?php }?>
-        <!-- Repeat the above .position div for more job listings -->
     </div>
 
     
 </div>
 
 </main>
+
+
 
 </html>
 <?php
@@ -419,3 +424,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['apply'])) {
     }
 }
 ?>
+
+
+

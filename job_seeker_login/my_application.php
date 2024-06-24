@@ -100,6 +100,13 @@ if ($stmt->rowCount() > 0) {
             padding: 7px 0;
             box-sizing: border-box;
         }
+        .company-logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-right: 20px;
+        }
+
         .row {
             display: flex;
             flex-wrap: wrap;
@@ -131,54 +138,83 @@ if ($stmt->rowCount() > 0) {
 </head>
 <body>
 <main>
+
+    
+<h1 style="text-align:center;font-family:'Michroma', sans-serif;">Application Status & Benefits of Kozi Caretakers</h1>
+    
+<hr style="margin: 20px auto;border: 0;height: 1px;width: 50%;background: #EA60A7; ">
     <div class="row">
-        <div class="other-div1">
-            <div class="table-data">
-                <h2 style="color:teal">Welcome to Kozi Caretaker!</h2>
-                <ul style="margin-left:2rem">
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="15px" height="em" viewBox="0 0 24 24"><path fill="currentColor" d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10m0-6a4 4 0 1 0 0-8a4 4 0 0 0 0 8"/></svg>Diverse Job Listings: From housekeeping to specialized services, find the perfect job that matches your expertise.</li><br>
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="15px" height="em" viewBox="0 0 24 24"><path fill="currentColor" d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10m0-6a4 4 0 1 0 0-8a4 4 0 0 0 0 8"/></svg>Skill Development: Enhance your skills with our training programs and workshops.</li><br>
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="15px" height="em" viewBox="0 0 24 24"><path fill="currentColor" d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10m0-6a4 4 0 1 0 0-8a4 4 0 0 0 0 8"/></svg>Supportive Community: Connect with other job seekers and share experiences and advice.</li><br>
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="15px" height="em" viewBox="0 0 24 24"><path fill="currentColor" d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10m0-6a4 4 0 1 0 0-8a4 4 0 0 0 0 8"/></svg>Personalized Recommendations: Get job suggestions based on your profile and preferences.</li><br>
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="15px" height="em" viewBox="0 0 24 24"><path fill="currentColor" d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10m0-6a4 4 0 1 0 0-8a4 4 0 0 0 0 8"/></svg>Exclusive Opportunities: Access job listings that are only available to our members.</li>
-                </ul>
-                <p>Thank you for choosing Kozi Caretakers. Together, we're transforming homes and empowering lives. Start exploring opportunities and take the next step in your career today!</p>
-            </div>
+        <div class="other-div3">
+           
+                <h2 style="color:teal">Benefits of Kozi Caretakers
+                </h2>
+                <ul style="margin-left:"><br>
+                    <li style="text-align: justify;">Wide Range of Opportunities: Discover diverse job listings tailored to your skills, spanning from housekeeping to specialized services.
+                    </li><br>
+                    <li style="text-align: justify;">Continuous Skill Enhancement: Engage in our comprehensive training programs and workshops to sharpen your professional skills.</li><br>
+                    <li style="text-align: justify;">Community Support: Connect with a supportive community of fellow job seekers to share experiences and gain valuable advice.</li><br>
+                    <li style="text-align: justify;">Exclusive Access: Gain access to exclusive job listings available only to Kozi Caretaker members, enhancing your employment opportunities.</li><br>
+                    <li style="text-align: justify;">Thank you for choosing Kozi Caretakers. Together, we're transforming homes and empowering lives.</li><br>
+                    
+            
         </div>
-        <div class="other-div2">
-            <div class="table-data">
+        <div class="other-div3">
+           
                 <h2 style="color:teal">Application Status Update</h2>
-            </div>
+            
             <div class="progress">
                 <div class="progress-bar">
                     <?php echo $progress ? $progress . "%" : "Progress not available"; ?>
                 </div>
             </div>
+            <strong> Step 1: Initial Sign-up:</strong>
+Start your journey with us! Your application status begins at 36%. Sign up and create your profile.<br>
+
+<strong> Step 2: Complete Your Profile:</strong>
+Update your information and complete your profile details to increase your status to 66%. Provide accurate information to enhance your job opportunities.<br>
+
+<strong>Step 3: Get Recruited:</strong>
+Congratulations! Once recruited, your application status reaches 100%. You are now part of our team and ready to begin your new role.<br>
+
+<strong>Step 4: Start Working ðŸ’¼</strong>
+Begin working and making a difference! Your journey with us starts here. Dive into your responsibilities and contribute to our community.<br><br>
+
+<span style="font-size: 14px;">Track your progress and take the next step in your career journey with us!</span></p>
+    
         </div>
     </div>
     <br><br>
     <h2 style="color:teal">Open positions:</h2><br>
+
     <div class="row">
         <?php
         $stmt = $pdo->query("SELECT * FROM jobs");
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         ?>
+        
             <div class="other-div3">
                 <div>
-                    <div>District Sales TL <?php echo $row['job_id']; ?></div>
-                    <div><?php echo $row['job_title']; ?> | <?php echo $row['location']; ?></div>
-                    <div><?php echo $row['description']; ?></div>
+                    <?php
+                    $folderPath = '../dashboard';
+                    $logoFilename = $row['logo'];
+                    $uniqueLogoPath = $folderPath . $logoFilename . '?' . $row['job_id']; 
+                    echo '<td><img class="company-logo" src="' . htmlspecialchars($uniqueLogoPath) . '" alt="Job Logo" style="width: 50px; height: 50px;"></td>';
+                    ?>
+                    <h3><?php echo $row['job_title'] ?></h3>
+                    <p>
+                        <?php echo  $row['job_description']?> | Published on <?php echo  $row['published_date']?> | Deadline <?php echo  $row['deadline_date']?>
+                    </p>
                     <form action="" method="post">
                         <input type="hidden" name="job_id" value="<?php echo $row['job_id']; ?>">
                         <input type="submit" name="apply" value="Apply" style="width: 30%; padding: 10px; border: none; border-radius: 5px; background-color: teal; font-size: 16px; cursor: pointer;">
                     </form>
                 </div>
             </div>
-        <?php
-        }
-        ?>
-    </div>
-</main>
+            <?php
+            }
+            ?>
+            </div>
+        </main>
 
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['apply'])) {
@@ -229,3 +265,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['apply'])) {
 ?>
 </body>
 </html>
+
+

@@ -233,8 +233,8 @@ if (!isset($_SESSION['admin_email'])) {
                 
                 <!-- Dropdown Menu -->
                 <ul class="dropdown-menu">
-                    <li><a href="view_job_provider.php">View Jobs</a></li>
-                    <li><a href="register_job_provider.php?role_id=<?php echo $row['role_id'];?>">Register New Jobs</a></li>
+                    <li><a href="view_jobs.php">View Jobs</a></li>
+                    <li><a href="register_job.php">Register New Jobs</a></li>
                 </ul>
             </li>
         </ul>
@@ -350,7 +350,7 @@ if (!isset($_SESSION['admin_email'])) {
                     include'../connection.php';
                     $i = 1;
                    
-                    $stmt = $pdo->query("SELECT * FROM job_provider INNER JOIN users ON users.users_id = job_provider.users_id ORDER BY job_provider_id DESC LIMIT 2");
+                    $stmt = $pdo->query("SELECT * FROM job_provider INNER JOIN users ON users.users_id = job_provider.users_id ORDER BY users.users_id DESC LIMIT 2");
 
                     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     ?>
@@ -394,7 +394,7 @@ if (!isset($_SESSION['admin_email'])) {
          
                 <?php 
                 $i = 1;
-                $stmt = $pdo->query("SELECT * FROM job_seeker INNER JOIN users ON users.users_id = job_seeker.users_id order by job_seeker_id desc LIMIT 2");
+                $stmt = $pdo->query("SELECT * FROM job_seeker INNER JOIN users ON users.users_id = job_seeker.users_id order by users.users_id desc LIMIT 2");
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 ?>
                 

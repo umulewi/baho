@@ -189,7 +189,7 @@ include 'dashboard.php';
             </div>
             
             <div>
-                <input type="submit" name="register" value="Register" stayle="background-color:red">
+                <input type="submit" name="register" value="Register">
             </div>
         </form>
     </div>

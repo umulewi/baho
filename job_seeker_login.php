@@ -124,7 +124,7 @@ if (isset($_GET['code'])) {
         $stmt = $pdo->prepare("UPDATE users SET verifiedEmail = 1 WHERE verification_code = :verification_code");
         $stmt->bindParam(':verification_code', $verification_code);
         $stmt->execute();
-        echo "<script>alert('Email verified successfully! You can now log in.');</script>";
+        
     } else {
         echo "<script>alert('Invalid verification code');</script>";
     }

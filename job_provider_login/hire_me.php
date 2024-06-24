@@ -224,8 +224,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $mail->setFrom('your_email@gmail.com');
                 $mail->addAddress($email);
                 $mail->isHTML(false);
-                $mail->Subject = 'Confirmation';
-                $mail->Body = 'You have been hired.';
+                $mail->Subject = 'Congratulations!';
+                $mail->Body = 'Dear,<br>I am delighted to inform you that after a thorough review of your application and interview, we have selected you for the position.<br>
+                Your skills align perfectly with what we are looking for, and we are excited about the potential contributions you can bring to our team.<br>
+                Here are the next steps to formalize your employment<br>
+                Trainings<br>
+                Interview';
                 $mail->send();
                 // echo "Email sent successfully!";
             } catch (Exception $e) {
