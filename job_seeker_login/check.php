@@ -5,8 +5,12 @@ if (!isset($_SESSION['user_email'])) {
     exit();
 }
 ?>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Seeker Dashboard</title>
     <style>
         .body-container {
             display: flex;
@@ -19,7 +23,7 @@ if (!isset($_SESSION['user_email'])) {
             overflow: hidden;
             background: white;
             transition: transform 0.3s;
-            gap: 20px;
+            gap: 20px; /* Added gap between columns */
         }
 
         .description {
@@ -65,7 +69,7 @@ if (!isset($_SESSION['user_email'])) {
             justify-content: center;
             align-items: center;
             overflow: hidden;
-            padding: 40px;
+            padding: 40px; /* Added padding to match the description section */
         }
 
         .profile-picture {
@@ -148,7 +152,9 @@ if (!isset($_SESSION['user_email'])) {
                 max-width: 100%;
                 width: auto;
             }
+        }
 
+        @media (max-width: 768px) {
             .apply-container {
                 width: 90%;
             }
@@ -191,6 +197,16 @@ if (!isset($_SESSION['user_email'])) {
                 width: 100%;
                 padding: 10px 0;
             }
+            .custom-alert-box {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin-left:3rem;
+            max-width: 100px;
+            width: 100%;
+        }
         }
 
         .custom-alert-overlay {
@@ -212,23 +228,21 @@ if (!isset($_SESSION['user_email'])) {
             border-radius: 10px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             text-align: center;
-            max-width: 400px;
+            max-width: 300px;
             width: 100%;
         }
 
-        .custom-alert-button {
-            background-color: #EA60A7;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            margin-top: 10px;
+        .custom-alert-message {
+            margin-bottom: 20px;
         }
 
-        .custom-alert-button:hover {
-            background-color: #503141;
+        .custom-alert-button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -238,8 +252,8 @@ if (!isset($_SESSION['user_email'])) {
 
 <div class="form-container">
     <main>
-        <h1 style="text-align:center;font-family:'Michroma', sans-serif;">Welcome to Job Seeker Dashboard</h1>
-        <hr style="margin: 20px auto;border: 0;height: 1px;width: 50%;background: #EA60A7; ">
+        <h1 style="text-align:center; font-family:'Michroma', sans-serif;">Welcome to Job Seeker Dashboard</h1>
+        <hr style="margin: 20px auto; border: 0; height: 1px; width: 50%; background: #EA60A7;">
         <ul class="box-info">
             <li>
                 <i class='bx bxs-group'></i>
@@ -271,6 +285,7 @@ if (!isset($_SESSION['user_email'])) {
             </li>
         </ul>
     </main>
+
     <main>
         <div class="body-container">
             <div class="description">
@@ -278,7 +293,7 @@ if (!isset($_SESSION['user_email'])) {
                 <p>Welcome to your profile page! Here, you can view and update your personal 
                 information. If your profile is not complete, please check the bio section 
                 below to add more details and help potential employers learn more about you.</p><br>
-                <h3 style="font-family:'Michroma', sans-serif;size:12px">update your bio:</h3>
+                <h3 style="font-family:'Michroma', sans-serif; size:12px">Update your bio:</h3>
                 <p><br>
                     <?php
                     include '../connection.php';
@@ -316,30 +331,28 @@ if (!isset($_SESSION['user_email'])) {
         <div class="apply-container">
             <h2 style="font-family:'Michroma', sans-serif; text-align: center;">Open Positions</h2>
             <?php
-        $stmt = $pdo->query("SELECT * FROM jobs");
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        ?>
-        <div class="position">
-        <?php
-        $folderPath = '../dashboard';
-        $logoFilename = $row['logo'];
-        $uniqueLogoPath = $folderPath . $logoFilename . '?' . $row['job_id'];
-        echo '<td><img class="company-logo" src="' . htmlspecialchars($uniqueLogoPath) . '" alt="Job Logo" style="width: 50px; height: 50px;"></td>';
-        ?>
-        <div class="position-details">
-            <h3><?php echo $row['job_title'] ?></h3>
-                <p>
-                    <?php echo  $row['job_description']?> | Published on <?php echo  $row['published_date']?> | Deadline <?php echo  $row['deadline_date']?>
-                </p>
-                <form action="" method="post">
-                    <input type="hidden" name="job_id" value="<?php echo $row['job_id']; ?>">
-                    <input type="submit" name="apply" value="Apply"  class="apply-button">
-                </form>
+            $stmt = $pdo->query("SELECT * FROM jobs");
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            ?>
+            <div class="position">
+                <?php
+                $folderPath = '../dashboard';
+                $logoFilename = $row['logo'];
+                $uniqueLogoPath = $folderPath . $logoFilename . '?' . $row['job_id'];
+                echo '<td><img class="company-logo" src="' . htmlspecialchars($uniqueLogoPath) . '" alt="Job Logo" style="width: 50px; height: 50px;"></td>';
+                ?>
+                <div class="position-details">
+                    <h3><?php echo $row['job_title'] ?></h3>
+                    <p>
+                        <?php echo  $row['job_description']?> | Published on <?php echo  $row['published_date']?> | Deadline <?php echo  $row['deadline_date']?>
+                    </p>
+                    <form action="" method="post">
+                        <input type="hidden" name="job_id" value="<?php echo $row['job_id']; ?>">
+                        <input type="submit" name="apply" value="Apply" class="apply-button">
+                    </form>
+                </div>
             </div>
-        </div>
-        <?php }?>
-
-
+            <?php }?>
         </div>
     </main>
 </div>
@@ -363,9 +376,6 @@ if (!isset($_SESSION['user_email'])) {
     }
 </script>
 
-</body>
-</html>
-
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['apply'])) {
     include '../connection.php';
@@ -378,27 +388,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['apply'])) {
         $user = $query->fetch(PDO::FETCH_ASSOC);
         if ($user) {
             $users_id = $user['users_id'];
-            $query = $pdo->prepare("SELECT job_seeker_id FROM job_seeker WHERE users_id = :users_id");
+            $query = $pdo->prepare("SELECT job_seeker_id, payment FROM job_seeker WHERE users_id = :users_id");
             $query->execute(['users_id' => $users_id]);
             $result = $query->fetch(PDO::FETCH_ASSOC);
             if ($result) {
                 $job_seeker_id = $result['job_seeker_id'];
+                $payment_status = $result['payment'];
 
-                // Check if the user has already applied for this job
-                $checkQuery = $pdo->prepare("SELECT COUNT(*) FROM applied WHERE job_id = :job_id AND job_seeker_id = :job_seeker_id");
-                $checkQuery->execute(['job_id' => $job_id, 'job_seeker_id' => $job_seeker_id]);
-                $applicationCount = $checkQuery->fetchColumn();
+                if ($payment_status == 1) {
+                    // Check if the user has already applied for this job
+                    $checkQuery = $pdo->prepare("SELECT COUNT(*) FROM applied WHERE job_id = :job_id AND job_seeker_id = :job_seeker_id");
+                    $checkQuery->execute(['job_id' => $job_id, 'job_seeker_id' => $job_seeker_id]);
+                    $applicationCount = $checkQuery->fetchColumn();
 
-                if ($applicationCount == 0) {
-                    // Insert the application if the user has not applied for this job yet
-                    $sql = "INSERT INTO applied (job_id, job_seeker_id) VALUES (:job_id, :job_seeker_id)";
-                    $stmt = $pdo->prepare($sql);
-                    $stmt->bindParam(':job_id', $job_id, PDO::PARAM_INT);
-                    $stmt->bindParam(':job_seeker_id', $job_seeker_id, PDO::PARAM_INT);
-                    $stmt->execute();
-                    echo "<script>showCustomAlert('Application submitted successfully.');</script>";
+                    if ($applicationCount == 0) {
+                        // Insert the application if the user has not applied for this job yet
+                        $sql = "INSERT INTO applied (job_id, job_seeker_id) VALUES (:job_id, :job_seeker_id)";
+                        $stmt = $pdo->prepare($sql);
+                        $stmt->bindParam(':job_id', $job_id, PDO::PARAM_INT);
+                        $stmt->bindParam(':job_seeker_id', $job_seeker_id, PDO::PARAM_INT);
+                        $stmt->execute();
+                        echo "<script>showCustomAlert('Application submitted successfully.');</script>";
+                    } else {
+                        echo "<script>showCustomAlert('You have already applied for this job.');</script>";
+                    }
                 } else {
-                    echo "<script>showCustomAlert('You have already applied for this job.');</script>";
+                    echo "<script>showCustomAlert('You must pay registration fees before applying to  this job.');</script>";
                 }
             } else {
                 echo "<script>showCustomAlert('Job seeker not found.');</script>";
@@ -414,3 +429,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['apply'])) {
     }
 }
 ?>
+
+</body>
+</html>
