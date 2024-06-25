@@ -6,123 +6,48 @@ if (!isset($_SESSION['user_email'])) {
 }
 ?>
 <html>
-    <head>
-        <style>
-            
-.body-container {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    margin-left:5%;
-    max-width: 1000px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    border-radius: 10px;
-    overflow: hidden;
-    background: white;
-    transition: transform 0.3s;
-    gap: 20px; /* Added gap between columns */
-}
-
-.description {
-    flex: 1;
-    padding: 40px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin-top:-2%;
-}
-
-.description h2 {
-    font-size: 24px;
-    margin-bottom: 20px;
-    color: #333;
-    font-family:'Michroma', sans-serif;
-}
-
-.description p {
-    font-size: 16px;
-    margin-bottom: 20px;
-    color: #666;
-}
-
-.update-button {
-    background-color: #EA60A7;
-    color: white;
-    width:50%;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-   
-}
-
-.update-button:hover {
-    background-color: #503141;
-}
-
-.picture-container {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    padding: 40px; /* Added padding to match the description section */
-}
-
-.profile-picture {
-    width: 100%;
-    max-width: 400px;
-    border-radius: 10px;
-    transition: transform 0.3s ease-in-out;
-}
-
-.profile-picture:hover {
-    transform: scale(1.1);
-}
-.apply-container {
-            width: 80%;
-            max-width: 1200px;
-            background: white;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            border-radius: 10px;
-            padding: 20px;
-            margin-top: 20px;
-            margin-left:5%;
-        }
-.position {
+<head>
+    <style>
+        .body-container {
             display: flex;
             flex-direction: row;
-            align-items: center;
-            margin-bottom: 20px;
-            
+            width: 100%;
+            margin-left: 5%;
+            max-width: 1000px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+            background: white;
+            transition: transform 0.3s;
+            gap: 20px;
         }
 
-        .company-logo {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            margin-right: 20px;
-        }
-
-        .position-details {
+        .description {
             flex: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin-top: -2%;
         }
 
-        .position-details h3 {
-            margin: 0;
-            font-size: 20px;
+        .description h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
             color: #333;
+            font-family: 'Michroma', sans-serif;
         }
 
-        .position-details p {
-            margin: 5px 0 10px;
+        .description p {
+            font-size: 16px;
+            margin-bottom: 20px;
             color: #666;
         }
 
-        .apply-button {
+        .update-button {
             background-color: #EA60A7;
             color: white;
+            width: 50%;
             border: none;
             padding: 10px 20px;
             border-radius: 5px;
@@ -130,10 +55,31 @@ if (!isset($_SESSION['user_email'])) {
             transition: background-color 0.3s;
         }
 
-        .apply-button:hover {
+        .update-button:hover {
             background-color: #503141;
         }
-         .apply-container {
+
+        .picture-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            padding: 40px;
+        }
+
+        .profile-picture {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 10px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .profile-picture:hover {
+            transform: scale(1.1);
+        }
+
+        .apply-container {
             width: 80%;
             max-width: 1200px;
             background: white;
@@ -141,6 +87,7 @@ if (!isset($_SESSION['user_email'])) {
             border-radius: 10px;
             padding: 20px;
             margin-top: 20px;
+            margin-left: 5%;
         }
 
         .position {
@@ -148,12 +95,6 @@ if (!isset($_SESSION['user_email'])) {
             flex-direction: row;
             align-items: center;
             margin-bottom: 20px;
-            padding: 10px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-
-        .position:last-child {
-            border-bottom: none;
         }
 
         .company-logo {
@@ -171,7 +112,6 @@ if (!isset($_SESSION['user_email'])) {
             margin: 0;
             font-size: 20px;
             color: #333;
-            text-align:left;
         }
 
         .position-details p {
@@ -193,23 +133,22 @@ if (!isset($_SESSION['user_email'])) {
             background-color: #503141;
         }
 
-@media (max-width: 768px) {
-    .body-container {
-        flex-direction: column;
-    }
+        @media (max-width: 768px) {
+            .body-container {
+                flex-direction: column;
+            }
 
-    .description, .picture-container {
-        flex: none;
-        width: 100%;
-        padding: 20px;
-    }
+            .description, .picture-container {
+                flex: none;
+                width: 100%;
+                padding: 20px;
+            }
 
-    .profile-picture {
-        max-width: 100%;
-        width: auto;
-    }
-}
-@media (max-width: 768px) {
+            .profile-picture {
+                max-width: 100%;
+                width: auto;
+            }
+
             .apply-container {
                 width: 90%;
             }
@@ -253,13 +192,50 @@ if (!isset($_SESSION['user_email'])) {
                 padding: 10px 0;
             }
         }
-        </style>
-    </head>
 
-<?php
+        .custom-alert-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
 
-include 'dashboard.php';
-?>
+        .custom-alert-box {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .custom-alert-button {
+            background-color: #EA60A7;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+
+        .custom-alert-button:hover {
+            background-color: #503141;
+        }
+    </style>
+</head>
+<body>
+
+<?php include 'dashboard.php'; ?>
+
 <div class="form-container">
     <main>
         <h1 style="text-align:center;font-family:'Michroma', sans-serif;">Welcome to Job Seeker Dashboard</h1>
@@ -296,52 +272,50 @@ include 'dashboard.php';
         </ul>
     </main>
     <main>
-            <div class="body-container">
-        <div class="description">
-            <h2>Profile Information</h2>
-            <p>Welcome to your profile page! Here, you can view and update your personal 
-            information. If your profile is not complete, please check the bio section 
-            below to add more details and help potential employers learn more about you.</p><br>
-            <h3 style="font-family:'Michroma', sans-serif;size:12px">update your bio:</h3>
-            <p><br>
-                <?php
-                include '../connection.php';
-                $user_email = $_SESSION['user_email'];
+        <div class="body-container">
+            <div class="description">
+                <h2>Profile Information</h2>
+                <p>Welcome to your profile page! Here, you can view and update your personal 
+                information. If your profile is not complete, please check the bio section 
+                below to add more details and help potential employers learn more about you.</p><br>
+                <h3 style="font-family:'Michroma', sans-serif;size:12px">update your bio:</h3>
+                <p><br>
+                    <?php
+                    include '../connection.php';
+                    $user_email = $_SESSION['user_email'];
 
-try {
-    $sql = "SELECT job_seeker.bio 
-            FROM job_seeker
-            JOIN users ON job_seeker.users_id = users.users_id
-            WHERE users.email = :email";
+                    try {
+                        $sql = "SELECT job_seeker.bio 
+                                FROM job_seeker
+                                JOIN users ON job_seeker.users_id = users.users_id
+                                WHERE users.email = :email";
 
-    $stmt = $pdo->prepare($sql);
-    $stmt->bindParam(':email', $user_email, PDO::PARAM_STR);
-    $stmt->execute();
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                        $stmt = $pdo->prepare($sql);
+                        $stmt->bindParam(':email', $user_email, PDO::PARAM_STR);
+                        $stmt->execute();
+                        $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if ($result) {
-        $user_bio = htmlspecialchars($result['bio'], ENT_QUOTES, 'UTF-8');
-        echo "<b style='color:#ea60a7'>User Bio:</b> " . $user_bio;
-    } else {
-        echo "No bio found for this user.";
-    }
-} catch (PDOException $e) {
-    die('Database error: ' . htmlspecialchars($e->getMessage()));
-}
-?></p>
-            <a href="my_profile.php"><button class="update-button">Update My Info</button></a>
+                        if ($result) {
+                            $user_bio = htmlspecialchars($result['bio'], ENT_QUOTES, 'UTF-8');
+                            echo "<b style='color:#ea60a7'>User Bio:</b> " . $user_bio;
+                        } else {
+                            echo "No bio found for this user.";
+                        }
+                    } catch (PDOException $e) {
+                        die('Database error: ' . htmlspecialchars($e->getMessage()));
+                    }
+                    ?>
+                </p>
+                <a href="my_profile.php"><button class="update-button">Update My Info</button></a>
+            </div>
+            <div class="picture-container">
+                <img src="sample.png" alt="Profile Picture" class="profile-picture">
+            </div>
         </div>
-        <div class="picture-container">
-            <img src="sample.png" alt="Profile Picture" class="profile-picture">
-        </div>
-        
-    </div>
 
-
-
-    <div class="apply-container">
-        <h2 style="font-family:'Michroma', sans-serif; text-align: center;">Open Positions</h2>
-        <?php
+        <div class="apply-container">
+            <h2 style="font-family:'Michroma', sans-serif; text-align: center;">Open Positions</h2>
+            <?php
         $stmt = $pdo->query("SELECT * FROM jobs");
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         ?>
@@ -364,20 +338,39 @@ try {
             </div>
         </div>
         <?php }?>
-    </div>
 
-    
+
+        </div>
+    </main>
 </div>
 
-</main>
+<!-- Custom Alert Box -->
+<div class="custom-alert-overlay" id="customAlertOverlay">
+    <div class="custom-alert-box">
+        <div class="custom-alert-message" id="customAlertMessage"></div>
+        <button class="custom-alert-button" onclick="hideCustomAlert()">OK</button>
+    </div>
+</div>
 
+<script>
+    function showCustomAlert(message) {
+        document.getElementById('customAlertMessage').innerText = message;
+        document.getElementById('customAlertOverlay').style.display = 'flex';
+    }
 
+    function hideCustomAlert() {
+        document.getElementById('customAlertOverlay').style.display = 'none';
+    }
+</script>
 
+</body>
 </html>
+
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['apply'])) {
     include '../connection.php';
     $job_id = $_POST['job_id'];
+    $user_email = $_SESSION['user_email'];
 
     try {
         $query = $pdo->prepare("SELECT users_id FROM users WHERE email = :email");
@@ -403,24 +396,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['apply'])) {
                     $stmt->bindParam(':job_id', $job_id, PDO::PARAM_INT);
                     $stmt->bindParam(':job_seeker_id', $job_seeker_id, PDO::PARAM_INT);
                     $stmt->execute();
-                    echo "Application submitted successfully.";
+                    echo "<script>showCustomAlert('Application submitted successfully.');</script>";
                 } else {
-                    echo "You have already applied for this job.";
+                    echo "<script>showCustomAlert('You have already applied for this job.');</script>";
                 }
             } else {
-                echo "Job seeker not found.";
+                echo "<script>showCustomAlert('Job seeker not found.');</script>";
                 exit();
             }
         } else {
-            echo "User not found.";
+            echo "<script>showCustomAlert('User not found.');</script>";
             exit();
         }
     } catch (PDOException $e) {
-        echo "Database error: " . $e->getMessage();
+        echo "<script>showCustomAlert('Database error: " . $e->getMessage() . "');</script>";
         exit();
     }
 }
 ?>
-
-
-
