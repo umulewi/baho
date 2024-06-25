@@ -1,105 +1,103 @@
 <?php
 session_start();
 if (!isset($_SESSION['user_email'])) {
-    header("location:../../../login.php");
+    header("Location: ../../../login.php");
     exit();
-}
-$user_email = $_SESSION['user_email'];
-include '../connection.php';
-
-try {
-    $query = $pdo->prepare("SELECT users_id FROM users WHERE email = :email");
-    $query->execute(['email' => $user_email]);
-    $user = $query->fetch(PDO::FETCH_ASSOC);
-    if ($user) {
-        $users_id = $user['users_id'];
-    } else {
-        echo "User not found.";
-        exit();
-    }
-} catch (PDOException $e) {
-    echo "Database error: " . $e->getMessage();
-    exit();
-}
-
-include 'dashboard.php';
-$progress = 0;
-$sql = "SELECT 1 FROM users WHERE users_id = :users_id";
-$stmt = $pdo->prepare($sql);
-$stmt->bindParam(':users_id', $users_id, PDO::PARAM_INT);
-$stmt->execute();
-if ($stmt->rowCount() > 0) {
-    $progress += 33;
-}
-
-$sql = "SELECT mothers_name, fathers_name, telephone, province, district, sector, cell, village, salary, bio, date_of_birth, ID, created_at FROM job_seeker WHERE users_id = :users_id";
-$stmt = $pdo->prepare($sql);
-$stmt->bindParam(':users_id', $users_id, PDO::PARAM_INT);
-$stmt->execute();
-if ($stmt->rowCount() > 0) {
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
-    $filledFields = 0;
-    $totalFields = 12;
-    
-    if (!empty($result['mothers_name'])) { $filledFields++; }
-    if (!empty($result['fathers_name'])) { $filledFields++; }
-    if (!empty($result['telephone'])) { $filledFields++; }
-    if (!empty($result['province'])) { $filledFields++; }
-    if (!empty($result['district'])) { $filledFields++; }
-    if (!empty($result['sector'])) { $filledFields++; }
-    if (!empty($result['cell'])) { $filledFields++; }
-    if (!empty($result['village'])) { $filledFields++; }
-    if (!empty($result['salary'])) { $filledFields++; }
-    if (!empty($result['bio'])) { $filledFields++; }
-    if (!empty($result['date_of_birth'])) { $filledFields++; }
-    if (!empty($result['ID'])) { $filledFields++; }
-
-    $progress += (33 / $totalFields) * $filledFields;
-    $created_at = new DateTime($result['created_at']);
-    $now = new DateTime();
-    $interval = $now->diff($created_at);
-    if ($interval->days > 15) {
-        $progress += 12;
-    }
-}
-
-$sql = "SELECT job_seeker_id FROM job_seeker WHERE users_id = :users_id";
-$stmt = $pdo->prepare($sql);
-$stmt->bindParam(':users_id', $users_id, PDO::PARAM_INT);
-$stmt->execute();
-if ($stmt->rowCount() > 0) {
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
-    $job_seeker_id = $result['job_seeker_id'];
-    $sql = "SELECT 1 FROM hired_seekers WHERE job_seeker_id = :job_seeker_id";
-    $stmt = $pdo->prepare($sql);
-    $stmt->bindParam(':job_seeker_id', $job_seeker_id, PDO::PARAM_INT);
-    $stmt->execute();
-    if ($stmt->rowCount() > 0) {
-        $progress = 100;
-    }
 }
 ?>
-
-<!DOCTYPE html>
 <html>
-<head>
+    <head>
+        <style>
+            
+.body-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin-left:5%;
+    max-width: 1000px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
+    background: white;
+    transition: transform 0.3s;
+    gap: 20px; /* Added gap between columns */
+}
+
+.description {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top:-2%;
+}
+
+.description h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+    font-family:'Michroma', sans-serif;
+}
+
+.description p {
+    font-size: 16px;
+    margin-bottom: 20px;
+    color: #666;
+}
+
+.update-button {
+    background-color: #EA60A7;
+    color: white;
+    width:50%;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
    
-    <style>
-        .progress {
-            width: 100%;
-            max-width: 400px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            overflow: hidden;
+}
+
+.update-button:hover {
+    background-color: #503141;
+}
+
+.picture-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    padding: 40px; /* Added padding to match the description section */
+}
+
+.profile-picture {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 10px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.profile-picture:hover {
+    transform: scale(1.1);
+}
+.apply-container {
+            width: 80%;
+            max-width: 1200px;
+            background: white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            margin-left:5%;
         }
-        .progress-bar {
-            width: <?php echo $progress; ?>%;
-            background-color: teal;
-            color: white;
-            text-align: center;
-            padding: 7px 0;
-            box-sizing: border-box;
+.position {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin-bottom: 20px;
+            
         }
+
         .company-logo {
             width: 60px;
             height: 60px;
@@ -107,115 +105,275 @@ if ($stmt->rowCount() > 0) {
             margin-right: 20px;
         }
 
-        .row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
+        .position-details {
+            flex: 1;
         }
-        .other-div1, .other-div2 {
-            flex: 1 1 100%;
+
+        .position-details h3 {
+            margin: 0;
+            font-size: 20px;
+            color: #333;
         }
-        @media (min-width: 768px) {
-            .other-div1, .other-div2 {
-                flex: 1 1 calc(50% - 10px);
-            }
+
+        .position-details p {
+            margin: 5px 0 10px;
+            color: #666;
         }
-        .other-div3 {
-            width: 48%;
-            background-color: #fff;
-            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+
+        .apply-button {
+            background-color: #EA60A7;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .apply-button:hover {
+            background-color: #503141;
+        }
+         .apply-container {
+            width: 80%;
+            max-width: 1200px;
+            background: white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
             border-radius: 10px;
-            margin-bottom: 1rem;
-            padding: 1rem;
-            box-sizing: border-box;
+            padding: 20px;
+            margin-top: 20px;
         }
-        @media (max-width: 768px) {
-            .other-div3 {
-                width: 100%;
+
+        .position {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 10px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .position:last-child {
+            border-bottom: none;
+        }
+
+        .company-logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-right: 20px;
+        }
+
+        .position-details {
+            flex: 1;
+        }
+
+        .position-details h3 {
+            margin: 0;
+            font-size: 20px;
+            color: #333;
+            text-align:left;
+        }
+
+        .position-details p {
+            margin: 5px 0 10px;
+            color: #666;
+        }
+
+        .apply-button {
+            background-color: #EA60A7;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .apply-button:hover {
+            background-color: #503141;
+        }
+
+@media (max-width: 768px) {
+    .body-container {
+        flex-direction: column;
+    }
+
+    .description, .picture-container {
+        flex: none;
+        width: 100%;
+        padding: 20px;
+    }
+
+    .profile-picture {
+        max-width: 100%;
+        width: auto;
+    }
+}
+@media (max-width: 768px) {
+            .apply-container {
+                width: 90%;
+            }
+
+            .position-details h3 {
+                font-size: 18px;
+            }
+
+            .position-details p {
+                font-size: 14px;
+            }
+
+            .apply-button {
+                padding: 10px;
+                font-size: 14px;
+            }
+
+            .company-logo {
+                width: 50px;
+                height: 50px;
             }
         }
-    </style>
-</head>
-<body>
-<main>
 
-    
-<h1 style="text-align:center;font-family:'Michroma', sans-serif;">Application Status & Benefits of Kozi Caretakers</h1>
-    
-<hr style="margin: 20px auto;border: 0;height: 1px;width: 50%;background: #EA60A7; ">
-    <div class="row">
-        <div class="other-div3">
-           
-                <h2 style="color:teal">Benefits of Kozi Caretakers
-                </h2>
-                <ul style="margin-left:"><br>
-                    <li style="text-align: justify;">Wide Range of Opportunities: Discover diverse job listings tailored to your skills, spanning from housekeeping to specialized services.
-                    </li><br>
-                    <li style="text-align: justify;">Continuous Skill Enhancement: Engage in our comprehensive training programs and workshops to sharpen your professional skills.</li><br>
-                    <li style="text-align: justify;">Community Support: Connect with a supportive community of fellow job seekers to share experiences and gain valuable advice.</li><br>
-                    <li style="text-align: justify;">Exclusive Access: Gain access to exclusive job listings available only to Kozi Caretaker members, enhancing your employment opportunities.</li><br>
-                    <li style="text-align: justify;">Thank you for choosing Kozi Caretakers. Together, we're transforming homes and empowering lives.</li><br>
-                    
-            
+        @media (max-width: 480px) {
+            .apply-container {
+                width: 100%;
+                padding: 10px;
+            }
+
+            .position {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .company-logo {
+                margin-bottom: 10px;
+            }
+
+            .apply-button {
+                width: 100%;
+                padding: 10px 0;
+            }
+        }
+        </style>
+    </head>
+
+<?php
+
+include 'dashboard.php';
+?>
+<div class="form-container">
+    <main>
+        <h1 style="text-align:center;font-family:'Michroma', sans-serif;">Welcome to Job Seeker Dashboard</h1>
+        <hr style="margin: 20px auto;border: 0;height: 1px;width: 50%;background: #EA60A7; ">
+        <ul class="box-info">
+            <li>
+                <i class='bx bxs-group'></i>
+                <?php
+                include '../connection.php';
+                $sql = "SELECT COUNT(job_provider_id) AS total FROM job_provider";
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute();
+                $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                ?>
+                <span class="text">
+                    <h3><?php echo $result['total']; ?></h3>
+                    <p>All Job Provider</p>
+                </span>
+            </li>
+            <li>
+                <i class='bx bxs-group'></i>
+                <?php
+                include '../connection.php';
+                $sql = "SELECT COUNT(job_seeker_id) AS total FROM job_seeker";
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute();
+                $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                ?>
+                <span class="text">
+                    <h3><?php echo $result['total']; ?></h3>
+                    <p>All Seekers</p>
+                </span>
+            </li>
+        </ul>
+    </main>
+    <main>
+            <div class="body-container">
+        <div class="description">
+            <h2>Profile Information</h2>
+            <p>Welcome to your profile page! Here, you can view and update your personal 
+            information. If your profile is not complete, please check the bio section 
+            below to add more details and help potential employers learn more about you.</p><br>
+            <h3 style="font-family:'Michroma', sans-serif;size:12px">update your bio:</h3>
+            <p><br>
+                <?php
+                include '../connection.php';
+                $user_email = $_SESSION['user_email'];
+
+try {
+    $sql = "SELECT job_seeker.bio 
+            FROM job_seeker
+            JOIN users ON job_seeker.users_id = users.users_id
+            WHERE users.email = :email";
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindParam(':email', $user_email, PDO::PARAM_STR);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($result) {
+        $user_bio = htmlspecialchars($result['bio'], ENT_QUOTES, 'UTF-8');
+        echo "<b style='color:#ea60a7'>User Bio:</b> " . $user_bio;
+    } else {
+        echo "No bio found for this user.";
+    }
+} catch (PDOException $e) {
+    die('Database error: ' . htmlspecialchars($e->getMessage()));
+}
+?></p>
+            <a href="my_profile.php"><button class="update-button">Update My Info</button></a>
         </div>
-        <div class="other-div3">
-           
-                <h2 style="color:teal">Application Status Update</h2>
-            
-            <div class="progress">
-                <div class="progress-bar">
-                    <?php echo $progress ? $progress . "%" : "Progress not available"; ?>
-                </div>
-            </div>
-            <strong> Step 1: Initial Sign-up:</strong>
-Start your journey with us! Your application status begins at 36%. Sign up and create your profile.<br>
-
-<strong> Step 2: Complete Your Profile:</strong>
-Update your information and complete your profile details to increase your status to 66%. Provide accurate information to enhance your job opportunities.<br>
-
-<strong>Step 3: Get Recruited:</strong>
-Congratulations! Once recruited, your application status reaches 100%. You are now part of our team and ready to begin your new role.<br>
-
-<strong>Step 4: Start Working ðŸ’¼</strong>
-Begin working and making a difference! Your journey with us starts here. Dive into your responsibilities and contribute to our community.<br><br>
-
-<span style="font-size: 14px;">Track your progress and take the next step in your career journey with us!</span></p>
-    
+        <div class="picture-container">
+            <img src="sample.png" alt="Profile Picture" class="profile-picture">
         </div>
+        
     </div>
-    <br><br>
-    <h2 style="color:teal">Open positions:</h2><br>
 
-    <div class="row">
+
+
+    <div class="apply-container">
+        <h2 style="font-family:'Michroma', sans-serif; text-align: center;">Open Positions</h2>
         <?php
         $stmt = $pdo->query("SELECT * FROM jobs");
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         ?>
-        
-            <div class="other-div3">
-                <div>
-                    <?php
-                     $folderPath = '../../../dashboard/';
-                    $logoFilename = $row['logo'];
-                    $uniqueLogoPath = $folderPath . $logoFilename . '?' . $row['job_id']; 
-                    echo '<td><img class="company-logo" src="' . htmlspecialchars($uniqueLogoPath) . '" alt="Job Logo" style="width: 50px; height: 50px;"></td>';
-                    ?>
-                    <h3><?php echo $row['job_title'] ?></h3>
-                    <p>
-                        <?php echo  $row['job_description']?> | Published on <?php echo  $row['published_date']?> | Deadline <?php echo  $row['deadline_date']?>
-                    </p>
-                    <form action="" method="post">
-                        <input type="hidden" name="job_id" value="<?php echo $row['job_id']; ?>">
-                        <input type="submit" name="apply" value="Apply" style="width: 30%; padding: 10px; border: none; border-radius: 5px; background-color: teal; font-size: 16px; cursor: pointer;">
-                    </form>
-                </div>
+        <div class="position">
+        <?php
+        $folderPath = '../dashboard';
+        $logoFilename = $row['logo'];
+        $uniqueLogoPath = $folderPath . $logoFilename . '?' . $row['job_id'];
+        echo '<td><img class="company-logo" src="' . htmlspecialchars($uniqueLogoPath) . '" alt="Job Logo" style="width: 50px; height: 50px;"></td>';
+        ?>
+        <div class="position-details">
+            <h3><?php echo $row['job_title'] ?></h3>
+                <p>
+                    <?php echo  $row['job_description']?> | Published on <?php echo  $row['published_date']?> | Deadline <?php echo  $row['deadline_date']?>
+                </p>
+                <form action="" method="post">
+                    <input type="hidden" name="job_id" value="<?php echo $row['job_id']; ?>">
+                    <input type="submit" name="apply" value="Apply"  class="apply-button">
+                </form>
             </div>
-            <?php
-            }
-            ?>
-            </div>
-        </main>
+        </div>
+        <?php }?>
+    </div>
 
+    
+</div>
+
+</main>
+
+
+
+</html>
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['apply'])) {
     include '../connection.php';
@@ -263,7 +421,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['apply'])) {
     }
 }
 ?>
-</body>
-</html>
+
 
 

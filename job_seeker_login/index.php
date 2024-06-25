@@ -349,12 +349,9 @@ try {
         <?php
         $folderPath = '../dashboard';
         $logoFilename = $row['logo'];
-        $uniqueLogoPath = $folderPath . $logoFilename . '?' . $row['job_id']; // or . '?' . time() for a timestamp
+        $uniqueLogoPath = $folderPath . $logoFilename . '?' . $row['job_id'];
         echo '<td><img class="company-logo" src="' . htmlspecialchars($uniqueLogoPath) . '" alt="Job Logo" style="width: 50px; height: 50px;"></td>';
         ?>
-        
-        
-
         <div class="position-details">
             <h3><?php echo $row['job_title'] ?></h3>
                 <p>

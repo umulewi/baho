@@ -99,6 +99,8 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
 $salaryWithCurrency = $row['salary'] . ' RWF';
 $email = $row['email'];
+$x=$row['first_name'];
+
 
 ?>
 
@@ -225,11 +227,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $mail->addAddress($email);
                 $mail->isHTML(false);
                 $mail->Subject = 'Congratulations!';
-                $mail->Body = 'Dear,<br>I am delighted to inform you that after a thorough review of your application and interview, we have selected you for the position.<br>
-                Your skills align perfectly with what we are looking for, and we are excited about the potential contributions you can bring to our team.<br>
-                Here are the next steps to formalize your employment<br>
-                Trainings<br>
-                Interview';
+                $mail->Body = '
+    Dear ' . $x . ',
+
+    I am delighted to inform you that after a thorough review of your application and interview, we have selected you for the position. Your skills align perfectly with what we are looking for, and we are excited about the potential contributions you can bring to our team.
+
+    Here are the next steps to formalize your employment:
+
+    1. Training Sessions:
+    - We will schedule a series of training sessions to ensure you are well-prepared for your role.
+    - These sessions will cover all essential aspects and best practices of the job.
+
+    2. Additional Interviews:
+    - To further assess your fit within our team and finalize details, we may conduct additional interviews.
+    - This will be an opportunity for you to ask any questions and get to know our team better.
+
+    We are looking forward to having you on board and are confident that you will be an excellent addition to our team.
+
+    Best regards,
+    [https://kozi.rw/]
+';
+            
+
                 $mail->send();
                 // echo "Email sent successfully!";
             } catch (Exception $e) {
