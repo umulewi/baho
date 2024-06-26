@@ -67,6 +67,12 @@
                     <span class="text">My Application</span>
                 </a>
             </li>
+            <li class="active">
+                <a href="all_jobs.php">
+                    <i class='bx bxs-shopping-bag-alt' ></i>   
+                    <span class="text">All jobs</span>
+                </a>
+            </li>
             
             
         </ul>

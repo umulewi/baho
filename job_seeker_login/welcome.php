@@ -149,7 +149,7 @@ if (isset($_GET['code'])) {
                 </a>
             </li>
             <li class="active">
-                <a href="#">
+                <a href="all_jobs.php">
                     <i class='bx bxs-dashboard' ></i>   
                     <span class="text">All Jobs</span>
                 </a>
