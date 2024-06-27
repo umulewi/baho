@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (!isset($_SESSION['user_email'])) {
+if (!isset($_SESSION['admin_email'])) {
     header("location:login.php");
     exit();
 }
@@ -96,7 +96,7 @@ include 'dashboard.php';
 
 <?php
 
-$email = $_SESSION['user_email'];
+$email = $_SESSION['admin_email'];
 $id = $_GET['job_seeker_id'];
 include '../connection.php';
 $stmt = $pdo->prepare("SELECT *
@@ -196,30 +196,30 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
         
 
-        <?php
+                <?php
         
-                include '../connection.php';
-                try {
-                    $stmt = $pdo->query("SELECT * FROM users JOIN job_seeker ON users.users_id = job_seeker.users_id WHERE job_seeker.job_seeker_id = '$job_seeker_id'");
-                    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                    foreach ($rows as $row) {
-                         $imagePath = str_replace('uploads/', 'uploads/', $row['ID']);
-                         $imageMimeType = mime_content_type($imagePath);
-                         ?>
-                         <label for="gender">ID CARD:</label>
-                         <div>
-                            <a href="#" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
-                                <h2 class="m-0 text-primary">
-                                    <img src="<?php echo $imagePath; ?>" style="height: 200px; width: 300px;" class="img-fluid" <?php echo 'data-mime="' . $imageMimeType . '"'; ?>>
-                                </h2>
-                            </a>
-                        </div>
-                        <?php 
-                        }
-                    } catch (PDOException $e) {
-                        echo "Error: " . $e->getMessage();
-                    }
-                    ?>
+        include '../connection.php';
+        try {
+            $stmt = $pdo->query("SELECT * FROM users JOIN job_seeker ON users.users_id = job_seeker.users_id WHERE job_seeker.job_seeker_id = '$job_seeker_id'");
+            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            foreach ($rows as $row) {
+                 $imagePath = str_replace('uploads/', 'uploads/', $row['ID']);
+                 $imageMimeType = mime_content_type($imagePath);
+                 ?>
+                 <label for="gender">ID CARD:</label>
+                 <div>
+                    <a href="#" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+                        <h2 class="m-0 text-primary">
+                            <img src="<?php echo $imagePath; ?>" style="height: 200px; width: 300px;" class="img-fluid" <?php echo 'data-mime="' . $imageMimeType . '"'; ?>>
+                        </h2>
+                    </a>
+                </div>
+                <?php 
+                }
+            } catch (PDOException $e) {
+                echo "Error: " . $e->getMessage();
+            }
+            ?>
         
     </form>
 </div>

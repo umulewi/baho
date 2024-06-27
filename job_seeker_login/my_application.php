@@ -32,14 +32,14 @@ if ($stmt->rowCount() > 0) {
     $progress += 33;
 }
 
-$sql = "SELECT mothers_name, fathers_name, telephone, province, district, sector, cell, village, salary, bio, date_of_birth, ID, created_at FROM job_seeker WHERE users_id = :users_id";
+$sql = "SELECT mothers_name, fathers_name, telephone, province, district, sector, cell, village, salary, bio, date_of_birth, ID, created_at, payment FROM job_seeker WHERE users_id = :users_id";
 $stmt = $pdo->prepare($sql);
 $stmt->bindParam(':users_id', $users_id, PDO::PARAM_INT);
 $stmt->execute();
 if ($stmt->rowCount() > 0) {
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     $filledFields = 0;
-    $totalFields = 12;
+    $totalFields = 13;
     
     if (!empty($result['mothers_name'])) { $filledFields++; }
     if (!empty($result['fathers_name'])) { $filledFields++; }
@@ -53,6 +53,11 @@ if ($stmt->rowCount() > 0) {
     if (!empty($result['bio'])) { $filledFields++; }
     if (!empty($result['date_of_birth'])) { $filledFields++; }
     if (!empty($result['ID'])) { $filledFields++; }
+    if (!empty($result['payment'])) { 
+        $filledFields++; 
+        // Adding 15% progress if payment is not empty
+        $progress += (15 / $totalFields); 
+    }
 
     $progress += (33 / $totalFields) * $filledFields;
     $created_at = new DateTime($result['created_at']);
@@ -79,6 +84,7 @@ if ($stmt->rowCount() > 0) {
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html>
@@ -134,6 +140,7 @@ if ($stmt->rowCount() > 0) {
                 width: 100%;
             }
         }
+        
     </style>
 </head>
 <body>
@@ -184,36 +191,9 @@ Begin working and making a difference! Your journey with us starts here. Dive in
         </div>
     </div>
     <br><br>
-    <h2 style="color:teal">Open positions:</h2><br>
+   
 
-    <div class="row">
-        <?php
-        $stmt = $pdo->query("SELECT * FROM jobs");
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        ?>
-        
-            <div class="other-div3">
-                <div>
-                    <?php
-                    $folderPath = '../dashboard';
-                    $logoFilename = $row['logo'];
-                    $uniqueLogoPath = $folderPath . $logoFilename . '?' . $row['job_id']; 
-                    echo '<td><img class="company-logo" src="' . htmlspecialchars($uniqueLogoPath) . '" alt="Job Logo" style="width: 50px; height: 50px;"></td>';
-                    ?>
-                    <h3><?php echo $row['job_title'] ?></h3>
-                    <p>
-                        <?php echo  $row['job_description']?> | Published on <?php echo  $row['published_date']?> | Deadline <?php echo  $row['deadline_date']?>
-                    </p>
-                    <form action="" method="post">
-                        <input type="hidden" name="job_id" value="<?php echo $row['job_id']; ?>">
-                        <input type="submit" name="apply" value="Apply" style="width: 30%; padding: 10px; border: none; border-radius: 5px; background-color: teal; font-size: 16px; cursor: pointer;">
-                    </form>
-                </div>
-            </div>
-            <?php
-            }
-            ?>
-            </div>
+    
         </main>
 
 <?php

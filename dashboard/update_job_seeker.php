@@ -1,6 +1,8 @@
+
+
 <?php
 session_start();
-if (!isset($_SESSION['user_email'])) {
+if (!isset($_SESSION['admin_email'])) {
     header("location:login.php");
     exit();
 }
@@ -102,7 +104,7 @@ include 'dashboard.php';
 
 <?php
 
-$email = $_SESSION['user_email'];
+$email = $_SESSION['admin_email'];
 $id = $_GET['job_seeker_id'];
 include '../connection.php';
 $stmt = $pdo->prepare("SELECT *
@@ -208,6 +210,7 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
                 <label for="dob">telephone:</label>
                 <input type="number"  name="telephone" id="telephone" value="<?php echo htmlspecialchars($row['telephone']); ?>" required>
             </div>
+            
             <div class="form-row">
             <div>
                     <label for="id">ID Card:</label>
@@ -225,6 +228,7 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
         
         <div>
             <input type="submit" name="update" value="Update" style="background-color: teal;">
+            <input type="submit" name="approve" value="Approve" style="background-color: teal;">
         </div>    
                
         
@@ -262,7 +266,7 @@ if (isset($_POST['update'])) {
 
     if (isset($_FILES['id']) && $_FILES['id']['error'] == 0) {
         $id = $_FILES['id'];
-        $upload_dir = '../uploads/';
+        $upload_dir = 'uploads/';
         $file_name = basename($id['name']);
         $target_file = $upload_dir . $file_name;
 
@@ -350,6 +354,45 @@ if (isset($_POST['update'])) {
           } else {
             echo "<script>alert('Update atleast one record');</script>";
           }
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
+}
+elseif (isset($_POST['approve'])) {
+    $job_seeker_id = $_GET['job_seeker_id'];
+
+    try {
+        // Check if payment is already approved
+        $stmt_check = $pdo->prepare("SELECT payment FROM job_seeker WHERE job_seeker_id = :job_seeker_id");
+        $stmt_check->bindParam(':job_seeker_id', $job_seeker_id);
+        $stmt_check->execute();
+        $row = $stmt_check->fetch(PDO::FETCH_ASSOC);
+
+        if ($row && $row['payment'] == 'approved') {
+            echo "<script>
+                alert('Payment has already been approved');
+                window.location.href = window.location.href; 
+                </script>";
+        } else {
+            // Update job_seeker table for approval
+            $sql = "UPDATE job_seeker
+                    SET payment = 1,
+                        payment = 'approved'
+                    WHERE job_seeker_id = :job_seeker_id";
+
+            $stmt = $pdo->prepare($sql);
+            $stmt->bindParam(':job_seeker_id', $job_seeker_id);
+            $stmt->execute();
+
+            if ($stmt->rowCount() > 0) {
+                echo "<script>
+                    alert('Payment approved successfully');
+                    window.location.href = window.location.href; 
+                    </script>";
+            } else {
+                echo "<script>alert('Failed to approve payment');</script>";
+            }
+        }
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
     }
