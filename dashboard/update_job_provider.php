@@ -124,6 +124,16 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
         </div>
     </div>
     <div class="form-row">
+            <div>
+                <label for="name">Email:</label>
+                <input type="text" name="email" value="<?php echo $row['email']; ?>" required>
+            </div>
+            <div>
+                <label for="name">Telephone:</label>
+                <input type="text" name="telephone" value="<?php echo $row['telephone']; ?>" required>
+            </div>
+        </div>
+    <div class="form-row">
     <div>
             <label for="gender">Gender:</label>
             <select name="gender">
@@ -193,9 +203,12 @@ include '../connection.php';
 if (isset($_POST['update'])) {
     $first_name = htmlspecialchars($_POST['first_name']);
     $last_name = htmlspecialchars($_POST['last_name']);
+    
+    $telephone = htmlspecialchars($_POST['telephone']);
     $full_name = $first_name . ' ' . $last_name; 
     $gender = $_POST['gender'];
     $ID=$_POST['id'];
+
 
     $province = htmlspecialchars($_POST['province']);
     $district = htmlspecialchars($_POST['district']);
@@ -214,6 +227,7 @@ if (isset($_POST['update'])) {
                 SET 
                     province = :province,
                     district = :district,
+                    telephone=:telephone,
                     sector = :sector,
                     cell = :cell,
                     village = :village,
@@ -223,6 +237,7 @@ if (isset($_POST['update'])) {
 
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':province', $province);
+        $stmt->bindParam(':telephone', $telephone);
         $stmt->bindParam(':district', $district);
         $stmt->bindParam(':sector', $sector);
         $stmt->bindParam(':cell', $cell);
@@ -249,7 +264,10 @@ if (isset($_POST['update'])) {
         $stmt2->execute();
 
         if ($stmt->rowCount() > 0 || $stmt2->rowCount() > 0) {
-            echo "<script>alert('well updated.');</script>";
+           
+            echo "<script>
+            alert('well updated');
+            window.location.href = window.location.href; </script>";
         } else {
             echo "<script>alert('No records updated.');</script>";
         }

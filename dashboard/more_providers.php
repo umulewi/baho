@@ -111,54 +111,67 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
 		<main>
             <div class="table-data">
     <form action="" method="post">
+        
+        <div class="form-row">
+            <div>
+                <label for="name">Provider First Name:</label>
+                <input type="text" name="first_name" value="<?php echo $row['first_name']; ?>" required readonly>
+            </div>
+            <div>
+                <label for="name">Last name:</label>
+                <input type="text" name="last_name" value="<?php echo $row['last_name']; ?>" required readonly>
+            </div>
+        </div>
+        <div class="form-row">
+            <div>
+                <label for="name">Email:</label>
+                <input type="text" name="email" value="<?php echo $row['email']; ?>" required readonly>
+            </div>
+            <div>
+                <label for="name">Telephone:</label>
+                <input type="text" name="telephone" value="<?php echo $row['telephone']; ?>" required readonly>
+            </div>
+        </div>
+
+        
         <div class="form-row">
         <div>
-            <label for="name">JOB FIRST NAME1:</label>
-            <input type="text" name="first_name" value="<?php echo $row['first_name']; ?>" required readonly>
-        </div>
-        <div>
-            <label for="name">Last name:</label>
-            <input type="text" name="last_name" value="<?php echo $row['last_name']; ?>" required readonly>
-        </div>
-        </div>
-        <div class="form-row">
-        <div>
-            <label for="gender">GENDER:</label>
+            <label for="gender">Gender:</label>
             <input type="text" id="gender" name="gender" value="<?php echo $row['gender']; ?>" required readonly>
         </div>
         <div>
-            <label for="province">PROVINCE:</label>
+            <label for="province">Province:</label>
             <input type="text" id="province" name="province" value="<?php echo $row['province']; ?>" required readonly>
         </div>
         </div>
         
         <div class="form-row">
         <div>
-            <label for="district">DISTRICT:</label>
+            <label for="district">District:</label>
             <input type="text" id="district" name="district" value="<?php echo $row['district']; ?>" required readonly>
         </div>
         <div>
-            <label for="sector">SECTOR:</label>
+            <label for="sector">Sector:</label>
             <input type="text" id="sector" name="sector" value="<?php echo $row['sector']; ?>" required readonly>
         </div>
         </div>
         <div class="form-row">
         <div>
-            <label for="dob">DATE OF BIRTH:</label>
+            <label for="dob">Date of birth:</label>
             <input type="date" id="dob" name="date_of_birth" value="<?php echo htmlspecialchars($row['date_of_birth']); ?>" required readonly>
         </div>
         <div>
-            <label for="village">VILLAGE:</label>
+            <label for="village">Village:</label>
             <input type="text" id="village" name="village" value="<?php echo $row['village']; ?>" required readonly>
         </div>
         </div>
         <div class="form-row">
         <div>
-            <label for="cell">CELL:</label>
+            <label for="cell">Cell:</label>
             <input type="text" id="cell" name="cell" value="<?php echo $row['cell']; ?>" required readonly>
         </div>
         <div>
-            <label for="id">ID CARDS:</label>
+            <label for="id">ID Cards:</label>
             <input type="text" id="ID" name="ID" value="<?php echo $row['ID']; ?>" required readonly>
         </div>
         </div>  
