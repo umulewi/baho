@@ -161,6 +161,7 @@ $i = 1;
             <td>
                 <div class="action-buttons">
                     <a class="btn custom-bg shadow-none" style="background-color:#b0b435" href="details.php?job_seeker_id=<?php echo $row['job_seeker_id']; ?>"><b>More</b></a>
+                    <a class="btn custom-bg shadow-none" style="background-color:#b0b435" href="delete_job_seeker.php?job_seeker_id=<?php echo $row['job_seeker_id']; ?>"><b>Delete</b></a>
                     <a class="btn custom-bg shadow-none" style="background-color:#b0b435" href="update_job_seeker.php?job_seeker_id=<?php echo $row['job_seeker_id']; ?>"><b>Update</b></a>
                 </div>
             </td>
