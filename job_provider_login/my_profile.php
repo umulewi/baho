@@ -15,32 +15,26 @@ include'dashboard.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title>Job Provider Update</title>
     <style>
         .form-container {
             max-width: 750px;
             margin: 0 auto;
-           
         }
-
-        /* Form fields */
         .form-container div {
             margin-bottom: 15px;
         }
-
         .form-container label {
             display: block;
             font-weight: bold;
             margin-bottom: 5px;
         }
-
         .form-container input[type="text"],
         .form-container input[type="date"],
         .form-container input[type="password"],
         .form-container input[type="email"],
         .form-container input[type="tel"],
         .form-container input[type="number"],
-
         select {
             width: 100%;
             padding: 10px;
@@ -48,7 +42,6 @@ include'dashboard.php';
             border-radius: 5px;
             box-sizing: border-box;
         }
-
         .form-container input[type="submit"] {
             width: 30%;
             padding: 10px;
@@ -59,30 +52,35 @@ include'dashboard.php';
             font-size: 16px;
             cursor: pointer;
         }
-
         .form-container input[type="submit"]:hover {
             background-color: darkslategray;
         }
-
         .form-row {
             display: flex;
             flex-wrap: wrap;
             gap: 15px;
         }
-
         .form-row > div {
             flex: 1;
             min-width: 300px;
         }
-
-        /* Responsive adjustments */
         @media (max-width: 600px) {
             .form-row > div {
                 min-width: 100%;
             }
         }
     </style>
-    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var today = new Date();
+            var minDateOfBirth = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
+            document.querySelector('input[name="date_of_birth"]').setAttribute('max', minDateOfBirth.toISOString().split('T')[0]);
+
+            var minPeriodDate = new Date();
+            minPeriodDate.setDate(today.getDate() + 5);
+            document.querySelector('input[name="period"]').setAttribute('min', minPeriodDate.toISOString().split('T')[0]);
+        });
+    </script>
 </head>
 <body>
 <?php
@@ -92,97 +90,97 @@ $stmt->bindParam(':user_email', $user_email);
 $stmt->execute();
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
 ?>
-
 <div class="form-container">
-        <main>
-       <div class="table-data">
-        <form action="" method="post">
-            <input type="hidden" name="job_provider_id" value="<?php echo $row['job_provider_id']; ?>">
-            <div class="form-row">
-                <div><label for="name">First name:</label>
-            <input type="text" name="first_name" value="<?php echo $row['first_name']; ?>" required>
+    <main>
+        <div class="table-data">
+            <form action="" method="post">
+                <input type="hidden" name="job_provider_id" value="<?php echo $row['job_provider_id']; ?>">
+                <div class="form-row">
+                    <div>
+                        <label for="name">First name:</label>
+                        <input type="text" name="first_name" value="<?php echo $row['first_name']; ?>" required>
+                    </div>
+                    <div>
+                        <label for="name">Last name:</label>
+                        <input type="text" name="last_name" value="<?php echo $row['last_name']; ?>" required>
+                    </div>
+                </div>
+                <div class="form-row"> 
+                    <div>
+                        <label for="name">Date of birth:</label>
+                        <input type="date" name="date_of_birth" value="<?php echo $row['date_of_birth']; ?>" required>
+                    </div>
+                    <div>
+                        <label for="province">Province</label>
+                        <select name="province" required>
+                            <option value="KIGALI CITY" <?php echo ($row['province']=='kigali city')? 'selected' : ''; ?>>Kigali city</option>
+                            <option value="Western province" <?php echo ($row['province']=='western province')? 'selected' : ''; ?>>Western province</option>
+                            <option value="Estern province" <?php echo ($row['province']=='Estern province')? 'selected' : ''; ?>>Estern province</option>
+                            <option value="North province" <?php echo ($row['province']=='North province')? 'selected' : ''; ?>>North province</option>
+                            <option value="South province" <?php echo ($row['province']=='South province')? 'selected' : ''; ?>>South Province</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div>
+                        <label for="district">District:</label>
+                        <input type="text" id="district" name="district" value="<?php echo $row['district']; ?>" required>
+                    </div>
+                    <div>
+                        <label for="sector">Sector:</label>
+                        <input type="text" id="sector" name="sector" value="<?php echo $row['sector']; ?>" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div>
+                        <label for="village">Village:</label>
+                        <input type="text" id="village" name="village" value="<?php echo $row['village']; ?>" required>
+                    </div>
+                    <div>
+                        <label for="village">Gender:</label>
+                        <select name="gender">
+                            <option value="male" <?php echo ($row['gender']=='male')? 'selected' : ''; ?>>Male</option>
+                            <option value="female" <?php echo ($row['gender']=='female')? 'selected' : ''; ?>>Female</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div>
+                        <label for="cell">Cell:</label>
+                        <input type="text" id="cell" name="cell" value="<?php echo $row['cell']; ?>" required>
+                    </div>
+                    <div>
+                        <label for="id">ID card</label>
+                        <input type="number" id="ID" name="ID" value="<?php echo $row['ID']; ?>" required maxlength="16" oninput="if(this.value.length > 16) this.value = this.value.slice(0, 16);">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div>
+                        <label for="id">Telephone:</label>
+                        <input type="text" id="ID" name="telephone" value="<?php echo $row['telephone']; ?>" required>
+                    </div>
+                    <div>
+                        <label for="id">Password:</label>
+                        <input type="password" id="ID" name="password" value="<?php echo $row['password']; ?>" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div>
+                        <label for="id">Describe work you need:</label>
+                        <input type="text" id="ID" name="description" value="<?php echo $row['description']; ?>" required>
+                    </div>
+                    <div>
+                        <label for="id">Period you need worker:</label>
+                        <input type="date" id="ID" name="period" value="<?php echo $row['period']; ?>" required>
+                    </div>
+                </div>
+                <div>
+                    <input type="submit" name="update" value="Update" style="background-color: teal;">
+                </div>
+            </form>
         </div>
-        <div>
-            <label for="name">Last name:</label>
-            <input type="text" name="last_name" value="<?php echo $row['last_name']; ?>" required>
-        </div>
-    </div>
-    <div class="form-row"> 
-        <div>
-            <label for="name">Date of birth:</label>
-            <input type="date" name="date_of_birth" value="<?php echo $row['date_of_birth']; ?>" required>
-        </div>
-        <div>
-            <label for="province">Province</label>
-            <select name="province" required>
-                <option value="KIGALI CITY" <?php echo ($row['province']=='kigali city')? 'selected' : ''; ?>>Kigali city</option>
-                <option value="Western province" <?php echo ($row['province']=='western province')? 'selected' : ''; ?>>Western province</option>
-                <option value="Estern province" <?php echo ($row['province']=='Estern province')? 'selected' : ''; ?>>Estern province</option>
-                <option value="North province" <?php echo ($row['province']=='North province')? 'selected' : ''; ?>>North province</option>
-                <option value="South province" <?php echo ($row['province']=='South province')? 'selected' : ''; ?>>South Province</option>
-            </select>
-        </div>
-        
-        <!-- <div>
-            <label for="province">province:</label>
-            <input type="text" id="province" name="province" value="<?php echo $row['province']; ?>" required>
-        </div> -->
-    </div>
-    <div class="form-row">
-        <div>
-            <label for="district">District:</label>
-            <input type="text" id="district" name="district" value="<?php echo $row['district']; ?>" required>
-        </div>
-        <div>
-            <label for="sector">Sector:</label>
-            <input type="text" id="sector" name="sector" value="<?php echo $row['sector']; ?>" required>
-        </div>
-    </div>
-    <div class="form-row">
-        <div>
-            <label for="village">Village:</label>
-            <input type="text" id="village" name="village" value="<?php echo $row['village']; ?>" required>
-   
-        </div>
-        
-        <div>
-        
-            <label for="village">Gender:</label>
-        <select name="gender">
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                </select>
-        </div>
-    </div>
-    <div class="form-row">
-        <div>
-            <label for="cell">Cell:</label>
-            <input type="text" id="cell" name="cell" value="<?php echo $row['cell']; ?>" required>
-        </div>
-        <div>
-    <label for="id">ID card</label>
-    <input type="number" id="ID" name="ID" value="<?php echo $row['ID']; ?>" required  maxlength="16" oninput="if(this.value.length > 16) this.value = this.value.slice(0, 16);">
-</div>
-
-    </div>
-    <div class="form-row">
-        <div>
-            <label for="id">Telephone:</label>
-            <input type="text" id="ID" name="telephone" value="<?php echo $row['telephone']; ?>" required>
-        </div>
-        <div>
-            <label for="id">Password:</label>
-            <input type="password" id="ID" name="password" value="<?php echo $row['password']; ?>" required>
-        </div>
-    </div>
-        <div>
-            <input type="submit" name="update" value="Update" style="background-color: teal;">
-        </div>
-    </form>
-</div>
     </main>
-    </div>
-
+</div>
 </body>
 </html>
 
@@ -194,6 +192,8 @@ if (isset($_POST['update'])) {
   $first_name = $_POST['first_name'];
   $last_name = $_POST['last_name'];
   $province = $_POST['province'];
+  $description=$_POST['description'];
+  $period=$_POST['period'];
   $district = $_POST['district'];
   $sector = $_POST['sector'];
   $village = $_POST['village'];
@@ -208,6 +208,8 @@ if (isset($_POST['update'])) {
   try {
     $sql = "UPDATE job_provider 
             SET users_id =:users_id,
+            description=:description,
+            period=:period,
                 province = :province,
                 district = :district,
                 sector = :sector,
@@ -233,6 +235,8 @@ $stmt->bindParam(':province', $province);
 $stmt->bindParam(':district', $district);
 $stmt->bindParam(':sector', $sector);
 $stmt->bindParam(':cell', $cell);
+$stmt->bindParam(':description', $description);
+$stmt->bindParam(':period', $period);
 $stmt->bindParam(':village', $village);
 $stmt->bindParam(':ID', $ID);
 $stmt->bindParam(':date_of_birth', $date_of_birth);
@@ -248,7 +252,7 @@ $stmt_user->bindParam(':users_id', $row['users_id']);
     // Execute the statement
     if ($stmt->execute() && $stmt_user->execute()) {
     //   echo "<script>window.location.href = 'view_job-seeker.php';</script>";
-    echo"well updated";
+    echo "<script>alert('well updated');</script>";
       exit();
     } else {
       echo "<script>alert('Error updating record');</script>";
@@ -258,4 +262,3 @@ $stmt_user->bindParam(':users_id', $row['users_id']);
   }
 }
 ?>
-

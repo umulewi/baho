@@ -40,7 +40,7 @@
             <span class="text"></span>
         </a>
         <ul class="side-menu top">
-            <li class="active">
+            <li class="">
                 <a href="index.php">
                     <i class='bx bxs-dashboard' ></i>
                     <span class="text">Dashboard</span>
@@ -48,7 +48,7 @@
             </li>
            
             
-            <li class="active">
+            <li class="">
                 <a href="#" class="dropdown-toggle" data-nav="top">
                     <i class='bx bxs-group' ></i>
                     <span class="text">MY Profile</span>
@@ -61,17 +61,26 @@
                 </ul>
             </li>
 
-            <li class="active">
+            <li class="">
                 <a href="my_application.php">
                     <i class='bx bxs-shopping-bag-alt' ></i>   
                     <span class="text">My Application</span>
                 </a>
             </li>
-            <li class="active">
+            <li class="">
                 <a href="all_jobs.php">
                     <i class='bx bxs-shopping-bag-alt' ></i>   
                     <span class="text">All jobs</span>
                 </a>
+            </li>
+            <li>
+                <a href="payment.php">
+                    <i class='bx bxs-shopping-bag-alt' ></i>
+                    <span class="text"> Payment</span>
+                   
+                </a>
+                
+                
             </li>
             
             

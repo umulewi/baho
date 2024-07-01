@@ -130,7 +130,6 @@ $i = 1;
 </head>
 <body>
 <main>
-  
     <div class="search-bar">
         <form action="#" method="GET">
             <div class="form-input">
@@ -140,38 +139,48 @@ $i = 1;
         </form>
     </div>
     <div class="table-data">
-    <table class="">
-        <tr>
-            <th>ID</th>
-            <th>NAMES</th>
-            <th>SALARY</th>
-            <th>BIO</th>
-            <th>AGE</th>
-            <th>ACTION</th>
-        </tr>
-        <?php 
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        ?>
-        <tr>
-            <td><?php echo $i; ?></td>
-            <td><?php echo $row['full_name']; ?></td>
-            <td><?php echo $row['salary']; ?> RW</td>
-            <td><?php echo $row['bio']; ?></td>
-            <td><?php echo $row['province']; ?></td>
-            <td>
-                <div class="action-buttons">
-                    <a class="btn custom-bg shadow-none" style="background-color:#b0b435" href="details.php?job_seeker_id=<?php echo $row['job_seeker_id']; ?>"><b>More</b></a>
-                    <a class="btn custom-bg shadow-none" style="background-color:#b0b435" href="delete_job_seeker.php?job_seeker_id=<?php echo $row['job_seeker_id']; ?>"><b>Delete</b></a>
-                    <a class="btn custom-bg shadow-none" style="background-color:#b0b435" href="update_job_seeker.php?job_seeker_id=<?php echo $row['job_seeker_id']; ?>"><b>Update</b></a>
-                </div>
-            </td>
-        </tr>
-        <?php
-            $i++;
-        }
-        ?>
-    </table>
+        <table class="">
+            <tr>
+                <th>ID</th>
+                <th>NAMES</th>
+                <th>SALARY</th>
+                <th>BIO</th>
+                <th>PROVINCE</th>
+                <th>ACTION</th>
+            </tr>
+            <?php 
+            $i = 1;
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            ?>
+            <tr>
+                <td><?php echo $i; ?></td>
+                <td><?php echo $row['full_name']; ?></td>
+                <td><?php echo $row['salary']; ?> RW</td>
+                <td><?php echo $row['bio']; ?></td>
+                <td><?php echo $row['province']; ?></td>
+                <td>
+                    <div class="action-buttons">
+                        <a class="btn custom-bg shadow-none" style="background-color:#b0b435" href="details.php?job_seeker_id=<?php echo $row['job_seeker_id']; ?>"><b>More</b></a>
+                        <a class="btn custom-bg shadow-none" style="background-color:#b0b435" href="#" onclick="confirmDelete(<?php echo $row['job_seeker_id']; ?>)"><b>Delete</b></a>
+                        <a class="btn custom-bg shadow-none" style="background-color:#b0b435" href="update_job_seeker.php?job_seeker_id=<?php echo $row['job_seeker_id']; ?>"><b>Update</b></a>
+                    </div>
+                </td>
+            </tr>
+            <?php
+                $i++;
+            }
+            ?>
+        </table>
     </div>
 </main>
+
+<script>
+function confirmDelete(job_seeker_id) {
+    if (confirm("Are you sure you want to delete this worker?")) {
+        window.location.href = "delete_job_seeker.php?job_seeker_id=" + job_seeker_id;
+    }
+}
+</script>
+
 </body>
 </html>

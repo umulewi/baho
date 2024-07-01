@@ -145,6 +145,7 @@ include '../connection.php';
                 <td>
                     <div class="action-buttons">
                         <a class="btn update" href="more_providers.php?job_provider_id=<?php echo $row['job_provider_id'];?>"><b>More</b></a>
+                        <a class="btn custom-bg shadow-none" style="background-color:#b0b435" href="#" onclick="confirmDelete(<?php echo $row['job_provider_id']; ?>)"><b>Delete</b></a>
                         <a class="btn update" href="update_job_provider.php?job_provider_id=<?php echo $row['job_provider_id'];?>"><b>Update</b></a>
                     </div>
                 </td>
@@ -156,4 +157,13 @@ include '../connection.php';
         </table>
     </div>
 </main>
+
+<script>
+function confirmDelete(job_provider_id) {
+    if (confirm("Are you sure you want to delete this Employer?")) {
+        window.location.href = "delete_job_provider.php?job_provider_id=" + job_provider_id;
+    }
+}
+</script>
+
 

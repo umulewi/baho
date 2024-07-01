@@ -16,7 +16,7 @@ if (!isset($_SESSION['user_email'])) {
             display: flex;
             flex-direction: row;
             width: 100%;
-            margin-left: 5%;
+           
             max-width: 1000px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
             border-radius: 10px;
@@ -244,6 +244,55 @@ if (!isset($_SESSION['user_email'])) {
             border-radius: 5px;
             cursor: pointer;
         }
+        .progress {
+            width: 100%;
+            max-width: 400px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .progress-bar {
+            width: <?php echo $progress; ?>%;
+            background-color: teal;
+            color: white;
+            text-align: center;
+            padding: 7px 0;
+            box-sizing: border-box;
+        }
+        .company-logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-right: 20px;
+        }
+
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .other-div1, .other-div2 {
+            flex: 1 1 100%;
+        }
+        @media (min-width: 768px) {
+            .other-div1, .other-div2 {
+                flex: 1 1 calc(50% - 10px);
+            }
+        }
+        .other-div3 {
+            width: 48%;
+            background-color: #fff;
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            box-sizing: border-box;
+        }
+        @media (max-width: 768px) {
+            .other-div3 {
+                width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
@@ -251,40 +300,44 @@ if (!isset($_SESSION['user_email'])) {
 <?php include 'dashboard.php'; ?>
 
 <div class="form-container">
-    <main>
-        <h1 style="text-align:center; font-family:'Michroma', sans-serif;">Welcome to Job Seeker Dashboard</h1>
-        <hr style="margin: 20px auto; border: 0; height: 1px; width: 50%; background: #EA60A7;">
-        <ul class="box-info">
-            <li>
-                <i class='bx bxs-group'></i>
-                <?php
-                include '../connection.php';
-                $sql = "SELECT COUNT(job_provider_id) AS total FROM job_provider";
-                $stmt = $pdo->prepare($sql);
-                $stmt->execute();
-                $result = $stmt->fetch(PDO::FETCH_ASSOC);
-                ?>
-                <span class="text">
-                    <h3><?php echo $result['total']; ?></h3>
-                    <p>All Job Provider</p>
-                </span>
-            </li>
-            <li>
-                <i class='bx bxs-group'></i>
-                <?php
-                include '../connection.php';
-                $sql = "SELECT COUNT(job_seeker_id) AS total FROM job_seeker";
-                $stmt = $pdo->prepare($sql);
-                $stmt->execute();
-                $result = $stmt->fetch(PDO::FETCH_ASSOC);
-                ?>
-                <span class="text">
-                    <h3><?php echo $result['total']; ?></h3>
-                    <p>All Seekers</p>
-                </span>
-            </li>
-        </ul>
-    </main>
+<main>
+
+    
+<h1 style="text-align:center;font-family:'Michroma', sans-serif;">Payment Status & Benefits of Kozi Caretakers</h1>
+    
+<hr style="margin: 20px auto;border: 0;height: 1px;width: 50%;background: #EA60A7; ">
+    <div class="row">
+    <div class="other-div3" style="text-align: center;">
+    <img src="../img/team1.jpg" alt="" srcset="" style="width: 350px; display: inline-block;">
+</div>
+
+        <div class="other-div3"><br>
+           
+                <h2 style="text-align:center">How It works</h2><br>
+                <hr style="margin: 0px auto;border: 0;height: 1px;width: 50%;background: #EA60A7; "><br>
+            <strong> Step 1:</strong>Enter momo pay code *182*8*1*724002#
+            <br><br>
+            <strong> Step 2:</strong> Check if name is: Sam
+                <br><br>
+                <strong>Step 3:</strong>Enter your momo pin  <br><br>
+                <strong>Step 4:</strong>Wait 5 min to be approved  <br><br>
+                <strong>Step 5:</strong>For any assistance call: (+250)789 524 429 <br><br>
+                <span style="font-size: 14px;">Track your progress and take the next step in your career journey with us!</span></p>
+                
+    
+        </div>
+    </div>
+    <br><br>
+   
+
+    
+        </main>
+
+    
+
+
+
+
 
     <main>
         <div class="body-container">
