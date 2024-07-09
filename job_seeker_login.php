@@ -40,6 +40,7 @@ if (isset($_POST['user_signup'])) {
     $email = $_POST['email'];
     $first_name = $_POST['first_name'];
     $last_name = $_POST['last_name'];
+    $telephone = $_POST['telephone'];
     $password = $_POST['password'];
     $verification_code = md5(uniqid(rand(), true));
 
@@ -64,9 +65,10 @@ if (isset($_POST['user_signup'])) {
         $users_id = $pdo->lastInsertId();
 
         // Insert into job_seeker table
-        $stmt = $pdo->prepare("INSERT INTO job_seeker (users_id, role_id) VALUES (:users_id, :role_id)");
+        $stmt = $pdo->prepare("INSERT INTO job_seeker (users_id, role_id,telephone) VALUES (:users_id, :role_id,:telephone)");
         $stmt->bindParam(':users_id', $users_id);
         $stmt->bindParam(':role_id', $role_id);
+        $stmt->bindParam(':telephone', $telephone);
         $stmt->execute();
 
         // Send verification email
@@ -183,7 +185,7 @@ if (isset($_GET['code'])) {
             position: relative;
             width: 100%;
             height: 100%;
-            margin-top: 8%;
+            margin-top: 02%;
         }
 
         label {
@@ -272,6 +274,8 @@ if (isset($_GET['code'])) {
             cursor: pointer;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
             width: 50%;
+            justify-content: center;
+            margin: 10px auto;
         }
 
         .google-login-btn:hover {
@@ -292,6 +296,7 @@ if (isset($_GET['code'])) {
         .btn-text {
             font-weight: bold;
             text-decoration: none;
+            color: white;
         }
 
         .btn-text:hover {
@@ -300,64 +305,39 @@ if (isset($_GET['code'])) {
         }
 
         @media (max-width: 768px) {
-            .login-container {
-                flex-direction: column;
-                width: 95%;
-                height: 80%;
-            }
-
-            .login-image {
-                display: none;
-            }
-
-            .login-form {
-                height: 200px;
-                background-size: cover;
-                width: 100%;
-                align-items: center;
-                padding-right: -28%;
-            }
-
-            .login-form .main {
-                align-items: center;
-                padding-right: -58%;
-            }
-
-            .signup {
-                align-items: center;
-                margin-left: -11%;
-            }
-
             .login {
-                align-items: center;
-                margin-left: -20%;
-            }
+            height: 990px;
+            background: #eee;
+            border-radius: 60% / 10%;
+            transform: translateY(-180px);
+            transition: .8s ease-in-out;
+            margin-top: 5rem;
+        }
+        .google-login-btn {
+            display: flex;
+            align-items: center;
+            background-color: #bdbfc2;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 12px;
+            font-family: 'Arial', sans-serif;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            width: 50%;
+            justify-content: center;
+            margin: 10px auto;
+        }
+        
 
-            .login input[type="email"],
-            input[type="password"],
-            input[type="text"] {
-                align-items: center;
-                width: 60%;
-            }
-
-            .signup input[type="email"],
-            input[type="password"],
-            input[type="text"] {
-                align-items: center;
-                width: 60%;
-            }
-
-            #chk {
-                align-items: center;
-                padding-right: -45%;
-            }
+            
         }
 
-        @media (max-width: 480px) {
-            .login-form {
-                width: 100%;
-            }
-        }
+        
+          
+        
+
     </style>
 </head>
 
@@ -366,10 +346,12 @@ if (isset($_GET['code'])) {
         <div class="login-image"></div>
         <div class="main">
             <input type="checkbox" id="chk" aria-hidden="true">
-            <div class="signup">
+            <div class="signup" style="margin-top:-2rem">
+                
                 <form method="POST" action="">
                     <label for="chk" aria-hidden="true" class="btn-signup">Sign up</label>
                     <input type="email" name="email" placeholder="Email" required="">
+                    <input type="number" name="telephone" placeholder="Telephone" required="">
                     <input type="text" name="first_name" placeholder="First Name" required="">
                     <input type="text" name="last_name" placeholder="Last Name" required="">
                     <input type="password" name="password" placeholder="Password" required="">
@@ -400,9 +382,10 @@ if (isset($_GET['code'])) {
                             if (isset($_SESSION['user_token'])) {
                                 header("Location: job_seeker_login/index.php");
                             } else {
-                                echo "<a href='" . $client->createAuthUrl() . "' class='btn-text'>Login with Google</a>";
+                                echo "<a href='" . $client->createAuthUrl() . "' class='btn-text'>Sign Up with Google</a>";
                             }
                         ?>
+
                     </button>
                 </form>
             </div>

@@ -18,18 +18,24 @@ include 'dashboard.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Update Job Seeker</title>
     <style>
+        /* Form container */
         .form-container {
             max-width: 750px;
             margin: 0 auto;
+            
         }
+
+        /* Form fields */
         .form-container div {
-            margin-bottom: 5px;
+            margin-bottom: 15px;
         }
+
         .form-container label {
             display: block;
             font-weight: bold;
             margin-bottom: 5px;
         }
+
         .form-container input[type="text"],
         .form-container input[type="date"],
         .form-container input[type="password"],
@@ -45,8 +51,9 @@ include 'dashboard.php';
             border-radius: 5px;
             box-sizing: border-box;
         }
+
         .form-container input[type="submit"] {
-            width: 20%;
+            width: 40%;
             padding: 10px;
             border: none;
             border-radius: 5px;
@@ -55,18 +62,23 @@ include 'dashboard.php';
             font-size: 16px;
             cursor: pointer;
         }
+
         .form-container input[type="submit"]:hover {
             background-color: darkslategray;
         }
+
         .form-row {
             display: flex;
             flex-wrap: wrap;
             gap: 15px;
         }
+
         .form-row > div {
             flex: 1;
             min-width: 300px;
         }
+
+        /* Responsive adjustments */
         @media (max-width: 600px) {
             .form-row > div {
                 min-width: 100%;

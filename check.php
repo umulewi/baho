@@ -1,68 +1,429 @@
 <?php
 session_start();
+error_reporting(0);
+ini_set('display_errors', 1);
+include 'connection.php';
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+require './PHPMailer/src/Exception.php';
+require './PHPMailer/src/PHPMailer.php';
+require './PHPMailer/src/SMTP.php';
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $_SESSION['first_name'] = $_POST['first_name'];
-    $_SESSION['last_name'] = $_POST['last_name'];
-    $_SESSION['email'] = $_POST['email'];
-    $_SESSION['phone'] = $_POST['phone'];
-    $_SESSION['select_service'] = $_POST['select_service'];
-    $_SESSION['select_price'] = $_POST['select_price'];
-    $_SESSION['comments'] = $_POST['comments'];
+function sendVerificationEmail($email, $verification_code) {
+    $verification_link = "https://kozi.rw/sessions/continue/as-seeker.php?code=$verification_code";
+    $subject = "Email Verification";
+    $message = "Please click the following link to verify your email: $verification_link";
 
-    header("Location: login_or_signup.php");
-    exit();
+    $mail = new PHPMailer(true);
+    try {
+        $mail->isSMTP();
+        $mail->Host = 'mail.kozi.rw';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'info@kozi.rw'; // your email
+        $mail->Password = 'WhatPeopleS@y!'; // your email password
+        $mail->SMTPSecure = 'ssl';
+        $mail->Port = 465;
+        $mail->setFrom('info@kozi.rw', 'kozi'); // your email and name
+        $mail->addAddress($email);
+        $mail->isHTML(false);
+        $mail->Subject = $subject;
+        $mail->Body = $message;
+        $mail->send();
+        echo "<script>alert('Verification email sent successfully');</script>";
+       
+    } catch (Exception $e) {
+        echo "Email sending failed. Error: {$mail->ErrorInfo}";
+    }
+}
+
+
+if (isset($_POST['user_signup'])) {
+    $role_id = $_GET['role_id'];
+    $email = $_POST['email'];
+    $first_name = $_POST['first_name'];
+    $last_name = $_POST['last_name'];
+    $password = $_POST['password'];
+    $verification_code = md5(uniqid(rand(), true));
+
+    // Check if email already exists
+    $stmt = $pdo->prepare("SELECT * FROM users WHERE email = :email");
+    $stmt->bindParam(':email', $email);
+    $stmt->execute();
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($user) {
+        
+           echo "<script>
+                alert('This email has an account. Please login or use a different email');
+                window.location.href = window.location.href; </script>";
+        
+    } else {
+        // Insert user details into the database
+        $stmt = $pdo->prepare("INSERT INTO users (role_id, email, first_name, last_name, password, verification_code, verifiedEmail) VALUES (:role_id, :email, :first_name, :last_name, :password, :verification_code, 0)");
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':first_name', $first_name);
+        $stmt->bindParam(':last_name', $last_name);
+        $stmt->bindParam(':password', $password);
+        $stmt->bindParam(':role_id', $role_id);
+        $stmt->bindParam(':verification_code', $verification_code);
+        $stmt->execute();
+        $users_id = $pdo->lastInsertId();
+
+        // Insert into job_seeker table
+        $stmt = $pdo->prepare("INSERT INTO job_seeker (users_id, role_id) VALUES (:users_id, :role_id)");
+        $stmt->bindParam(':users_id', $users_id);
+        $stmt->bindParam(':role_id', $role_id);
+        $stmt->execute();
+
+        // Send verification email
+        sendVerificationEmail($email, $verification_code);
+        
+        echo "<script>
+                alert('Account created! Please verify your email.');
+                window.location.href = window.location.href; </script>";
+    }
+}
+
+if (isset($_POST['login'])) {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $statement = $pdo->prepare("SELECT users.*, role.role_name FROM users INNER JOIN role ON users.role_id = role.role_id WHERE email=:email AND password=:password");
+    $statement->bindParam(':email', $email);
+    $statement->bindParam(':password', $password);
+    $statement->execute();
+
+    $user = $statement->fetch(PDO::FETCH_ASSOC);
+
+    if ($user) {
+        if ($user['verifiedEmail'] == 1) {
+            $_SESSION['user_email'] = $email;
+            $role_name = $user['role_name'];
+            switch ($role_name) {
+                case 'job_seeker':
+                    header("Location: as-seeker-login/index.php");
+                    exit();
+                default:
+                   
+                    echo "<script>
+                alert('You have registered as an Empoloyer, but you are accessing the wrong side');
+                window.location.href = window.location.href; </script>";
+                    exit();
+            }
+        } else {
+           
+            echo "<script>
+                alert('Please verify your email before logging in');
+                window.location.href = window.location.href; </script>";
+            
+        }
+    } else {
+      
+        echo "<script>
+                alert('Incorrect email or password');
+                window.location.href = window.location.href; </script>";
+    }
+}
+
+if (isset($_GET['code'])) {
+    $verification_code = $_GET['code'];
+
+    $stmt = $pdo->prepare("SELECT * FROM users WHERE verification_code = :verification_code");
+    $stmt->bindParam(':verification_code', $verification_code);
+    $stmt->execute();
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($user) {
+        $stmt = $pdo->prepare("UPDATE users SET verifiedEmail = 1 WHERE verification_code = :verification_code");
+        $stmt->bindParam(':verification_code', $verification_code);
+        $stmt->execute();
+        
+       
+    } else {
+        echo "<script>alert('Invalid verification code');</script>";
+    }
 }
 ?>
 
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url(img/main.jpg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
 
-<div class="row">
-                <div class="col-md-8 col-md-offset-2">
-                    <div class="contact_form">
-                        <div id="message"></div>
-                        <form id="contactform" class="row" action="" name="contactform" method="post">
-                            <fieldset class="row-fluid">
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <input type="text" name="first_name" id="first_name" class="form-control" placeholder="First Name">
-                                </div>
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <input type="text" name="last_name" id="last_name" class="form-control" placeholder="Last Name">
-                                </div>
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <input type="email" name="email" id="email" class="form-control" placeholder="Your Email">
-                                </div>
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <input type="text" name="phone" id="phone" class="form-control" placeholder="Your Phone">
-                                </div>
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <label class="sr-only">Select Service</label>
-                                    <select name="select_service" id="select_service" class="selectpicker form-control" data-style="btn-white">
-                                        <option value="12" style="font-weight: bold;color:black">Choose  a service to get started:</option>
-                                        <option value="Regular Maintenance Services" style="font-weight: bold;color:black">Regular Maintenance Services</option>
-                                        <option value="Specialized Cleaning Services" style="font-weight: bold;color:black">Specialized Cleaning Services</option>
-                                        <option value="Commercial Services" style="font-weight: bold;color:black">Commercial Services</option>
-                                        <option value="Maintenance and Care Services" style="font-weight: bold;color:black">Maintenance and Care Services</option>
-                                        <option value="Others" style="font-weight: bold;color:black">Others</option>
-                                    </select>
-                                </div>
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <label class="sr-only">What is max price?</label>
-                                    <select name="select_price" id="select_price" class="selectpicker form-control" data-style="btn-white">
-                                        <option value="invalid">Salary Range Expectations:</option>
-                                        <option value="35000 - 69000">35,000 Rwf - 69,000 Rwf</option>
-                                        <option value="70000 - 89000">70,000 Rwf - 89,000 Rwf</option>
-                                        <option value="$4000 - $10000">Rwf 90,000 - 130,000 Rwf</option>
-                                    </select>
-                                </div>
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <textarea class="form-control" name="comments" id="comments" rows="6" placeholder="Give us more details.."></textarea>
-                                </div>
-                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 text-center">
-                                    <button type="submit" value="SEND" id="submit" class="btn btn-light btn-radius btn-brd grd1 btn-block">Submit</button>
-                                </div>
-                            </fieldset>
-                        </form>
+        .login-container {
+            display: flex;
+            flex-direction: row;
+            width: 90%;
+            max-width: 900px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+            height: 85%;
+        }
+
+        .login-image {
+            flex: 1;
+            background: url(img/team11.jpg) no-repeat center center/cover;
+        }
+
+        .main {
+            width: 480px;
+            height: 590px;
+            background: red;
+            overflow: hidden;
+            background: url("img/background.jpg") no-repeat center/cover;
+            border-radius: 10px;
+            border-top-left-radius: 2px;
+        }
+
+        #chk {
+            display: none;
+        }
+
+        .signup {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            margin-top: 8%;
+        }
+
+        label {
+            color: #fff;
+            font-size: 2.3em;
+            justify-content: center;
+            display: flex;
+            margin: 60px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: .5s ease-in-out;
+        }
+
+        input {
+            width: 80%;
+            height: 20px;
+            background: #e0dede;
+            justify-content: center;
+            display: flex;
+            margin: 30px auto;
+            padding: 10px;
+            border: none;
+            outline: none;
+            border-radius: 5px;
+            margin-top: -4%;
+        }
+
+        button {
+            width: 30%;
+            height: 40px;
+            margin: 10px auto;
+            justify-content: center;
+            display: block;
+            color: #fff;
+            background: #EA60A7;
+            font-size: 1em;
+            font-weight: bold;
+            margin-top: 20px;
+            outline: none;
+            border: none;
+            border-radius: 5px;
+            transition: .2s ease-in;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: white;
+        }
+
+        .login {
+            height: 990px;
+            background: #eee;
+            border-radius: 60% / 10%;
+            transform: translateY(-180px);
+            transition: .8s ease-in-out;
+            margin-top: -2rem;
+        }
+
+        .login label {
+            color: #EA60A7;
+            transform: scale(.6);
+        }
+
+        #chk:checked~.login {
+            transform: translateY(-590px);
+        }
+
+        #chk:checked~.login label {
+            transform: scale(1);
+        }
+
+        #chk:checked~.signup label {
+            transform: scale(.6);
+        }
+
+        .google-login-btn {
+            display: flex;
+            align-items: center;
+            background-color: #bdbfc2;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-family: 'Arial', sans-serif;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            width: 50%;
+            justify-content: center;
+            margin: 10px auto;
+        }
+
+        .google-login-btn:hover {
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-signup:hover {
+            color: #EA60A7;
+        }
+
+        .google-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 10px;
+        }
+
+        .btn-text {
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+        }
+
+        .btn-text:hover {
+            font-weight: bold;
+            color: #EA60A7;
+        }
+
+        @media (max-width: 768px) {
+            .login-container {
+                flex-direction: column;
+                width: 95%;
+                height: 80%;
+            }
+
+            .login-image {
+                display: none;
+            }
+
+            .login-form {
+                height: 200px;
+                background-size: cover;
+                width: 100%;
+                align-items: center;
+                padding-right: -28%;
+            }
+
+            .login-form .main {
+                align-items: center;
+                padding-right: -58%;
+            }
+
+            .signup {
+                align-items: center;
+                margin-left: -11%;
+            }
+
+            .login {
+                align-items: center;
+                margin-left: -20%;
+            }
+
+            .login input[type="email"],
+            input[type="password"],
+            input[type="text"] {
+                align-items: center;
+                width: 60%;
+            }
+
+            .signup input[type="email"],
+            input[type="password"],
+            input[type="text"] {
+                align-items: center;
+                width: 60%;
+            }
+
+            #chk {
+                align-items: center;
+                padding-right: -45%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .login-form {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-container">
+        <div class="login-image"></div>
+        <div class="main">
+            <input type="checkbox" id="chk" aria-hidden="true">
+            <div class="signup">
+                <form method="POST" action="">
+                    <label for="chk" aria-hidden="true" class="btn-signup">Sign up</label>
+                    <input type="email" name="email" placeholder="Email" required="">
+                    <input type="text" name="first_name" placeholder="First Name" required="">
+                    <input type="text" name="last_name" placeholder="Last Name" required="">
+                    <input type="password" name="password" placeholder="Password" required="">
+                    <button type="submit" name="user_signup">Sign Up</button>
+                    <div class="google-login-btn">
+                        <img src="img/google.png" alt="Google Icon" class="google-icon">
+                        <?php
+                        require_once 'as-seeker-login/config.php';
+                        if (isset($_SESSION['user_token'])) {
+                            header("Location: as-seeker-login/index.php");
+                        } else {
+                            echo "<a href='" . $client->createAuthUrl() . "' class='btn-text'>Sign Up with Google</a>";
+                        }
+                        ?>
                     </div>
-                </div><!-- end col -->
+                </form>
             </div>
+            <div class="login">
+                <form method="POST" action="">
+                    <label for="chk" aria-hidden="true">Login</label>
+                    <input type="email" name="email" placeholder="Email" required="">
+                    <input type="password" name="password" placeholder="Password" required="">
+                    <button type="submit" name="login">Login</button>
+                    <div class="google-login-btn">
+                        <img src="img/google.png" alt="Google Icon" class="google-icon">
+                        <?php
+                        require_once 'as-seeker-login/config.php';
+                        if (isset($_SESSION['user_token'])) {
+                            header("Location: as-seeker-login/index.php");
+                        } else {
+                            echo "<a href='" . $client->createAuthUrl() . "' class='btn-text'>Login with Google</a>";
+                        }
+                        ?>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

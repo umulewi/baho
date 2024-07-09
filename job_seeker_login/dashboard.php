@@ -78,9 +78,7 @@
                     <i class='bx bxs-shopping-bag-alt' ></i>
                     <span class="text"> Payment</span>
                    
-                </a>
-                
-                
+                </a>  
             </li>
             
             
@@ -97,6 +95,86 @@
         </ul>
     </section>  
     <!-- CONTENT -->
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multilingual Website with Google Translate</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            position: relative; /* Ensure this is relative for absolute positioning */
+        }
+        header {
+            background-color: #f8f9fa;
+            padding: 10px;
+            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .language-switcher {
+            margin: 0;
+        }
+        .language-switcher a {
+            padding: 10px;
+            cursor: pointer;
+            text-decoration: none;
+            color: #007bff;
+        }
+        .language-switcher a:hover {
+            text-decoration: underline;
+        }
+        /* Hide Google Translate toolbar */
+        #goog-gt-tt,
+        .skiptranslate > .goog-te-gadget-simple,
+        .goog-te-banner-frame,
+        .goog-te-balloon-frame,
+        .goog-tooltip,
+        .goog-tooltip:hover,
+        .goog-text-highlight {
+            display: none !important;
+        }
+        body {
+            top: 0 !important;
+        }
+        /* Hide the Google Translate element */
+        #google_translate_element {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+
+
+    
+    <script>
+        function changeLanguage(lang) {
+            var selectField = document.querySelector('select.goog-te-combo');
+            if (selectField) {
+                selectField.value = lang;
+                selectField.dispatchEvent(new Event('change'));
+            }
+        }
+
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'en,fr,rw'}, 'google_translate_element');
+        }
+
+        (function initGoogleTranslate() {
+            var gtElement = document.createElement('div');
+            gtElement.id = 'google_translate_element';
+            gtElement.style.display = 'none';
+            document.body.appendChild(gtElement);
+            var translateScript = document.createElement('script');
+            translateScript.src = "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+            document.body.appendChild(translateScript);
+        })();
+    </script>
+</body>
+</html>
+
     <section id="content">
         <!-- NAVBAR -->
         <nav class="subsequent-nav">
@@ -107,7 +185,13 @@
                     <!-- <input type="search" placeholder="Search..."> -->
                     <button type="submit" class="search-btn" style="display: none;"><i class='bx'></i></button>
                 </div>
+                
             </form>
+            <div class="language-switcher">
+                <a href="#" onclick="changeLanguage('rw')">Kinyarwanda</a>
+                <a href="#" onclick="changeLanguage('en')">English</a>
+                <a href="#" onclick="changeLanguage('fr')">Français</a>
+            </div>
             <input type="checkbox" id="switch-mode" hidden>
             <label for="switch-mode" class="switch-mode"></label>
             

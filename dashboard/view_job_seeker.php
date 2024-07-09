@@ -154,7 +154,7 @@ $i = 1;
             ?>
             <tr>
                 <td><?php echo $i; ?></td>
-                <td><?php echo $row['full_name']; ?></td>
+                <td><?php echo $row['first_name']; ?> <?php echo $row['last_name']; ?></td>
                 <td><?php echo $row['salary']; ?> RW</td>
                 <td><?php echo $row['bio']; ?></td>
                 <td><?php echo $row['province']; ?></td>

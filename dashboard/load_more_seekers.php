@@ -53,6 +53,7 @@ include('../connection.php');
 
 $lastJobSeekerId = isset($_GET['lastId']) ? intval($_GET['lastId']) : 0;
 $stmt = $pdo->prepare("SELECT * FROM job_seeker INNER JOIN users ON users.users_id = job_seeker.users_id WHERE job_seeker_id > ? ORDER BY job_seeker_id ASC ");
+
 $stmt->execute([$lastJobSeekerId]);
 
 $html = '';

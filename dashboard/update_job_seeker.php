@@ -1,5 +1,3 @@
-
-
 <?php
 session_start();
 if (!isset($_SESSION['admin_email'])) {
@@ -9,9 +7,11 @@ if (!isset($_SESSION['admin_email'])) {
 include('../connection.php');
 
 $job_seeker_id = $_GET['job_seeker_id'];
-$stmt = $pdo->prepare("SELECT users_id FROM job_seeker WHERE job_seeker_id = ?");
+$stmt = $pdo->prepare("SELECT users_id, payment FROM job_seeker WHERE job_seeker_id = ?");
 $stmt->execute([$job_seeker_id]); 
-$user_id = $stmt->fetchColumn(); 
+$job_seeker = $stmt->fetch(PDO::FETCH_ASSOC); 
+$user_id = $job_seeker['users_id']; 
+$payment_status = $job_seeker['payment'];
 $stmt->closeCursor(); 
 
 $pdo = null;
@@ -30,7 +30,6 @@ include 'dashboard.php';
         .form-container {
             max-width: 750px;
             margin: 0 auto;
-           
         }
 
         /* Form fields */
@@ -50,11 +49,7 @@ include 'dashboard.php';
         .form-container input[type="tel"],
         .form-container input[type="number"],
         .form-container input[type="file"],
-
-        
-
         textarea,
-
         select {
             width: 100%;
             padding: 10px;
@@ -95,9 +90,6 @@ include 'dashboard.php';
                 min-width: 100%;
             }
         }
-        
-
-        
     </style>
 </head>
 <body>
@@ -118,129 +110,163 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
 
 <div class="form-container">
-		
-		<main>
-            <div class="table-data">
-                <form action="" method="post">
+    <main>
+        <div class="table-data">
+            <form action="" method="post" enctype="multipart/form-data">
                 <div class="form-row">
-        <div>
-            <label for="name">Seeke's first name:</label>
-            <input type="text" name="first_name" value="<?php echo htmlspecialchars($row['first_name']); ?>" required>
-        </div>
-        <div>
-            <label for="name">Seeker's last name:</label>
-            <input type="text" name="last_name" value="<?php echo htmlspecialchars($row['last_name']); ?>" required>
-        </div>
-        </div>
-        <div class="form-row">
-        <div>
-            <label for="fathers_name">Father;s name:</label>
-            <input type="text" id="fathers_name" name="fathers_name" value="<?php echo htmlspecialchars($row['fathers_name']); ?>" required>
-        </div>
-        <div>
-            <label for="mothers_name">Mothers'name:</label>
-            <input type="text" id="mothers_name" name="mothers_name" value="<?php echo htmlspecialchars($row['mothers_name']); ?>" required>
-        </div>
-        </div>
-        
-        <div class="form-row">
-        <div>
-            <label for="email">Email:</label>
-            <input type="text" id="email" name="email" value="<?php echo htmlspecialchars($row['email']); ?>" required>
-        </div>
-        
-        <div>
-            <label for="province">Province</label>
-            <select name="province" required>
-                <option value="KIGALI CITY" <?php echo ($row['province']=='kigali city')? 'selected' : ''; ?>>Kigali city</option>
-                <option value="Western province" <?php echo ($row['province']=='western province')? 'selected' : ''; ?>>Western province</option>
-                <option value="Estern province" <?php echo ($row['province']=='Estern province')? 'selected' : ''; ?>>Estern province</option>
-                <option value="North province" <?php echo ($row['province']=='North province')? 'selected' : ''; ?>>North province</option>
-                <option value="South province" <?php echo ($row['province']=='South province')? 'selected' : ''; ?>>South Province</option>
-            </select>
-        </div>
-        </div>
-        <div class="form-row">
-        <div>
-            <label for="district">District:</label>
-            <input type="text" id="district" name="district" value="<?php echo htmlspecialchars($row['district']); ?>" required>
-        </div>
-        <div>
-            <label for="sector">Sector:</label>
-            <input type="text" id="sector" name="sector" value="<?php echo htmlspecialchars($row['sector']); ?>" required>
-        </div>
-
-        </div>
-        
-        <div class="form-row">
-        <div>
-            <label for="village">Village:</label>
-            <input type="text" id="village" name="village" value="<?php echo htmlspecialchars($row['village']); ?>" required>
-        </div>
-        <div>
-            <label for="cell">Cell:</label>
-            <input type="text" id="cell" name="cell" value="<?php echo htmlspecialchars($row['cell']); ?>" required>
-        </div>
-        </div>
-        <div class="form-row">
-        <div>
-            <label for="dob">Date of birth:</label>
-            <input type="date"  name="date_of_birth" id="date_of_birth" value="<?php echo htmlspecialchars($row['date_of_birth']); ?>" required>
-        </div>
-        <div>
-            <label for="gender">Gender:</label>
-            <select name="gender">
-                <option value="male" <?php echo ($row['gender'] == 'male') ? 'selected' : ''; ?>>Male</option>
-                <option value="female" <?php echo ($row['gender'] == 'female') ? 'selected' : ''; ?>>Female</option>
-            </select>
-        </div>
-        </div>
-        <div class="form-row">
-            
-            <div>
-            <label for="cell">Salary:</label>
-                <select name="salary">
-                <option value="35000-99000" <?php echo($row['salary']=='35000-99000') ?  'selected': ''; ?>>35000RWF-99000RWF</option>
-                <option value="159000-199000" <?php echo($row['salary']=='159000-199000') ?  'selected': ''; ?>>159000RWF-199000RWF</option>
-                <option value="200000-299000" <?php echo($row['salary']=='200000-299000') ?  'selected': ''; ?>>200000RWF-299000RWF</option>
-            </select>
-            </div>
-
-            <div>
-                <label for="dob">telephone:</label>
-                <input type="number"  name="telephone" id="telephone" value="<?php echo htmlspecialchars($row['telephone']); ?>" required>
-            </div>
-            
-            <div class="form-row">
-            <div>
-                    <label for="id">ID Card:</label>
-                    <input type="file" name="id" accept="image/*">
+                    <div>
+                        <label for="name">Seeker's first name:</label>
+                        <input type="text" name="first_name" value="<?php echo htmlspecialchars($row['first_name']); ?>" required>
+                    </div>
+                    <div>
+                        <label for="name">Seeker's last name:</label>
+                        <input type="text" name="last_name" value="<?php echo htmlspecialchars($row['last_name']); ?>" required>
+                    </div>
                 </div>
-             <div>   
-                <label for="bio" class="">Bio:</label>
-                <textarea style="height:43px;" id="bio" name="bio" required><?php echo ($row['bio']); ?></textarea>
-            </div>
+                <div class="form-row">
+                    <div>
+                        <label for="fathers_name">Father's name:</label>
+                        <input type="text" id="fathers_name" name="fathers_name" value="<?php echo htmlspecialchars($row['fathers_name']); ?>" required>
+                    </div>
+                    <div>
+                        <label for="mothers_name">Mother's name:</label>
+                        <input type="text" id="mothers_name" name="mothers_name" value="<?php echo htmlspecialchars($row['mothers_name']); ?>" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div>
+                        <label for="email">Email:</label>
+                        <input type="text" id="email" name="email" value="<?php echo htmlspecialchars($row['email']); ?>" required>
+                    </div>
+                    <div>
+                        <label for="province">Province</label>
+                        <select name="province" required>
+                            <option value="KIGALI CITY" <?php echo ($row['province']=='kigali city')? 'selected' : ''; ?>>Kigali city</option>
+                            <option value="Western province" <?php echo ($row['province']=='western province')? 'selected' : ''; ?>>Western province</option>
+                            <option value="Estern province" <?php echo ($row['province']=='Estern province')? 'selected' : ''; ?>>Estern province</option>
+                            <option value="North province" <?php echo ($row['province']=='North province')? 'selected' : ''; ?>>North province</option>
+                            <option value="South province" <?php echo ($row['province']=='South province')? 'selected' : ''; ?>>South Province</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div>
+                        <label for="district">District:</label>
+                        <input type="text" id="district" name="district" value="<?php echo htmlspecialchars($row['district']); ?>" required>
+                    </div>
+                    <div>
+                        <label for="sector">Sector:</label>
+                        <input type="text" id="sector" name="sector" value="<?php echo htmlspecialchars($row['sector']); ?>" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div>
+                        <label for="village">Village:</label>
+                        <input type="text" id="village" name="village" value="<?php echo htmlspecialchars($row['village']); ?>" required>
+                    </div>
+                    <div>
+                        <label for="cell">Cell:</label>
+                        <input type="text" id="cell" name="cell" value="<?php echo htmlspecialchars($row['cell']); ?>" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div>
+                        <label for="dob">Date of birth:</label>
+                        <input type="date" name="date_of_birth" id="date_of_birth" value="<?php echo htmlspecialchars($row['date_of_birth']); ?>" required>
+                    </div>
+                    <div>
+                        <label for="gender">Gender:</label>
+                        <select name="gender">
+                            <option value="male" <?php echo ($row['gender'] == 'male') ? 'selected' : ''; ?>>Male</option>
+                            <option value="female" <?php echo ($row['gender'] == 'female') ? 'selected' : ''; ?>>Female</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div>
+                        <label for="salary">Salary:</label>
+                        <select name="salary">
+                            <option value="35000-99000" <?php echo ($row['salary']=='35000-99000') ? 'selected' : ''; ?>>35000RWF-99000RWF</option>
+                            <option value="159000-199000" <?php echo ($row['salary']=='159000-199000') ? 'selected' : ''; ?>>159000RWF-199000RWF</option>
+                            <option value="200000-299000" <?php echo ($row['salary']=='200000-299000') ? 'selected' : ''; ?>>200000RWF-299000RWF</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="telephone">Telephone:</label>
+                        <input type="number" name="telephone" id="telephone" value="<?php echo htmlspecialchars($row['telephone']); ?>" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div>
+                        <label for="id">ID Card:</label>
+                        <input type="file" name="id" accept="image/*">
+                    </div>
+                    <div>
+                        <label for="bio">Bio:</label>
+                        <textarea style="height:43px;" id="bio" name="bio" required><?php echo htmlspecialchars($row['bio']); ?></textarea>
+                    </div>
+                </div>
+                <div>
+                    <input type="submit" name="update" value="Update" style="background-color: teal;">
+                    <?php if ($payment_status !== 'approved') { ?>
+                        <input type="submit" name="approve" value="Approve" style="background-color: teal;">
+                    <?php } ?>
+                </div>
+            </form>
         </div>
-        
-        
-        </div>
-        
-        
-        <div>
-            <input type="submit" name="update" value="Update" style="background-color: teal;">
-            <input type="submit" name="approve" value="Approve" style="background-color: teal;">
-        </div>    
-               
-        
-    </form>
+    </main>
 </div>
-			
-		</main>
-		<!-- MAIN -->
-	</section>
 
 </body>
 </html>
+
+<?php
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+require '../PHPMailer/src/Exception.php';
+require '../PHPMailer/src/PHPMailer.php';
+require '../PHPMailer/src/SMTP.php';
+
+
+
+if (isset($_POST['approve'])){
+    $x = $_POST["first_name"];
+    $company = $_POST["company"];
+    $email = $_POST["email"];
+    $message = $_POST['message'];
+
+    $mail = new PHPMailer(true);
+
+    try {
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'ntegerejimanalewis@gmail.com';
+        $mail->Password = 'zwhcmifrjmnlnziz';
+        $mail->SMTPSecure = 'tls';
+        $mail->Port = 587;
+        $mail->setFrom('your_email@gmail.com');
+        $mail->addAddress($email);
+        $mail->isHTML(false);
+        $mail->Subject = 'Congratulations!';
+        $mail->Body = '
+Dear ' . $x . ',
+
+I am delighted to inform you that your payment has been approved, now you are allowed to apply for all jobs .
+
+
+[https://kozi.rw/]
+';
+    
+
+        $mail->send();
+        // echo "Email sent successfully!";
+    } catch (Exception $e) {
+        echo "Email sending failed. Error: {$mail->ErrorInfo}";
+    }  
+}
+?>
+
 
 
 <?php
@@ -278,19 +304,13 @@ if (isset($_POST['update'])) {
         $target_file = null;
     }
 
-    
-    
-
-    
-
-
     try {
         // Update job_seeker table
         $sql = "UPDATE job_seeker
                 SET fathers_name = :fathers_name,
                     mothers_name = :mothers_name,
                     province = :province,
-                    telephone=:telephone,
+                    telephone = :telephone,
                     district = :district,
                     salary = :salary,
                     bio = :bio,
@@ -298,14 +318,10 @@ if (isset($_POST['update'])) {
                     cell = :cell,
                     village = :village,
                     date_of_birth = :date_of_birth";
-                    if ($target_file) {
-                        $sql .= ", id = :id";
-                     }
-
-
-                     $sql .= " WHERE job_seeker_id = :job_seeker_id";
-                     
-                    
+        if ($target_file) {
+            $sql .= ", id = :id";
+        }
+        $sql .= " WHERE job_seeker_id = :job_seeker_id";
 
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':fathers_name', $fathers_name);
@@ -318,7 +334,6 @@ if (isset($_POST['update'])) {
         $stmt->bindParam(':cell', $cell);
         $stmt->bindParam(':village', $village);
         $stmt->bindParam(':date_of_birth', $date_of_birth);
-        
         $stmt->bindParam(':bio', $bio);
         $stmt->bindParam(':job_seeker_id', $job_seeker_id);
         if ($target_file) {
@@ -344,21 +359,17 @@ if (isset($_POST['update'])) {
         $stmt2->execute();
 
         if ($stmt->rowCount() > 0 || $stmt2->rowCount() > 0) {
-           
-
             echo "<script>
-            alert('well updated');
-            window.location.href = window.location.href; 
-            </script>";
-
-          } else {
-            echo "<script>alert('Update atleast one record');</script>";
-          }
+                alert('Successfully updated');
+                window.location.href = window.location.href; 
+                </script>";
+        } else {
+            echo "<script>alert('Update at least one record');</script>";
+        }
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
     }
-}
-elseif (isset($_POST['approve'])) {
+} elseif (isset($_POST['approve'])) {
     $job_seeker_id = $_GET['job_seeker_id'];
 
     try {
@@ -376,8 +387,7 @@ elseif (isset($_POST['approve'])) {
         } else {
             // Update job_seeker table for approval
             $sql = "UPDATE job_seeker
-                    SET payment = 1,
-                        payment = 'approved'
+                    SET payment = 'approved'
                     WHERE job_seeker_id = :job_seeker_id";
 
             $stmt = $pdo->prepare($sql);
@@ -408,12 +418,11 @@ elseif (isset($_POST['approve'])) {
 </script>
 
 <script>
-const idInput = document.getElementById("id");s
+const idInput = document.getElementById("id");
 idInput.addEventListener("input", function() {
-  const value = idInput.value;
-  if (value.length > 16) {
-    idInput.value = value.slice(0, 16); 
-  }
-  
+    const value = idInput.value;
+    if (value.length > 16) {
+        idInput.value = value.slice(0, 16); 
+    }
 });
 </script>

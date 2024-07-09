@@ -301,7 +301,8 @@ if (!isset($_SESSION['user_email'])) {
 
 <div class="form-container">
 <main>
-        <h1 style="text-align:center;font-family:'Michroma', sans-serif;">Welcome to Job Seeker Dashboard</h1>
+        <h1 style="text-align:center;font-family:'Michroma', sans-serif;">
+            Welcome to Job Seeker Dashboard</h1>
         <hr style="margin: 20px auto;border: 0;height: 1px;width: 50%;background: #EA60A7; ">
         <ul class="box-info">
             <li>
@@ -337,7 +338,7 @@ if (!isset($_SESSION['user_email'])) {
 
 <main>
 
-    
+<div class="table-data">
 <h1 style="text-align:center;font-family:'Michroma', sans-serif;">Payment Status & Benefits of Kozi Caretakers</h1>
     
 <hr style="margin: 20px auto;border: 0;height: 1px;width: 50%;background: #EA60A7; ">
@@ -363,6 +364,7 @@ if (!isset($_SESSION['user_email'])) {
         </div>
     </div>
     <br><br>
+    </div>
    
 
     
