@@ -9,31 +9,31 @@ require './PHPMailer/src/Exception.php';
 require './PHPMailer/src/PHPMailer.php';
 require './PHPMailer/src/SMTP.php';
 
-function sendVerificationEmail($email, $verification_code) {
-    $verification_link = "http://localhost/baho/job_seeker_login.php?code=$verification_code";
-    $subject = "Email Verification";
-    $message = "Please click the following link to verify your email: $verification_link";
+// function sendVerificationEmail($email, $verification_code) {
+//     $verification_link = "http://localhost/baho/job_seeker_login.php?code=$verification_code";
+//     $subject = "Email Verification";
+//     $message = "Please click the following link to verify your email: $verification_link";
 
-    $mail = new PHPMailer(true);
-    try {
-        $mail->isSMTP();
-        $mail->Host = 'smtp.gmail.com';
-        $mail->SMTPAuth = true;
-        $mail->Username = 'ntegerejimanalewis@gmail.com'; // your email
-        $mail->Password = 'zwhcmifrjmnlnziz'; // your email password
-        $mail->SMTPSecure = 'tls';
-        $mail->Port = 587;
-        $mail->setFrom('your_email@gmail.com', 'Your Name'); // your email and name
-        $mail->addAddress($email);
-        $mail->isHTML(false);
-        $mail->Subject = $subject;
-        $mail->Body = $message;
-        $mail->send();
-        echo "<script>alert('Verification email sent successfully');</script>";
-    } catch (Exception $e) {
-        echo "Email sending failed. Error: {$mail->ErrorInfo}";
-    }
-}
+//     $mail = new PHPMailer(true);
+//     try {
+//         $mail->isSMTP();
+//         $mail->Host = 'smtp.gmail.com';
+//         $mail->SMTPAuth = true;
+//         $mail->Username = 'ntegerejimanalewis@gmail.com'; // your email
+//         $mail->Password = 'zwhcmifrjmnlnziz'; // your email password
+//         $mail->SMTPSecure = 'tls';
+//         $mail->Port = 587;
+//         $mail->setFrom('your_email@gmail.com', 'Your Name'); // your email and name
+//         $mail->addAddress($email);
+//         $mail->isHTML(false);
+//         $mail->Subject = $subject;
+//         $mail->Body = $message;
+//         $mail->send();
+//         echo "<script>alert('Verification email sent successfully');</script>";
+//     } catch (Exception $e) {
+//         echo "Email sending failed. Error: {$mail->ErrorInfo}";
+//     }
+// }
 
 if (isset($_POST['user_signup'])) {
     $role_id = $_GET['role_id'];
@@ -54,13 +54,12 @@ if (isset($_POST['user_signup'])) {
         echo "<script>alert('This email has an account. Please login or use a different email.');</script>";
     } else {
         // Insert user details into the database
-        $stmt = $pdo->prepare("INSERT INTO users (role_id, email, first_name, last_name, password, verification_code, verifiedEmail) VALUES (:role_id, :email, :first_name, :last_name, :password, :verification_code, 0)");
+        $stmt = $pdo->prepare("INSERT INTO users (role_id, email, first_name, last_name, password) VALUES (:role_id, :email, :first_name, :last_name, :password)");
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':first_name', $first_name);
         $stmt->bindParam(':last_name', $last_name);
         $stmt->bindParam(':password', $password);
         $stmt->bindParam(':role_id', $role_id);
-        $stmt->bindParam(':verification_code', $verification_code);
         $stmt->execute();
         $users_id = $pdo->lastInsertId();
 
@@ -72,8 +71,7 @@ if (isset($_POST['user_signup'])) {
         $stmt->execute();
 
         // Send verification email
-        sendVerificationEmail($email, $verification_code);
-        echo "<script>alert('Account created! Please verify your email.');</script>";
+        echo "<script>alert('Account created! now you can login');</script>";
     }
 }
 
@@ -87,31 +85,29 @@ if (isset($_POST['login'])) {
 
     $user = $statement->fetch(PDO::FETCH_ASSOC);
 
+
     if ($user) {
-        if ($user['verifiedEmail'] == 1) {
-            $_SESSION['user_email'] = $email;
-            $role_name = $user['role_name'];
-            switch ($role_name) {
-                case 'job_seeker':
-                    header("Location: job_seeker_login/index.php");
-                    exit();
-                default:   
+        $_SESSION['user_email'] = $email;
+        $role_name = $user['role_name'];
+        switch ($role_name) {
+            case 'job_seeker':
+                header("Location: job_seeker_login/index.php");
+                exit();
+            default:   
                 echo "<script>
-                alert('You have registered as a Worker, but you are accessing the wrong side');
-                window.location.href = window.location.href; </script>";
-                                exit();
-                    
-            }
-        } else {
-            echo "<script>alert('Please verify your email before logging in.');</script>";
+                    alert('You have registered as a Worker, but you are accessing the wrong side');
+                    window.location.href = window.location.href; 
+                    </script>";
+                exit();
         }
     } else {
-       
         echo "<script>
                 alert('Incorrect email or password');
                 window.location.href = window.location.href; 
                 </script>";
     }
+    
+
 }
 
 if (isset($_GET['code'])) {
@@ -241,7 +237,7 @@ if (isset($_GET['code'])) {
             border-radius: 60% / 10%;
             transform: translateY(-180px);
             transition: .8s ease-in-out;
-            margin-top: -2rem;
+            margin-top: 1rem;
         }
 
         .login label {
@@ -342,6 +338,21 @@ if (isset($_GET['code'])) {
 </head>
 
 <body>
+
+<html>
+  <head>
+    <title>reCAPTCHA demo: Simple page</title>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  </head>
+  <body>
+    <form action="?" method="POST">
+      <div class="g-recaptcha" data-sitekey="your_site_key"></div>
+      <br/>
+      <input type="submit" value="Submit">
+    </form>
+  </body>
+</html>
+
     <div class="login-container">
         <div class="login-image"></div>
         <div class="main">
@@ -349,6 +360,7 @@ if (isset($_GET['code'])) {
             <div class="signup" style="margin-top:-2rem">
                 
                 <form method="POST" action="">
+                    
                     <label for="chk" aria-hidden="true" class="btn-signup">Sign up</label>
                     <input type="email" name="email" placeholder="Email" required="">
                     <input type="number" name="telephone" placeholder="Telephone" required="">

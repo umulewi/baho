@@ -6,12 +6,24 @@ if (!isset($_SESSION['user_email'])) {
 }
 include('../connection.php');
 $user_email = $_SESSION['user_email'];
-$stmt = $pdo->prepare("SELECT users_id FROM users WHERE email = ?");
-$stmt->execute([$user_email]); 
-$user_id = $stmt->fetchColumn(); 
-$stmt->closeCursor(); 
+
+$stmt = $pdo->prepare("SELECT users_id, first_name, last_name FROM users WHERE email = ?");
+$stmt->execute([$user_email]);
+$user = $stmt->fetch(PDO::FETCH_ASSOC); 
+
+if ($user) {
+    $user_id = $user['users_id'];
+    $first_name = $user['first_name'];
+    $last_name = $user['last_name'];
+   
+} else {
+    echo "User not found.";
+}
+
+$stmt->closeCursor();
 $pdo = null;
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -23,7 +35,15 @@ $pdo = null;
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <!-- My CSS -->
     <link rel="stylesheet" href="../dashboard/style.css">
-    <title>Attandance Management System</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Site Icons -->
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="stylesheet" href="../dashboard/style.css">
+    <title>KOZI E-RECRUITMENT</title>
     <style>
         /* Additional CSS for dropdown icon */
         .dropdown-icon {
@@ -93,6 +113,59 @@ $pdo = null;
             font-size: 14px;
             color: #777;
         }
+
+        
+        /*end */
+
+        .progress {
+            width: 100%;
+            max-width: 400px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .progress-bar {
+            width: <?php echo $progress; ?>%;
+            background-color: teal;
+            color: white;
+            text-align: center;
+            padding: 7px 0;
+            box-sizing: border-box;
+        }
+        .company-logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-right: 20px;
+        }
+
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .other-div1, .other-div2 {
+            flex: 1 1 100%;
+        }
+        @media (min-width: 768px) {
+            .other-div1, .other-div2 {
+                flex: 1 1 calc(50% - 10px);
+            }
+        }
+        .other-div3 {
+            width: 48%;
+            background-color: #fff;
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            box-sizing: border-box;
+        }
+        @media (max-width: 768px) {
+            .other-div3 {
+                width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
@@ -148,20 +221,19 @@ $pdo = null;
             <i class='bx bx-menu' ></i>
             
             <form action="#">
-                <div class="form-input">
-                    <input type="search" placeholder="Search...">
-                    <button type="submit" class="search-btn"><i class='bx bx-search' ></i></button>
-                </div>
+            <div class="form-input" style="display:hidden"> 
+                <button type="submit" class="search-btn" style="display: none;"><i class='bx'></i></button>
+            </div>
             </form>
             <input type="checkbox" id="switch-mode" hidden>
             <label for="switch-mode" class="switch-mode"></label>
             
         </nav>
         <main>
-       
-                
-        
+        <h1 style="text-align:center;font-family:'Michroma', sans-serif;">Welcome <?php echo $last_name ?></h1>
+    
         <ul class="box-info">
+            
                 
 				<li>
 					<i class='bx bxs-calendar-check' ></i>
@@ -200,6 +272,55 @@ $pdo = null;
 			</ul>
 			
 		</main>
+
+        <main class="box-info">
+
+    
+<h1 style="text-align:center;font-family:'Michroma', sans-serif;">Application Status & Benefits of Kozi Caretakers</h1>
+    
+<hr style="margin: 20px auto;border: 0;height: 1px;width: 50%;background: #EA60A7; ">
+    <div class="row">
+        <div class="other-div3">
+           
+                <h2 style="color:teal">Benefits of Kozi Caretakers
+                </h2>
+                <ul style="margin-left:"><br>
+                
+                    <li style="text-align: justify;">Wide Range of Opportunities: Discover diverse job listings tailored to your skills, spanning from housekeeping to specialized services.
+                    </li><br>
+                    <li style="text-align: justify;">Continuous Skill Enhancement: Engage in our comprehensive training programs and workshops to sharpen your professional skills.</li><br>
+                    <li style="text-align: justify;">Community Support: Connect with a supportive community of fellow job seekers to share experiences and gain valuable advice.</li><br>
+                    <li style="text-align: justify;">Exclusive Access: Gain access to exclusive job listings available only to Kozi Caretaker members, enhancing your employment opportunities.</li><br>
+                    <li style="text-align: justify;">Thank you for choosing Kozi Caretakers. Together, we're transforming homes and empowering lives.</li><br>
+    
+                    
+            
+        </div>
+        <div class="other-div3">
+           
+                <h2 style="color:teal">benefits of registering seeker</h2><br>
+
+                <strong><p style="text-align: justify;">Monetary Incentives:</strong> Agents earn 500 RWF for every job seeker they successfully register. This creates a direct financial motivation.</p><br>
+
+                <strong><p style="text-align: justify;">Flexibility:</strong> Agents can work at their own pace and choose their working hours, providing flexibility that can be appealing to a wide range of individuals, including students, part-time workers, and stay-at-home parents.<br><br>
+
+               <strong><p style="text-align: justify;">Skill Development:</strong> Agents gain experience in communication, sales, and marketing, which can enhance their professional skills and future career prospects.<br><br>
+
+               <strong><p style="text-align: justify;">Networking Opportunities:</strong> Agents can expand their professional network by interacting with job seekers and potential employers.<br><br>
+
+            <strong> <p style="text-align: justify;">Recognition and Rewards:</strong> Top-performing agents can be recognized and rewarded with additional bonuses, certificates, or public acknowledgment, boosting their morale and motivation.
+
+            
+            
+            
+        </div>
+    </div>
+    <br><br>
+   
+
+    
+        </main>
+
 
 		
     <!-- CONTENT -->

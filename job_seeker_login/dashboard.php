@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="../dashboard/style.css">
+
+
+<meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+    <!-- Site Icons -->
+    <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
     <title>kozi</title>
     <style>
         .dropdown-icon {

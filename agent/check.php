@@ -1,29 +1,31 @@
-<?php
-session_start();
-if (!isset($_SESSION['user_email'])) {
-    header("location: ../index.php");
-    exit();
-}
-include '../connection.php';
-$user_email = $_SESSION['user_email'];
-try {
-    $sql = "SELECT job_seeker.bio 
-            FROM job_seeker
-            JOIN users ON job_seeker.users_id = users.users_id
-            WHERE users.email = :email";
+<html>
+  <head>
+    <title>reCAPTCHA Enterprise Demo</title>
+    <script src="https://www.google.com/recaptcha/enterprise.js?render=6LeLiLEqAAAAAMR6SssLwyaXNjDz88B9axezt6tH"></script>
+  </head>
+  <body>
+    <form id="recaptcha-form" action="server.php" method="POST">
+      <!-- reCAPTCHA widget -->
+      <div class="g-recaptcha" data-sitekey="6LeLiLEqAAAAAMR6SssLwyaXNjDz88B9axezt6tH"></div>
+      <br/>
+      <input type="hidden" name="recaptcha_token" id="recaptcha-token">
+      <input type="submit" value="Submit" onclick="onClick(event)">
+    </form>
 
-    $stmt = $pdo->prepare($sql);
-    $stmt->bindParam(':email', $user_email, PDO::PARAM_STR);
-    $stmt->execute();
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if ($result) {
-        $user_bio = htmlspecialchars($result['bio'], ENT_QUOTES, 'UTF-8');
-        echo "User Bio: " . $user_bio;
-    } else {
-        echo "No bio found for this user.";
-    }
-} catch (PDOException $e) {
-    die('Database error: ' . htmlspecialchars($e->getMessage()));
-}
-?>
+    <script>
+      function onClick(e) {
+        e.preventDefault(); // Prevent default form submission
+        grecaptcha.enterprise.ready(async () => {
+          const token = await grecaptcha.enterprise.execute(
+            '6LeLiLEqAAAAAMR6SssLwyaXNjDz88B9axezt6tH', 
+            { action: 'LOGIN' }
+          );
+          // Add the token to the hidden input field
+          document.getElementById('recaptcha-token').value = token;
+          // Submit the form after getting the token
+          document.getElementById('recaptcha-form').submit();
+        });
+      }
+    </script>
+  </body>
+</html>

@@ -85,6 +85,7 @@
                     <li><a href="view_job_seeker.php">View Seekers</a></li>
                     <li><a href="register_job_seeker.php?role_id=<?php echo $row['role_id'];?>">Register Seeker</a></li>
                    <li><a href="hired_seekers.php">Hired Seekers</a></li>
+                   <li><a href="seekers_message.php">Messages</a></li>
                    
                 </ul>
             </li>
@@ -160,10 +161,8 @@
             <i class='bx bx-menu' ></i>
             
             <form action="#">
-                <div class="form-input" style="display:hidden">
-                   
+                <div class="form-input" style="display:hidden"> 
                 <button type="submit" class="search-btn" style="display: none;"><i class='bx'></i></button>
-
                 </div>
             </form>
             <input type="checkbox" id="switch-mode" hidden>

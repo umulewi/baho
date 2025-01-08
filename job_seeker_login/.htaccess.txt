@@ -1,0 +1,16 @@
+# Enable URL rewriting
+RewriteEngine On
+
+# Remove .php extension
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.*)$ $1.php [L]
+
+# Remove .html extension
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^(.*)$ $1.html [L]
+
+# Redirect index page without extension to index.html
+RewriteRule ^index$ index.html [L]
+
+# Redirect index page without extension to index.php
+RewriteRule ^index$ index.php [L]

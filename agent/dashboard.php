@@ -7,8 +7,15 @@
     <!-- Boxicons -->
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <!-- My CSS -->
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Site Icons -->
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
     <link rel="stylesheet" href="../dashboard/style.css">
-    <title>baho house  Maids</title>
+    <title>KOZI CARE TAKER</title>
     <style>
         /* Additional CSS for dropdown icon */
         .dropdown-icon {
@@ -56,7 +63,7 @@
         <ul class="side-menu top">
             <li class="active">
                 <a href="index.php">
-                    <i class='bx bxs-dashboard' ></i>
+                    <i class='bx bxs-dashboard'></i>
                     <span class="text">Dashboard</span>
                 </a>
             </li>
@@ -101,10 +108,9 @@
         <nav class="subsequent-nav">
             <i class='bx bx-menu' ></i>
             <form action="#">
-                <div class="form-input">
-                 
-                    <button type="submit" class="search-btn" style="display: none;"><i class='bx'></i></button>
-                </div>
+            <div class="form-input" style="display:hidden"> 
+                <button type="submit" class="search-btn" style="display: none;"><i class='bx'></i></button>
+            </div>
             </form>
             <input type="checkbox" id="switch-mode" hidden>
             <label for="switch-mode" class="switch-mode"></label>

@@ -23,7 +23,6 @@
 
     <?php
 include 'connection.php';
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Fetch role_id based on selected role_name
     $role_name = $_POST['role_name'];

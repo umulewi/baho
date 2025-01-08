@@ -11,8 +11,10 @@ try {
     $query = $pdo->prepare("SELECT users_id FROM users WHERE email = :email");
     $query->execute(['email' => $user_email]);
     $user = $query->fetch(PDO::FETCH_ASSOC);
+    
     if ($user) {
-        $users_id = $user['users_id'];
+     
+        
     } else {
         echo "User not found.";
         exit();
@@ -140,7 +142,76 @@ if ($stmt->rowCount() > 0) {
                 width: 100%;
             }
         }
-        
+
+ 
+        /* Form container */
+        .form-container {
+            max-width: 750px;
+            margin: 0 auto;
+            
+        }
+
+        /* Form fields */
+        .form-container div {
+            margin-bottom: 15px;
+        }
+
+        .form-container label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .form-container input[type="text"],
+        .form-container input[type="date"],
+        .form-container input[type="password"],
+        .form-container input[type="email"],
+        .form-container input[type="tel"],
+        .form-container input[type="number"],
+        .form-container input[type="file"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .form-container input[type="submit"] {
+            width: 40%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: teal;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .form-container input[type="submit"]:hover {
+            background-color: darkslategray;
+        }
+
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .form-row > div {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .form-row > div {
+                min-width: 100%;
+            }
+        }
+
+    
     </style>
 </head>
 <body>
@@ -148,6 +219,7 @@ if ($stmt->rowCount() > 0) {
 
     
 <h1 style="text-align:center;font-family:'Michroma', sans-serif;">Application Status & Benefits of Kozi Caretakers</h1>
+
     
 <hr style="margin: 20px auto;border: 0;height: 1px;width: 50%;background: #EA60A7; ">
     <div class="row">
@@ -174,10 +246,49 @@ if ($stmt->rowCount() > 0) {
         </div>
     </div>
     <br><br>
-   
+</main>
 
-    
-        </main>
+<div class="form-container">
+<main>
+    <form action="" method="post">
+            <input type="hidden" name="job_seeker_id">
+            <div class="form-row">
+                <div>
+                    <label for="name">Message:</label>
+                    <input type="text" name="message" placeholder="For approval delays, please notify us here." required>
+                </div>
+            </div>
+            <div>
+                <input type="submit" name="complain" value="send" style="background-color: teal;">
+            </div>
+        </form>
+
+</main>
+</div>
+
+
+<?php
+if(isset($_POST['complain'])){
+    $message=$_POST['message'];
+    $users_id = $user['users_id'];
+
+$stmt_user=$pdo->prepare("INSERT INTO messages(users_id,message) VALUES(:users_id,:message)");
+$stmt_user->bindParam(':message', $message);
+$stmt_user->bindParam(':users_id', $users_id);
+$stmt_user->execute();
+if($stmt_user){
+    echo"<script>alert('thank you! your message has been sent')</script>";
+}
+else{
+    echo"<script>alert('not')<script>";
+}
+
+
+}
+?>
+
+
+
 
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['apply'])) {

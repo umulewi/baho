@@ -21,6 +21,6 @@ $client->addScope("profile");
 $hostname = "localhost";
 $username = "root";
 $password = "";
-$database = "baho";
+$database = "bahoo";
 
 $conn = mysqli_connect($hostname, $username, $password, $database);
